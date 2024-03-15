@@ -12,3 +12,69 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+model user  {
+  user_id   Int        @id @default(autoincrement())
+  username  String     @db.VarChar(100)
+  image     String?    @db.Text
+  email     String     @db.VarChar(255) @unique
+  password  String     @db.VarChar(255)
+  role      String     @db.VarChar @default("user")
+  blog      blog[]
+  comment   comment[]
+  rating    rating[]
+}
+model restaurant  {
+  res_id            Int        @id @default(autoincrement())
+  name              String     @db.VarChar(255)
+  image_profile     String?    @db.Text
+  image_background  String?    @db.Text
+  phone_number      String     @db.VarChar(12)
+  address           String     @db.Text
+  description       String     @db.Text
+  res_op            res_op[]
+  blog              blog[]
+  comment           comment[]
+  rating            rating[]
+}
+model res_op  {
+  res_id            Int
+  open_id           Int
+  restaurant        restaurant    @relation(fields: [res_id], references: [res_id])
+  openingHours      openingHours  @relation(fields: [open_id], references: [open_id])
+  @@unique([res_id,open_id])
+}
+model openingHours {
+  open_id            Int        @id @default(autoincrement())
+  day_of_week        String     @db.Text
+  opening_time       String     @db.VarChar(5)
+  closing_time       String     @db.VarChar(5)
+  res_op             res_op[]
+}
+model blog {
+  blog_id            Int           @id @default(autoincrement())
+  user_id            Int
+  res_id             Int
+  image              String?       @db.Text
+  description        String        @db.Text
+  restaurant         restaurant    @relation(fields: [res_id], references: [res_id])
+  user               user          @relation(fields: [user_id], references: [user_id])
+}
+model comment {
+  comment_id         Int           @id @default(autoincrement())
+  user_id            Int
+  res_id             Int
+  description        String        @db.Text
+  posted_date        DateTime      @default(now())
+  restaurant         restaurant    @relation(fields: [res_id], references: [res_id])
+  user               user          @relation(fields: [user_id], references: [user_id])
+}
+model rating {
+  rating_id          Int           @id @default(autoincrement())
+  user_id            Int
+  res_id             Int
+  clean_rating       Float         @default(0.0)
+  delicious_rating   Float         @default(0.0)
+  service_rating     Float         @default(0.0)
+  restaurant         restaurant    @relation(fields: [res_id], references: [res_id])
+  user               user          @relation(fields: [user_id], references: [user_id])
+}
