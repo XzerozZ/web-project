@@ -32,13 +32,24 @@ model restaurant  {
   phone_number      String     @db.VarChar(12)
   address           String     @db.Text
   description       String     @db.Text
-  admin_id          Int
-  admin             admin      @relation(fields: [admin_id], references: [admin_id])
   res_op            res_op[]
   blog              blog[]
   comment           comment[]
   rating            rating[]
   favorite          favorite[]
+  res_type          res_type[]
+}
+model res_type {
+  res_id            Int
+  category_id       Int
+  restaurant        restaurant    @relation(fields: [res_id], references: [res_id])
+  category          category      @relation(fields: [category_id],references: [category_id])
+  @@unique([res_id,category_id])
+}
+model category {
+  category_id       Int       @id @default(autoincrement())
+  name              String    @db.Text
+  res_type          res_type[]
 }
 model res_op  {
   res_id            Int
@@ -88,12 +99,4 @@ model favorite {
   restaurant         restaurant    @relation(fields: [res_id], references: [res_id])
   user               user          @relation(fields: [user_id], references: [user_id])
   @@unique([user_id,res_id])
-}
-model admin {
-  admin_id           Int           @id @default(autoincrement())
-  username           String        @db.VarChar(100)
-  image              String?       @db.Text
-  email              String        @db.VarChar(255) @unique
-  password           String        @db.VarChar(255)
-  restaurant         restaurant[]
 }
