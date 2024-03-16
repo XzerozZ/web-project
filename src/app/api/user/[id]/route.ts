@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
+// localhost:3000/api/user/[id]
 export async function GET(req : Request,{ params }: { params: { id: string } }){
     const prisma = new PrismaClient();
     try{

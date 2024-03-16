@@ -13,16 +13,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 model user  {
-  user_id   Int        @id @default(autoincrement())
-  username  String     @db.VarChar(100)
-  image     String?    @db.Text
-  email     String     @db.VarChar(255) @unique
-  password  String     @db.VarChar(255)
-  role      String     @db.VarChar @default("user")
-  blog      blog[]
-  comment   comment[]
-  rating    rating[]
-  favorite  favorite[]
+  user_id       Int        @id @default(autoincrement())
+  username      String     @db.VarChar(100)
+  image         String?    @db.Text
+  phone_number  String     @db.VarChar(12)
+  birthday      DateTime   @map("birthday") @db.Date   
+  email         String     @db.VarChar(255) @unique
+  password      String     @db.VarChar(255)
+  role          String     @db.VarChar @default("user")
+  blog          blog[]
+  comment       comment[]
+  rating        rating[]
+  favorite      favorite[]
 }
 model restaurant  {
   res_id            Int        @id @default(autoincrement())
@@ -69,8 +71,10 @@ model blog {
   blog_id            Int           @id @default(autoincrement())
   user_id            Int
   res_id             Int
+  title              String        @db.Text
   image              String?       @db.Text
   description        String        @db.Text
+  posted_date        DateTime      @default(now())
   restaurant         restaurant    @relation(fields: [res_id], references: [res_id])
   user               user          @relation(fields: [user_id], references: [user_id])
 }
@@ -87,9 +91,7 @@ model rating {
   rating_id          Int           @id @default(autoincrement())
   user_id            Int
   res_id             Int
-  clean_rating       Float         @default(0.0)
-  delicious_rating   Float         @default(0.0)
-  service_rating     Float         @default(0.0)
+  rating             Float         @default(0.0)
   restaurant         restaurant    @relation(fields: [res_id], references: [res_id])
   user               user          @relation(fields: [user_id], references: [user_id])
 }
