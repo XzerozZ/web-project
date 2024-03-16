@@ -22,6 +22,7 @@ model user  {
   blog      blog[]
   comment   comment[]
   rating    rating[]
+  favorite  favorite[]
 }
 model restaurant  {
   res_id            Int        @id @default(autoincrement())
@@ -31,10 +32,13 @@ model restaurant  {
   phone_number      String     @db.VarChar(12)
   address           String     @db.Text
   description       String     @db.Text
+  admin_id          Int
+  admin             admin      @relation(fields: [admin_id], references: [admin_id])
   res_op            res_op[]
   blog              blog[]
   comment           comment[]
   rating            rating[]
+  favorite          favorite[]
 }
 model res_op  {
   res_id            Int
@@ -77,4 +81,19 @@ model rating {
   service_rating     Float         @default(0.0)
   restaurant         restaurant    @relation(fields: [res_id], references: [res_id])
   user               user          @relation(fields: [user_id], references: [user_id])
+}
+model favorite {
+  user_id            Int
+  res_id             Int
+  restaurant         restaurant    @relation(fields: [res_id], references: [res_id])
+  user               user          @relation(fields: [user_id], references: [user_id])
+  @@unique([user_id,res_id])
+}
+model admin {
+  admin_id           Int           @id @default(autoincrement())
+  username           String        @db.VarChar(100)
+  image              String?       @db.Text
+  email              String        @db.VarChar(255) @unique
+  password           String        @db.VarChar(255)
+  restaurant         restaurant[]
 }
