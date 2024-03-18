@@ -28,3 +28,12 @@ export async function POST( req : Request ) {
         )
     }
 }
+
+export async function DELETE() {
+    const prisma = new PrismaClient();
+    await prisma.blog.deleteMany({})
+    await prisma.$disconnect();
+    return Response.json({
+        message : " Delete Blog Successfully",
+    })
+}
