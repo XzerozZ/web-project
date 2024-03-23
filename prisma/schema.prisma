@@ -63,8 +63,8 @@ model res_op  {
 model openingHours {
   open_id            Int        @id @default(autoincrement())
   day_of_week        String     @db.Text
-  opening_time       String     @db.VarChar(5)
-  closing_time       String     @db.VarChar(5)
+  opening_time       String     @db.Text
+  closing_time       String     @db.Text
   res_op             res_op[]
 }
 model blog {

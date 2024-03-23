@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
         email: {
           label: 'Email',
           type: 'email',
-          placeholder: 'hello@example.com'
+          placeholder: 'example@gmail.com'
         },
         password: { label: 'Password', type: 'password' }
       },
@@ -47,7 +47,7 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           name: user.username,
           role: user.role,
-          randomKey: 'Hey cool'
+          randomKey: "Shooting_Majestic_Star_Dragon"
         }
       }
     })
