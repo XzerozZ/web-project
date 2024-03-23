@@ -87,7 +87,6 @@ export async function POST(req: Request) {
         return Response.json(newRestaurant);
     } catch (error) {
         await prisma.$disconnect();
-        console.log(error);
         return Response.json({ error: "error" });
     }
 }

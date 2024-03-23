@@ -37,21 +37,3 @@ export async function POST(req : Request){
         )
     }
 }
-/*export async function POST1(req :Request){
-    const prisma = new PrismaClient();
-    try{
-        const formData = await req.formData();
-        
-        const newuser = await prisma.user.create({
-            data : {
-                username : formData.get('username') as string,
-                phone_number : await formatPhoneNumber(phone_number), // 1234567890
-                birthday : new Date(birthday), // 1998-03-08
-                email,
-                password : hashedPassword
-            }
-        })
-    }catch{
-
-    }
-}*/

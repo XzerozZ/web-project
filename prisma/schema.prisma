@@ -72,7 +72,7 @@ model blog {
   user_id            Int
   res_id             Int
   title              String        @db.Text
-  image              String        @db.Text
+  image              String?       @db.Text
   description        String        @db.Text
   posted_date        DateTime      @default(now())
   restaurant         restaurant    @relation(fields: [res_id], references: [res_id])
