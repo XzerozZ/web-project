@@ -25,7 +25,6 @@ export async function POST( req : Request ) {
     }
     catch(error) {
         await prisma.$disconnect();
-        console.log(error)
         return Response.json(
             {
                 error
@@ -37,6 +36,7 @@ export async function POST( req : Request ) {
     }
 }
 
+// localhost:3000/api/comment
 export async function GET() {
     const prisma = new PrismaClient();
     try {
@@ -56,6 +56,7 @@ export async function GET() {
         )
     }
 }
+
 /*export async function DELETE() {
     const prisma = new PrismaClient();
     await prisma.blog.deleteMany({})
