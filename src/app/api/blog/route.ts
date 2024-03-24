@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { upLoadIMG } from '../admin/supa';
+// localhost:3000/api/comment
 
+//POST
 export async function POST( req : Request ) {
     const prisma = new PrismaClient();
     try {
@@ -36,7 +38,7 @@ export async function POST( req : Request ) {
     }
 }
 
-// localhost:3000/api/comment
+//GET
 export async function GET() {
     const prisma = new PrismaClient();
     try {
@@ -57,11 +59,83 @@ export async function GET() {
     }
 }
 
-/*export async function DELETE() {
+//PUT
+export async function PUT( req : Request ){
     const prisma = new PrismaClient();
-    await prisma.blog.deleteMany({})
-    await prisma.$disconnect();
-    return Response.json({
-        message : " Delete Blog Successfully",
-    })
-}*/
+    try {
+        const formData = await req.formData();
+        const id = parseInt(formData.get('id') as string);
+        const existingBlog = await prisma.blog.findUnique({
+            where: {
+                blog_id: id
+            },
+        });
+        if (!existingBlog) {
+            return Response.json({
+                message: "Blog not found"
+            });
+        }
+        if (formData.has('title')) {
+            existingBlog.title = formData.get('title') as string;
+        }
+        if (formData.has('image') && formData.get('image') instanceof File) {
+            existingBlog.image = await upLoadIMG(formData.get('image') as File);
+        }
+        if (formData.has('description')) {
+            existingBlog.description = formData.get('description') as string;
+        }
+        const updatedBlog = await prisma.blog.update({
+            where : {
+                blog_id : existingBlog.blog_id
+            },
+            data : existingBlog,
+            include : {
+                user : true , 
+                restaurant : true 
+            }
+        })
+        await prisma.$disconnect();
+        return Response.json(updatedBlog);
+    } 
+    catch(error){
+        await prisma.$disconnect();
+        console.log(error)
+        return Response.json(
+            {
+                error: "Server Error"
+            },
+            {
+                status: 500
+            }
+        );
+    }
+}
+
+//DELETE
+export async function DELETE( req : Request ) {
+    const prisma = new PrismaClient();
+    try{
+        const formData = await req.formData();
+        const id = parseInt(formData.get('id') as string);
+        await prisma.blog.delete({
+            where : {
+                blog_id : id
+            }
+        })
+        await prisma.$disconnect();
+        return Response.json({
+            message : " Delete Blog Successfully",
+        })
+    }
+    catch(error){
+        await prisma.$disconnect();
+        return Response.json(
+            {
+                error: "Server Error"
+            },
+            {
+                status: 500
+            }
+        );
+    } 
+}

@@ -125,3 +125,75 @@ export async function GET() {
     }
 }
 
+export async function PUT(req: Request) {
+    const prisma = new PrismaClient();
+    try {
+        const formData = await req.formData();
+        const id = parseInt(formData.get('id') as string);
+        const existingRestaurant = await prisma.restaurant.findUnique({
+            where: {
+                res_id: id
+            },
+        });
+
+        if (!existingRestaurant) {
+            return Response.json({
+                message: "Restaurant not found"
+            });
+        }
+
+        if (formData.has('name')) {
+            existingRestaurant.name = formData.get('name') as string;
+        }
+        if (formData.has('phone_number')) {
+            const phoneNumber = formData.get('phone_number') as string;
+            existingRestaurant.phone_number = await formatPhoneNumber(phoneNumber);
+        }
+        if (formData.has('address')) {
+            existingRestaurant.address = formData.get('address') as string;
+        }
+        if (formData.has('description')) {
+            existingRestaurant.description = formData.get('description') as string;
+        }
+        if (formData.has('image') && formData.get('image') instanceof File) {
+            existingRestaurant.image = await upLoadIMG(formData.get('image') as File);
+        }
+        if (formData.has('image_background') && formData.get('image_background') instanceof File) {
+            existingRestaurant.image_background = await upLoadIMG(formData.get('image_background') as File);
+        }
+
+        const updatedRestaurant = await prisma.restaurant.update({
+            where: {
+                res_id: existingRestaurant.res_id
+            },
+            data: existingRestaurant,
+            include : {
+                res_op : {
+                    include : {
+                        openingHours : true
+                    }
+                } , 
+                res_type : {
+                    include : {
+                        category : true
+                    }
+                } , 
+            }
+        });
+
+        await prisma.$disconnect();
+        return Response.json(updatedRestaurant);
+    } catch (error) {
+        await prisma.$disconnect();
+        return Response.json(
+            {
+                error: "Server Error"
+            },
+            {
+                status: 500
+            }
+        );
+    }
+}
+
+

@@ -35,29 +35,3 @@ export async function GET(req : Request,{ params }: { params: { id: string } }) 
     }
 }
 
-// Delete Blog อันนั้น
-export async function DELETE(req : Request,{ params }: { params: { id: string } }){
-    const prisma = new PrismaClient();
-    try{
-        const blog = await prisma.blog.delete({
-            where : {
-                blog_id : parseInt(params.id)
-            }
-        })
-        await prisma.$disconnect();
-        return Response.json({
-            message : "Success"
-        })
-    }
-    catch(error) {
-        await prisma.$disconnect();
-        return  Response.json(
-            {
-                error : "Server Error"
-            }, 
-            {
-                status : 500
-            }
-        )
-    }
-}

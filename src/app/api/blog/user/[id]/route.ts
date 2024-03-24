@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 // localhost:3000/api/blog/res/[id] //blog ที่userโพสต์
+// GET
 export async function GET(req : Request,{ params }: { params: { id: string } }) {
     const prisma = new PrismaClient();
     try {
