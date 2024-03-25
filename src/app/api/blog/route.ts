@@ -59,7 +59,7 @@ export async function GET() {
     }
 }
 
-//PUT
+//PUT(UPDATE/EDIT)
 export async function PUT( req : Request ){
     const prisma = new PrismaClient();
     try {

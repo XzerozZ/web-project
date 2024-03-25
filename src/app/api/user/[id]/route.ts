@@ -7,7 +7,7 @@ export async function GET(req : Request,{ params }: { params: { id: string } }){
         const userid = await prisma.user.findUnique({
             where: {
                 user_id: parseInt(params.id)
-            }
+            },
         });
         await prisma.$disconnect();
         return Response.json(

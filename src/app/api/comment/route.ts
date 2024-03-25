@@ -30,7 +30,7 @@ export async function POST( req : Request ) {
     }
 }
 
-//PUT
+//PUT(UPDATE/EDIT)
 export async function PUT( req : Request ) {
     const prisma = new PrismaClient();
     try{
@@ -62,7 +62,6 @@ export async function PUT( req : Request ) {
         await prisma.$disconnect();
         return Response.json(updatedComment)
     }
-   
     catch(error) {
         await prisma.$disconnect();
         return Response.json(

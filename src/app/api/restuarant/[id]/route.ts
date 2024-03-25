@@ -18,14 +18,17 @@ export async function GET(req : Request,{ params }: { params: { id: string } }) 
                     include : {
                         openingHours : true
                     }
-                }
+                },
+                rating : true
             }
         })
         await prisma.$disconnect();
         if (resId) {
             const categories = resId.res_type.map(type => type.category.name);
+            const ratings = resId.rating.map(r => r.rating);
+            const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b) / ratings.length : 0;
             const openingHours = resId.res_op.map(op => `${op.openingHours.day_of_week}: ${op.openingHours.opening_time}-${op.openingHours.closing_time}`);
-            const resWithData = { ...resId , categories , openingHours};
+            const resWithData = { ...resId , categories , openingHours , averageRating};
             return Response.json(resWithData);
         } else {
             return Response.json({

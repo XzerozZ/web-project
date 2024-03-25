@@ -3,6 +3,8 @@ import { PrismaClient } from '@prisma/client';
 import { formatPhoneNumber } from '../format/phonenumber';
 import { upLoadIMG } from '../admin/supa';
 
+//localhost:3000/api/restuarant
+//POST
 export async function POST(req: Request) {
     const prisma = new PrismaClient();
     try {
@@ -92,7 +94,7 @@ export async function POST(req: Request) {
 }
 
   
-// localhost:3000/api/restuarant
+//GET
 export async function GET() {
     const prisma = new PrismaClient();
     try {
@@ -110,7 +112,10 @@ export async function GET() {
             }
         });
         await prisma.$disconnect();
-        return Response.json(res)
+        return Response.json({
+            message : "Success" ,
+            res
+        })
     }
     catch(error){
         await prisma.$disconnect();
@@ -125,6 +130,7 @@ export async function GET() {
     }
 }
 
+//PUT(UPDATE/EDIT)
 export async function PUT(req: Request) {
     const prisma = new PrismaClient();
     try {
@@ -191,6 +197,93 @@ export async function PUT(req: Request) {
             },
             {
                 status: 500
+            }
+        );
+    }
+}
+
+//DELETE
+export async function DELETE(req: Request) {
+    const prisma = new PrismaClient();
+    try {
+        const formData = await req.formData();
+        const id = parseInt(formData.get('id') as string);
+        const resOps = await prisma.res_op.findMany({
+            where: {
+                res_id: id
+            },
+            select: {
+                open_id: true
+            }
+        });
+
+        if (!resOps || resOps.length === 0) {
+            return Response.json({
+                error: "No associated res_op records found for the provided restaurant ID",
+            }, {
+                status: 404
+            });
+        }
+
+        const openIds = resOps.map(resOp => resOp.open_id);
+
+        await prisma.$transaction([
+            prisma.res_type.deleteMany({
+                where: {
+                    res_id: id
+                }
+            }),
+            prisma.res_op.deleteMany({
+                where: {
+                    res_id: id
+                }
+            }),
+            prisma.openingHours.deleteMany({
+                where: {
+                    open_id: {
+                        in: openIds
+                    }
+                },
+            }),
+            prisma.blog.deleteMany({
+                where: {
+                    res_id : id
+                }
+            }),
+            prisma.comment.deleteMany({
+                where : {
+                    res_id : id
+                }
+            }),
+            prisma.rating.deleteMany({
+                where : {
+                    res_id : id
+                }
+            }),
+            prisma.favorite.deleteMany({
+                where : {
+                    res_id : id
+                }
+            }),
+            prisma.restaurant.delete({
+                where: {
+                    res_id: id
+                }
+            })
+        ]);
+
+        await prisma.$disconnect();
+        return Response.json({
+            message: "Delete Restaurant Successfully",
+        });
+    } catch (error) {
+        await prisma.$disconnect();
+        console.log(error);
+        return Response.json(
+            {
+            error: "Server Error"
+            }, {
+            status: 500
             }
         );
     }
