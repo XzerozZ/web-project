@@ -1,5 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
+import { FaUser } from "react-icons/fa";
+import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavorite } from "react-icons/md";
+
 
 import { IoSearchOutline } from "react-icons/io5";
 
@@ -8,25 +13,32 @@ type Props = {}
 const navbar = (props: Props) => {
   return (
    <>
-   <nav>
-    <div className='flex justify-between'>
-        <div>
-            logo
+   <nav className='bg-[#fff] flex justify-center h-[120px] items-center'>
+    <div className='flex justify-between w-[1328px] items-center gap-10'>
+        <div className='flex-none w-[150px]'>
+            <Image src='./image/wongaiLogo.svg' alt='logo' width={50} height={100}/>
+          
         </div>
-        <div>
-           <form>
-              <div className='flex align-center w-full bg-[#EAECEE] p-3 rounded-lg'>
-                <input type="search" placeholder="ร้านอาหาร บทความ" className='outline-none border-none bg-transparent'></input>
-                <span className=''><IoSearchOutline /></span>
-              </div>
+        <div className=' max-sm:hidden grow'>
+           <form className='m-1'>
+                <div className='items-center w-full bg-[#EAECEE] rounded-lg relative block'>
+                  <input className='border-none block bg-transparent w-full border  rounded-md p-4 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' placeholder="ร้านอาหาร บทความ" type="text" name="search"/>
+                  <div dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2'>
+                    <span className='m-2 '><IoSearchOutline className='w-[25px] h-[25px] '/></span>
+                
+                  </div>
+               </div>
            </form>
         </div>
-        <div>
+        <div className='max-sm:flex'>
+          <IoSearchOutline className='w-[25px] h-[25px] '/>
+        </div>
+        <div className='flex-none gap-10 flex'>
             <div>
-              favorites
+              <MdFavoriteBorder className='w-[25px] h-[25px]'/>
             </div>
             <div>
-              profile
+              <FaUser className='w-[25px] h-[25px]'/>
             </div>
         </div>
     </div>
