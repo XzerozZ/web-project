@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { FaUser } from "react-icons/fa";
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
+import Logo from './image-component/logo'
 
 
 import { IoSearchOutline } from "react-icons/io5";
@@ -13,10 +14,10 @@ type Props = {}
 const navbar = (props: Props) => {
   return (
    <>
-   <nav className='bg-[#fff] flex justify-center h-[120px] items-center'>
-    <div className='flex justify-between w-[1328px] items-center gap-10'>
-        <div className='flex-none w-[150px]'>
-            <Image src='./image/wongaiLogo.svg' alt='logo' width={50} height={100}/>
+   <nav className='bg-[#fff] flex justify-center h-[120px] items-center w-full'>
+    <div className='flex justify-between w-[1120px] items-center gap-10'>
+        <div className='flex-none w-[150px] pt-3'>
+           <Logo width={150} height={75}/>
           
         </div>
         <div className=' max-sm:hidden grow'>
