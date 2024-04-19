@@ -11,35 +11,35 @@ type Props = {}
 const footer = (props: Props) => {
   return (
    <>   
-   <footer className='bg-[#fff] flex justify-center h-[120px] items-center w-full mt-[70px]'>
+   <footer className='bg-[#fff] flex justify-center  items-center w-full mt-[70px] '>
         <div>
         <div className='sm:flex justify-between w-[1120px] max-sm:w-full max-sm:grid max-sm:grid-cols-2  gap-5'>
             <div>
                 <Logo width={150} height={75}/>
-                <span>Food blog food for you</span>
+                <span className='text-[25px] '>Food blog food for you</span>
             </div>
             <div>
-            <h1>Useful links</h1>
+            <h1 className='text-[25px] font-bold'>Useful links</h1>
                 <ul>
-                    <li>About</li>
-                    <li>Restaurant</li>
-                    <li>Blog</li>
-                    <li>FAQ</li>
+                    <li className='text-[15px]'>About</li>
+                    <li className='text-[15px]'>Restaurant</li>
+                    <li className='text-[15px]'>Blog</li>
+                    <li className='text-[15px]'>FAQ</li>
                 </ul>
             </div>
             <div>
-            <h1>Main menu</h1>
+            <h1 className='text-[25px] font-bold'>Main menu</h1>
                 <ul>
-                    <li>Restaurant</li>
-                    <li>Blog</li>
+                    <li className='text-[15px]'>Restaurant</li>
+                    <li className='text-[15px]'>Blog</li>
                 </ul>
             </div>
             <div>
-            <h1>Contact us</h1>
+            <h1 className='text-[25px] font-bold'>Contact us</h1>
                 <ul>
-                    <li>wongnok@company.ac.th</li>
-                    <li>087-1234567</li>
-                    <li>Wongnok Community</li>       
+                    <li className='text-[15px]'>wongnok@company.ac.th</li>
+                    <li className='text-[15px]'>087-1234567</li>
+                    <li className='text-[15px]'>Wongnok Community</li>       
                 </ul>
             </div>
 

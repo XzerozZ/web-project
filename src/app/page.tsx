@@ -1,7 +1,8 @@
 import React from 'react'
 import Poster from './components/image-component/poster'
 import Product_card from './components/product_card'
-
+import Image from 'next/image'
+import poster2 from '/public/poster2.png'
 
 type Props = {}
 
@@ -10,12 +11,12 @@ const Home = (props: Props) => {
     
     <>
    <body className='w-full  bg-[#FAFAFA]'>
-        <div className='flex justify-center gap-10 mt-[120px] max-sm:mt-[50px] mb-11'>
-            <div>
+        <div className='flex justify-center gap-10 mt-[60px] max-sm:mt-[50px] mb-11 '>
+            <div className='md:m-[140px] md:mr-0'>
               <Poster width={400} height={150}/>
             </div>
-            <div className=' max-sm:hidden'>
-              <Poster width={400} height={150}/>
+            <div className=' max-sm:hidden '>
+              <Image src={poster2} alt='image' width={500} className='rounded-lg'></Image>
             </div>
 
         </div>
@@ -28,7 +29,7 @@ const Home = (props: Props) => {
 
             </div>
 
-            <div className='grid grid-cols-4 gap-4  max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
+            <div className='grid grid-cols-4 gap-6 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
                <Product_card />
                <Product_card />
                <Product_card />
@@ -38,7 +39,7 @@ const Home = (props: Props) => {
                <Product_card />
               
             </div>
-            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5'><h3 className="text-center text-[20px] m-2">ดูทั้งหมด</h3></div>
+            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5 hover:bg-[#E8EAED]'><h3 className="text-center text-[20px] m-2">ดูทั้งหมด</h3></div>
         </div>
         <div className='w-full flex flex-col justify-center items-center gap-5 '>
             <div className='flex justify-center bg-[#FFFFFF] rounded-[10px] h-[65px] xl:w-[1120px] max-sm:w-full max-sm:m-5'>
@@ -58,7 +59,7 @@ const Home = (props: Props) => {
                <Product_card />
               
             </div>
-            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5'><h3 className="text-center text-[20px] m-2">ดูทั้งหมด</h3></div>
+            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5 hover:bg-[#E8EAED]'><h3 className="text-center text-[20px] m-2 ">ดูทั้งหมด</h3></div>
         </div>
 
 
