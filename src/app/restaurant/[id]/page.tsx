@@ -7,12 +7,32 @@ import image from '/public/restaurant.webp'
 
 
 
-type Props = {}
+type Props = {
+    texts: string[];
+}
 
 
 const RestaurantDetail = (props: Props) => {
 
-   
+    const ProgressNumber = {
+        width: '50%'
+    }
+    const [hoverValue, setHoverValue] = React.useState(3);
+
+    
+    const textStyle = {
+        verticalAlign: 'top',
+        lineHeight: '42px',
+        display: 'inline-block'
+      };
+
+      const texts = {
+        1: 'Useless',
+        2: 'Poor',
+        3: 'Ok',
+        4: 'Good',
+        5: 'Excellent'
+      };
 
   return (
     <>
@@ -75,27 +95,46 @@ const RestaurantDetail = (props: Props) => {
                         <div className='showrating flex flex-row'>
                             <div className='w-1/3 flex-col flex '>
                                 <div className='text-[80px]'>
-                                    4.5
+                                   1 
                                 </div>
                                 <div className='text-[30px]'>
                                     จาก 5
                                 </div>
                             </div>
-                            <div className='w-2/3 flex flex-row '>
-                                <div className='flex-col flex'>
+                            <div className='w-2/3 flex flex-col '>
+                                <div className='flex-row flex'>
                                 <Rate readOnly defaultValue={1}  size='xs' />
-                                <Rate readOnly defaultValue={2}  size='xs'/>
-                                <Rate readOnly defaultValue={3}  size='xs'/>
-                                <Rate readOnly defaultValue={4}  size='xs'/>
-                                <Rate readOnly defaultValue={5}  size='xs'/>
+                                <Progress.Line percent={100} showInfo={false} strokeColor="#787F82" />
                                 </div>
-                                <div className='flex-col flex'>
+                                <div className='flex-row flex'>
+                                <Rate readOnly defaultValue={2}  size='xs' />
+                                <Progress.Line percent={0} showInfo={false} strokeColor="#787F82" />
+                                </div>
+                                <div className='flex-row flex'>
+                                <Rate readOnly defaultValue={3}  size='xs' />
+                                <Progress.Line percent={0} showInfo={false} strokeColor="#787F82" />
+                                </div>
+                                <div className='flex-row flex'>
+                                <Rate readOnly defaultValue={4}  size='xs' />
+                                <Progress.Line percent={0} showInfo={false} strokeColor="#787F82" />
+                                </div>
+                                <div className='flex-row flex'>
+                                <Rate readOnly defaultValue={5}  size='xs' />
+                                <Progress.Line percent={0} showInfo={false} strokeColor="#787F82" />
+                                </div>
+                               
+                               
                                 
-                                </div>
+                                
+                               
+
                             </div>
                         </div>
-                        <div className='rating'>
-
+                        <div className='rating flex justify-center'>
+                                <div>
+                                <Rate defaultValue={2} onChangeActive={setHoverValue} />
+                                
+                                </div>
                         </div>
                         <div className='comment'>
 
