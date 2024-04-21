@@ -13,25 +13,29 @@ const RestaurantDetail = (props: Props) => {
 
   return (
     <>
-     <body className='w-full  bg-[#FAFAFA]'>
+     <main className='w-full  bg-[#FAFAFA]  items-center '>
+        <div className='  '>
         <div className='bg-[#E3E3E3] w-full '>
-            <div className=' ml-[160px]  max-sm:w-full pt-5 max-sm:py-3 max-sm:ml-0'>
-                <span className='text-black text-[25px] mr-3  max-sm:text-[40px]'>ร้านส้มตำบ้านนายถานี</span>
-                
-            </div>
-            <div className='flex flex-row ml-[160px]  max-sm:w-full  max-sm:py-3 max-sm:ml-0'>
-                <Rate readOnly defaultValue={5} allowHalf />
-                <div className='text-[25px] '>5</div>
-            </div>
-            <div>
+            <div className='flex justify-center py-5'>
+                <div className='w-[1120px] '>
+                    <div className='text-[30px]'>
+                        ร้านส้มตำนายถานี
+                    </div>
+                    <div className='flex flex-row'>
+                        <Rate defaultValue={3} allowHalf color='orange'/>
+                        <h3 className='text-[25px]'>5</h3>
+                    </div>
+                    <div>
+                        ส้มตำ/อาหารอีสาน
+                    </div>
+                </div>
 
             </div>
-            <div className=' ml-[160px]  max-sm:w-full pb-5 max-sm:py-3 max-sm:ml-0'>
-                <span className='text-black text-[15px] mr-3  max-sm:text-[40px]'>อาหารอีสาน/ส้มตำ</span>
-            </div>
         </div>
-        <div className=' flex flex-row justify-center items-center gap-5 my-10 mx-[160px] max-sm:mx-0'>
-            <div className='w-2/5 max-sm:hidden flex flex-col'>
+        <div className='w-full '>
+            <div className='flex justify-center '>
+            <div className=' flex flex-row justify-center items-center gap-5 my-10 mx-[160px] max-sm:mx-0 w-[1120px]'>
+            <div className='w-1/4 max-sm:hidden flex flex-col bg-white rounded-[10px]'>
                 <div>
                     <h3>ที่อยู่</h3>
                     <p></p>
@@ -64,10 +68,13 @@ const RestaurantDetail = (props: Props) => {
                 
                 </div>
             </div>
+            </div>  
+            </div>
         </div>
         
+        </div>
 
-    </body>
+    </main>
     
     </>
   )
