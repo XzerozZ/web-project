@@ -7,12 +7,24 @@ import image from '/public/restaurant.webp'
 
 
 
+
 type Props = {
     texts: string[];
 }
 
 
+
 const RestaurantDetail = (props: Props) => {
+
+   
+    const [countClick, setCountClick] = React.useState(0); 
+    const countClickHandler = () => { 
+        setCountClick(countClick + 1); 
+    }; 
+
+
+    
+  
 
     const ProgressNumber = {
         width: '50%'
@@ -152,6 +164,13 @@ const RestaurantDetail = (props: Props) => {
         </div>
         
         </div>
+        <center> 
+            <h1>GeeksforGeeks</h1> 
+            <h2> State value: {countClick} </h2> 
+            <button onClick={countClickHandler}> 
+                Click Me 
+            </button> 
+        </center> 
 
     </main>
     

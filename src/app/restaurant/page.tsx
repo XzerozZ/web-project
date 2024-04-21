@@ -1,9 +1,12 @@
 import React from 'react'
 import Product_card from '../components/product_card'
 
+
 type Props = {}
 
 const restaurant = (props: Props) => {
+
+  
   return (
     <>
     <body className='w-full  bg-[#FAFAFA]'>
@@ -11,7 +14,7 @@ const restaurant = (props: Props) => {
             <div className=' ml-[120px]  max-sm:w-full py-5 max-sm:py-3 max-sm:ml-0'>
             <span className='text-[#39DB4A] text-[60px] mr-3  max-sm:text-[40px]'>Restaurant</span>
                   <span className=' text-[60px] max-sm:text-[40px]'>|</span>
-                  <span className=' text-[60px] ml-3  max-sm:text-[40px]'>ร้านอาหาร</span>
+                  <span className=' text-[60px] ml-3  max-sm:text-[40px]'>ร้านอาหารf</span>
             </div>
         </div>
         <div className=' flex flex-row justify-center items-center gap-5 my-10 mx-[160px] max-sm:mx-0'>
