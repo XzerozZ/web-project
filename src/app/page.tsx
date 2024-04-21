@@ -3,13 +3,13 @@ import Poster from './components/image-component/poster'
 import Product_card from './components/product_card'
 import Image from 'next/image'
 import poster2 from '/public/poster2.png'
-
 type Props = {}
 
 const Home = (props: Props) => {
   return (
     
     <>
+    
    <body className='w-full  bg-[#FAFAFA]'>
         <div className='flex justify-center gap-10 mt-[60px] max-sm:mt-[50px] mb-11 '>
             <div className='md:m-[140px] md:mr-0'>

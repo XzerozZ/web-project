@@ -3,9 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/navbar";
 import Footer from "./components/footer";
-
-
-const inter = Inter({ subsets: ["latin"] });
+import { Noto_Sans_Thai} from "next/font/google";
+ 
+const noto_sans_thai = Noto_Sans_Thai({ subsets: ["latin"]
+  
+ });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +22,7 @@ export default function RootLayout({
   return (
     <>
       <NavBar />
-      <main>{children}</main>
+      <main className={`${noto_sans_thai}`}>{children}</main>
       <Footer />
       
       

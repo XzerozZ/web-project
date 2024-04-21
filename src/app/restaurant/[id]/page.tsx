@@ -1,7 +1,10 @@
 "use client"; 
 import React, { useState } from 'react'
-import { Rate } from 'rsuite';
+import { Progress, Rate } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
+import Image from 'next/image'
+import image from '/public/restaurant.webp'
+
 
 
 type Props = {}
@@ -22,8 +25,8 @@ const RestaurantDetail = (props: Props) => {
                         ร้านส้มตำนายถานี
                     </div>
                     <div className='flex flex-row'>
-                        <Rate defaultValue={3} allowHalf color='orange'/>
-                        <h3 className='text-[25px]'>5</h3>
+                        <Rate defaultValue={1} allowHalf color='orange'/>
+                        <h3 className='text-[25px]'>1</h3>
                     </div>
                     <div>
                         ส้มตำ/อาหารอีสาน
@@ -34,33 +37,70 @@ const RestaurantDetail = (props: Props) => {
         </div>
         <div className='w-full '>
             <div className='flex justify-center '>
-            <div className=' flex flex-row justify-center items-center gap-5 my-10 mx-[160px] max-sm:mx-0 w-[1120px]'>
-            <div className='w-1/4 max-sm:hidden flex flex-col bg-white rounded-[10px]'>
+            <div className=' flex flex-row justify-center  gap-5 my-10 mx-[160px] max-sm:mx-0 w-[1120px] items-start'>
+            <div className='w-1/4 n max-sm:hidden flex flex-col bg-white rounded-[10px] p-3 ' >
                 <div>
                     <h3>ที่อยู่</h3>
-                    <p></p>
+                    <p>R3GW+638, Thammasala, Mueang Nakhon Pathom District, Nakhon Pathom 73000</p>
                 </div>
                 <div>
                     <h3>เวลาเปิดร้าน</h3>
-                    <p></p>
+                    <p>จันทร์ - อังคาร	10:00 - 15:00 <br/>
+                        พฤหัสบดี - อาทิตย์	10:00 - 15:00</p>
                 </div> 
                 <div>
                     <h3>เบอร์โทร</h3>
-                    <p></p>
+                    <p>081-705-4942 <br/>
+                    095-556-1659</p>
                 </div>
             </div>
             <div className='w-3/4 max-sm:w-full'>
                 <div className='  max-sm:w-full flex flex-col gap-3'>
-                    <div className='rounded-[10px] bg-white p-2'>
-                        <div className='flex flex-row'>
+                    <div className='rounded-[10px] bg-white p-4 flex flex-col gap-3'>
+                        <div className='flex flex-row gap-3 '>
+                                <div>
+                                    <Image src={image} alt='image'  sizes='10vw' className='rounded-[10px]'></Image>
+                                </div>
+                                <div>
+                                    <Image src={image} alt='image'  sizes='10vw' className='rounded-[10px]'></Image>
 
+                                </div>
                         </div>
-                        <div>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias adipisci cumque consequuntur vero non ducimus nihil, architecto voluptates dicta, earum dolore quae exercitationem eius magni fugit, deleniti doloremque modi officiis?
+                        <div className='text-[20px] max-sm:10px'>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis fugit corrupti dolores velit quaerat eos, laudantium, tempore modi deleniti esse nobis, quidem ut consequatur harum aperiam voluptatem consequuntur? Ut voluptates distinctio explicabo molestias magni iure repudiandae beatae, delectus consequuntur minima! Deserunt nam similique quia illo officiis ea hic modi molestias?
                         </div>
                     </div>
                     <div className='rounded-[10px] bg-white p-2'>
                         <h3>แสดงความคิดเห็น</h3>
+                        <div className='showrating flex flex-row'>
+                            <div className='w-1/3 flex-col flex '>
+                                <div className='text-[80px]'>
+                                    4.5
+                                </div>
+                                <div className='text-[30px]'>
+                                    จาก 5
+                                </div>
+                            </div>
+                            <div className='w-2/3 flex flex-row '>
+                                <div className='flex-col flex'>
+                                <Rate readOnly defaultValue={1}  size='xs' />
+                                <Rate readOnly defaultValue={2}  size='xs'/>
+                                <Rate readOnly defaultValue={3}  size='xs'/>
+                                <Rate readOnly defaultValue={4}  size='xs'/>
+                                <Rate readOnly defaultValue={5}  size='xs'/>
+                                </div>
+                                <div className='flex-col flex'>
+                                
+                                </div>
+                            </div>
+                        </div>
+                        <div className='rating'>
+
+                        </div>
+                        <div className='comment'>
+
+                        </div>
+
                     </div>
                     <div className='rounded-[10px] bg-white p-2'>
                         <h3>ความคิดเห็น</h3>
