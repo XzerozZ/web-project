@@ -1,9 +1,12 @@
 "use client"; 
 import React, { useState } from 'react'
-import { Progress, Rate } from 'rsuite';
+import { Avatar, Progress, Rate } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import Image from 'next/image'
 import image from '/public/restaurant.webp'
+import Comment from '../../components/commentComponent';
+import { IoSearchOutline } from 'react-icons/io5';
+
 
 
 
@@ -38,13 +41,7 @@ const RestaurantDetail = (props: Props) => {
         display: 'inline-block'
       };
 
-      const texts = {
-        1: 'Useless',
-        2: 'Poor',
-        3: 'Ok',
-        4: 'Good',
-        5: 'Excellent'
-      };
+     
 
   return (
     <>
@@ -143,18 +140,49 @@ const RestaurantDetail = (props: Props) => {
                             </div>
                         </div>
                         <div className='rating flex justify-center'>
-                                <div>
-                                <Rate defaultValue={2} onChangeActive={setHoverValue} />
+                                <div className='flex flex-col justify-center w-[340px] shadow-xl  p-5 m-3 rounded-lg'>
+                                    <div className='text-center'> 
+                                        <h3 className='text-bold text-[30px] '>ให้คะแนนร้านนี้</h3>
+                                        <Rate defaultValue={2} onChangeActive={setHoverValue} />
                                 
+                                    </div>
                                 </div>
                         </div>
-                        <div className='comment'>
+                        <div className='comment flex flex-row justify-between m-10'>
+                            <div className=''>
+                            <Avatar size="lg" circle />
+                            </div>
+                            <div className='grow'>
+                                 <div className='w-full  '>
+                                    <form className='m-1 flex flex-col gap-3'>
+                                        <div>
+                                            <span>Natchapon Ponlaem</span>
+                                        </div>
+                                        <div>
+                                        <div className='items-center w-full bg-[#EAECEE] rounded-lg relative block'>
+                                               <div>
+                                                <input className='border-none block bg-transparent w-full border  rounded-md p-3 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' placeholder="แสดงความคิดเห็น" type="text" name="search"/>
+                                                    <div dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2'>
+                                                        <span className='m-2 text-white'>Post</span>
+                                               </div>
+                                                
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </form>
+                                 </div>
+                            </div>
+                            <div>
 
-                        </div>
+                            </div>
+                        </div> 
 
                     </div>
                     <div className='rounded-[10px] bg-white p-2'>
                         <h3>ความคิดเห็น</h3>
+                       <div>
+                            <Comment/>
+                       </div>
                     </div>
                 
                 </div>
@@ -164,13 +192,7 @@ const RestaurantDetail = (props: Props) => {
         </div>
         
         </div>
-        <center> 
-            <h1>GeeksforGeeks</h1> 
-            <h2> State value: {countClick} </h2> 
-            <button onClick={countClickHandler}> 
-                Click Me 
-            </button> 
-        </center> 
+       
 
     </main>
     

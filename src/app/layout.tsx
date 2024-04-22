@@ -20,13 +20,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <NavBar />
+   
+     
+      <html lang="en">
+      <body>
+        {/* Layout UI */}
+        <NavBar />
       <main className={`${noto_sans_thai}`}>{children}</main>
       <Footer />
+      </body>
+    </html>
       
       
-      
-    </>
+    
   );
 }
