@@ -10,8 +10,8 @@ const Home = (props: Props) => {
     
     <>
     
-   <body className='w-full  bg-[#FAFAFA]'>
-        <div className='flex justify-center gap-10 mt-[60px] max-sm:mt-[50px] mb-11 '>
+   <div className='w-full  bg-[#FAFAFA]'>
+        <div className='flex justify-center gap-10 pt-[60px] max-sm:mt-[50px] mb-11 '>
             <div className='md:m-[140px] md:mr-0'>
               <Poster width={400} height={150}/>
             </div>
@@ -63,7 +63,7 @@ const Home = (props: Props) => {
         </div>
 
 
-   </body>
+   </div>
     </>
   )
 }

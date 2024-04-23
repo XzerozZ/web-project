@@ -9,7 +9,7 @@ const restaurant = (props: Props) => {
   
   return (
     <>
-    <body className='w-full  bg-[#FAFAFA]'>
+    <div className='w-full  bg-[#FAFAFA]'>
         <div className='bg-[#E3E3E3] w-full '>
             <div className=' ml-[120px]  max-sm:w-full py-5 max-sm:py-3 max-sm:ml-0'>
             <span className='text-[#39DB4A] text-[60px] mr-3  max-sm:text-[40px]'>Restaurant</span>
@@ -35,7 +35,7 @@ const restaurant = (props: Props) => {
             </div>
         </div>
 
-    </body>
+    </div>
     </>
   )
 }
