@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import image from '/public/restaurant.webp'
-import './blog_card.css'
+
 type Props = {}
 
 const blog_card = (props: Props) => {
