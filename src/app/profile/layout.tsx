@@ -67,14 +67,14 @@ export default function RootLayout({
                 <div className='w-1/5  '>
                     <ul className='flex flex-col  p-3  bg-white rounded-[10px] gap-3'>
                         <Link href='/profile' className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline focus:no-underline focus:text-[#39db4a] focus:bg-[#39DB4A]/5'><li ><h5 >ภาพรวม</h5></li></Link>
-                        <Link href='/profile/restaurant' className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline  focus:no-underline focus:text-[#39db4a]  focus:bg-[#39DB4A]/5'> <li ><h5>ร้านอาหาร</h5></li></Link>
+                        <Link href='/profile/comment' className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline  focus:no-underline focus:text-[#39db4a]  focus:bg-[#39DB4A]/5'> <li ><h5>ความคิดเห็น</h5></li></Link>
                         <Link href='/profile/blog' className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline focus:no-underline focus:text-[#39db4a]  focus:bg-[#39DB4A]/5'> <li ><h5>บทความ</h5></li></Link>
                         <Link href='/profile/save' className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline focus:no-underline focus:text-[#39db4a]  focus:bg-[#39DB4A]/5'> <li ><h5>บันทึก</h5></li>  </Link>
                         <Link href='/profile/information' className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline focus:no-underline focus:text-[#39db4a]  focus:bg-[#39DB4A]/5 '> <li ><h5>ข้อมูลส่วนตัว</h5></li></Link>
                     </ul>
 
                 </div>
-                <div className='w-4/5 bg-white rounded-[10px] p-5 gap-5 flex flex-col'>
+                <div className='w-4/5 rounded-[10px] p-5 gap-5 flex flex-col'>
                     {children}
                 </div>
         </div>

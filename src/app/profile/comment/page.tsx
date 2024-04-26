@@ -1,21 +1,21 @@
 import React from 'react'
-import SaveCard from './component/saveCard'
+import ComCard from './component/comCard'
 type Props = {}
 
 const page = (props: Props) => {
   return (
-    <>
- 
+  <>
     <div className='flex flex-col gap-4'>
-        <SaveCard/>
-        <SaveCard/>
+        <ComCard/>
+        <ComCard/>
+       
 
           
      
 
          
     </div>
-    </>
+   </>
   )
 }
 

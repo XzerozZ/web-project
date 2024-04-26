@@ -3,15 +3,15 @@ import { Avatar, Rate } from 'rsuite'
 
 type Props = {}
 
-const commentComponent = (props: Props) => {
+const comCard = (props: Props) => {
   return (
     <>
        <div className='flex gap-1 flex-col'>
-       <div className='flex flex-row gap-3'>
+       <div className='flex flex-row gap-3' >
             <div>
               <Avatar circle  />
             </div>
-            <div className='flex flex-col '>
+            <div className='flex flex-col'>
               <div>
             Natchapon Ponlaem
               </div>
@@ -32,4 +32,4 @@ const commentComponent = (props: Props) => {
   )
 }
 
-export default commentComponent
+export default comCard
