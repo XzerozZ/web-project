@@ -4,6 +4,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { FaRegCopyright } from "react-icons/fa";
+import Link from 'next/link';
 
 
 type Props = {}
@@ -11,7 +12,7 @@ type Props = {}
 const footer = (props: Props) => {
   return (
    <>   
-   <footer className='bg-[#fff] flex justify-center  items-center w-full mt-[70px] max-sm:m-5'>
+   <footer className='bg-[#fff] flex justify-center  items-center w-full  max-sm:p-5 p-5'>
         <div>
         <div className='sm:flex justify-between w-[1120px] max-sm:w-full max-sm:grid max-sm:grid-cols-2  gap-5'>
             <div>
@@ -21,10 +22,10 @@ const footer = (props: Props) => {
             <div>
             <h1 className='text-[25px] font-bold'>Useful links</h1>
                 <ul>
-                    <li className='text-[15px]'>About</li>
-                    <li className='text-[15px]'>Restaurant</li>
-                    <li className='text-[15px]'>Blog</li>
-                    <li className='text-[15px]'>FAQ</li>
+                   <Link href="/"> <li className='text-[15px]'>About</li></Link>
+                   <Link href='/restaurant'> <li className='text-[15px]'>Restaurant</li></Link>
+                    <Link href='/blog'><li className='text-[15px]'>Blog</li></Link>
+                  <li className='text-[15px]'>FAQ</li>
                 </ul>
             </div>
             <div>

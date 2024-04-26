@@ -3,6 +3,7 @@ import Poster from './components/image-component/poster'
 import Product_card from './components/product_card'
 import Image from 'next/image'
 import poster2 from '/public/poster2.png'
+import Link from 'next/link'
 type Props = {}
 
 const Home = (props: Props) => {
@@ -39,7 +40,8 @@ const Home = (props: Props) => {
                <Product_card />
               
             </div>
-            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5 hover:bg-[#E8EAED]'><h3 className="text-center text-[20px] m-2">ดูทั้งหมด</h3></div>
+        <Link href='/restaurant'>            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5 p-1 hover:bg-[#E8EAED]'><h3 className="text-center text-[20px] m-2">ดูทั้งหมด</h3></div>
+</Link>
         </div>
         <div className='w-full flex flex-col justify-center items-center gap-5 '>
             <div className='flex justify-center bg-[#FFFFFF] rounded-[10px] h-[65px] xl:w-[1120px] max-sm:w-full max-sm:m-5'>
@@ -59,8 +61,8 @@ const Home = (props: Props) => {
                <Product_card />
               
             </div>
-            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5 hover:bg-[#E8EAED]'><h3 className="text-center text-[20px] m-2 ">ดูทั้งหมด</h3></div>
-        </div>
+            <Link href='/blog'>            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5 p-1 hover:bg-[#E8EAED]'><h3 className="text-center text-[20px] m-2">ดูทั้งหมด</h3></div>
+</Link>        </div>
 
 
    </div>
