@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import NavBar from "./components/navbar";
+import NavBar from "./components/navbarnotlogin";
 import Footer from "./components/footer";
 import { Noto_Sans_Thai} from "next/font/google";
  

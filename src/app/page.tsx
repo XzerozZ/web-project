@@ -43,7 +43,7 @@ const Home = (props: Props) => {
         <Link href='/restaurant'>            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5 p-1 hover:bg-[#E8EAED]'><h3 className="text-center text-[20px] m-2">ดูทั้งหมด</h3></div>
 </Link>
         </div>
-        <div className='w-full flex flex-col justify-center items-center gap-5 '>
+        <div className='w-full flex flex-col justify-center items-center gap-5 mt-3'>
             <div className='flex justify-center bg-[#FFFFFF] rounded-[10px] h-[65px] xl:w-[1120px] max-sm:w-full max-sm:m-5'>
                   <span className='text-[#39DB4A] text-[30px] mt-3 mb-3 ml-[50px]'>Blog</span>
                   <span className=' text-[30px] mt-3 mb-3 mx-5'>|</span>

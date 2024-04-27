@@ -14,10 +14,10 @@ type Props = {}
 const navbar = (props: Props) => {
   return (
    <>
-   <nav className='bg-[#fff] flex justify-center h-[120px] items-center w-full'>
+   <nav className='bg-[#fff] flex justify-center h-[120px] items-center w-full max-sm:p-3'>
     <div className='flex justify-between w-[1120px] items-center gap-10'>
         <div className='flex-none w-[150px] pt-3'>
-        <Link href='/'><Logo width={150} height={75}/></Link>
+           <Link href='/'><Logo width={150} height={75}/></Link>
           
         </div>
         <div className=' max-sm:hidden grow'>
@@ -31,16 +31,9 @@ const navbar = (props: Props) => {
                </div>
            </form>
         </div>
-        <div className='max-sm:flex'>
-          <IoSearchOutline className='w-[25px] h-[25px] '/>
-        </div>
-        <div className='flex-none gap-10 flex'>
-            <div>
-              <MdFavoriteBorder className='w-[25px] h-[25px]'/>
-            </div>
-            <div>
-              <FaUser className='w-[25px] h-[25px]'/>
-            </div>
+        <div className='max-sm:flex gap-5 flex'>
+          <Link href='/auth/signup'><button className='py-3 px-4 text-black'>Sign up</button></Link>
+         <Link href="/auth/signin"> <button className='border-[#39DB4A] py-3 px-4 border-2 rounded-md hover:bg-[#39DB4A] hover:text-white text-black'>Login</button></Link>
         </div>
     </div>
    </nav>
