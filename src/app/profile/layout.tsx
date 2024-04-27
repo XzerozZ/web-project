@@ -15,6 +15,7 @@ import { Uploader, Message, Loader, useToaster } from 'rsuite';
 import AvatarIcon from '@rsuite/icons/legacy/Avatar';
 import Link from 'next/link';
 
+import { useSession } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,6 +37,8 @@ export default function RootLayout({
   const [password, setPassword] = useState('');
   const [birthday, setBirthday] = useState('');
   const [telephone, setTelephone] = useState('')
+  const session = useSession();
+  console.log(session)
 
   return (
     <>
