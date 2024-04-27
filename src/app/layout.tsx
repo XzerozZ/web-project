@@ -23,10 +23,10 @@ export default function RootLayout({
    
      
       <html lang="en">
-      <body>
+      <body className={noto_sans_thai.className}>
         {/* Layout UI */}
         <NavBar />
-      <main className={`${noto_sans_thai}`}>{children}</main>
+      <main >{children}</main>
       <Footer />
       </body>
     </html>
