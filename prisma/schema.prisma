@@ -22,6 +22,7 @@ model user  {
   password      String     @db.VarChar(255)
   role          String     @db.VarChar @default("user")
   blog          blog[]
+  sessions      session[]
   comment       comment[]
   rating        rating[]
   favorite      favorite[]
@@ -102,4 +103,13 @@ model favorite {
   restaurant         restaurant    @relation(fields: [res_id], references: [res_id])
   user               user          @relation(fields: [user_id], references: [user_id])
   @@unique([user_id,res_id])
+}
+model session {
+  sessionToken        String        @unique
+  user_id             Int
+  expires             DateTime
+  user                user          @relation(fields: [user_id], references: [user_id])
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
