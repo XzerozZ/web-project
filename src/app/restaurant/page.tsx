@@ -1,10 +1,22 @@
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
 import Product_card from '../components/product_card'
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 
 type Props = {}
 
 const restaurant = (props: Props) => {
+
+  const router = useRouter();
+  const session = useSession();
+  useEffect(() => {
+    if (!session.data) {
+      router.push('/auth/signin');
+    }
+  }, [session,router]);
+
 
   
   return (

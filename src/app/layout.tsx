@@ -5,6 +5,7 @@ import NavBar from "./components/navbarnotlogin";
 import Footer from "./components/footer";
 import { Noto_Sans_Thai} from "next/font/google";
 import SessionProvider from "./components/sessionProvider";
+
  
 const noto_sans_thai = Noto_Sans_Thai({ subsets: ["latin"]
   

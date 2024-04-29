@@ -1,12 +1,30 @@
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
 import Poster from './components/image-component/poster'
 import Product_card from './components/product_card'
 import Image from 'next/image'
 import poster2 from '/public/poster2.png'
 import Link from 'next/link'
+import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation'
+
 type Props = {}
 
 const Home = (props: Props) => {
+
+  
+  
+  const router = useRouter();
+  const session = useSession();
+  useEffect(() => {
+    if (!session.data) {
+      router.push('/auth/signin');
+    }
+  }, [session,router]);
+
+  
+  
+
   return (
     
     <>

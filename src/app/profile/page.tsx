@@ -1,17 +1,17 @@
 "use client";
-import React from 'react'
+import React, { use } from 'react'
 import { Avatar } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
 import Comment from '@/app/components/commentComponent';
 
 import { Button,Checkbox, Label, Modal, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useState,useEffect} from "react";
 
 import { Uploader, Message, Loader, useToaster } from 'rsuite';
 import AvatarIcon from '@rsuite/icons/legacy/Avatar';
 import Link from 'next/link';
-
-
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 type Props = {}
 
@@ -22,7 +22,15 @@ const ProfilePage = (props: Props) => {
   function onCloseModal() {
     setOpenModal(false);
    
+
   }
+  const router = useRouter();
+  const session = useSession();
+  useEffect(() => {
+    if (!session.data) {
+      router.push('/auth/signin');
+    }
+  }, [session,router]);
 
 
   const [email, setEmail] = useState('');

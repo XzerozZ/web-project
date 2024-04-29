@@ -1,10 +1,26 @@
-import React from 'react'
+"use client"
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react'
 import { Avatar } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
 
 type Props = {}
 
 const BlogDetail = (props: Props) => {
+
+
+    const router = useRouter();
+  const session = useSession();
+  useEffect(() => {
+    if (!session.data) {
+      router.push('/auth/signin');
+    }
+  }, [session,router]);
+
+
+  
+    
   return (
     <>
      <main className='w-full bg-[#FAFAFA]  items-center flex justify-center'>

@@ -1,5 +1,5 @@
 "use client"; 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, Progress, Rate } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import Image from 'next/image'
@@ -7,6 +7,8 @@ import image from '/public/restaurant.webp'
 import Comment from '../../components/commentComponent';
 import { IoSearchOutline } from 'react-icons/io5';
 import { Tabs, Placeholder } from 'rsuite';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 
 
@@ -26,6 +28,16 @@ const RestaurantDetail = (props: Props) => {
         setCountClick(countClick + 1); 
     }; 
 
+    const router = useRouter();
+    const session = useSession();
+    useEffect(() => {
+        if (!session.data) {
+        router.push('/auth/signin');
+        }
+    }, [session,router]);
+
+
+  
 
     
   

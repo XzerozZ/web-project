@@ -1,10 +1,24 @@
+"use client"
 import React from 'react'
 import Blog_card from '../components/blog_card'
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
 
 type Props = {}
 
 const blog = (props: Props) => {
+
+
+  const router = useRouter();
+  const session = useSession();
+  useEffect(() => {
+    if (!session.data) {
+      router.push('/auth/signin');
+    }
+  }, [session,router]);
+
   return (
     <>
     <div className='w-full  bg-[#FAFAFA]'>
