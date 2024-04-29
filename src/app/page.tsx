@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Poster from './components/image-component/poster'
 import Product_card from './components/product_card'
 import Image from 'next/image'
@@ -7,22 +7,44 @@ import poster2 from '/public/poster2.png'
 import Link from 'next/link'
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation'
+import axios from 'axios'
 
-type Props = {}
 
-const Home = (props: Props) => {
+const Home = () => {
 
   
   
   const router = useRouter();
   const session = useSession();
-  useEffect(() => {
-    if (!session.data) {
-      router.push('/auth/signin');
-    }
-  }, [session,router]);
-
   
+
+  const [dataRes, setDataRes] = useState([]);
+  const fetchRestaurant = async () => {
+    axios.get('/api/restuarant')
+    .then((res) => {
+        console.log(res.data)
+        setDataRes(res.data)
+        
+    })
+  }
+
+  const [dataBlog, setDataBlog] = useState([]);
+  const fetchBlog = async () => {
+    axios.get('/api/blog')
+    .then((res) => {
+        console.log(res.data)
+        setDataBlog(res.data)
+        
+    })
+  }
+  useEffect(() => {
+    fetchRestaurant()
+    fetchBlog()
+  if (session.data === null) {
+    router.push('/auth/signin');
+  }
+}, [session,router]);
+
 
   
   
@@ -37,7 +59,7 @@ const Home = (props: Props) => {
               <Poster width={400} height={150}/>
             </div>
             <div className=' max-sm:hidden '>
-              <Image src={poster2} alt='image' width={500} className='rounded-lg'></Image>
+              <Image src={poster2} alt='image' width={500} className='rounded-lg' priority={true} ></Image>
             </div>
 
         </div>
@@ -51,13 +73,11 @@ const Home = (props: Props) => {
             </div>
 
             <div className='grid grid-cols-4 gap-6 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
-               <Product_card />
-               <Product_card />
-               <Product_card />
-               <Product_card />
-               <Product_card />
-               <Product_card />
-               <Product_card />
+               {
+                dataRes.map((data,index) => {
+                  return <Product_card key={index} data={data}/>
+                })
+               }
               
             </div>
         <Link href='/restaurant'>            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5 p-1 hover:bg-[#E8EAED]'><h3 className="text-center text-[20px] m-2">ดูทั้งหมด</h3></div>
@@ -72,13 +92,11 @@ const Home = (props: Props) => {
             </div>
 
             <div className='grid grid-cols-4 gap-4  max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
-               <Product_card />
-               <Product_card />
-               <Product_card />
-               <Product_card />
-               <Product_card />
-               <Product_card />
-               <Product_card />
+                {
+                  dataBlog.map((data,index) => {
+                    return <Product_card key={index} data={data}/>
+                  })
+                }
               
             </div>
             <Link href='/blog'>            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5 p-1 hover:bg-[#E8EAED]'><h3 className="text-center text-[20px] m-2">ดูทั้งหมด</h3></div>

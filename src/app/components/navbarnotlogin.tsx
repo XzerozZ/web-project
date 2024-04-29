@@ -85,8 +85,12 @@ const navbar = (props: Props) => {
              <div>
                
                 <Dropdown label="" dismissOnClick={false} renderTrigger={() => <span><FaUser className='w-[25px] h-[25px]'/></span>}>
-                  <Dropdown.Item>Profile</Dropdown.Item>
-                  <Dropdown.Item>Settings</Dropdown.Item>
+                  <Dropdown.Item><Link href="/profile">Profile</Link></Dropdown.Item>
+                  <Dropdown.Item><Link href="/profile/comment">Comment</Link></Dropdown.Item>
+                  <Dropdown.Item><Link href="/profile/blog">My blog</Link></Dropdown.Item>
+                  <Dropdown.Item><Link href="/profile/save">My favorite</Link></Dropdown.Item>
+                  <Dropdown.Item><Link href="/profile/information">Information</Link></Dropdown.Item>
+
                   <Dropdown.Item onClick={() => signOut({callbackUrl:'/auth/signin'})}>Sign out</Dropdown.Item>
                 </Dropdown>
                     

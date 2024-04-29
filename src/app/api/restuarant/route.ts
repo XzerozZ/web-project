@@ -112,10 +112,10 @@ export async function GET() {
             }
         });
         await prisma.$disconnect();
-        return Response.json({
-            message : "Success" ,
+        return Response.json(
+           
             res
-        })
+        )
     }
     catch(error){
         await prisma.$disconnect();

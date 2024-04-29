@@ -91,9 +91,9 @@ const page = () => {
                             </div>
                             <div className='w-4/5 flex flex-col gap-4 bg-white rounded-[10px] p-5'>
                               {
-                                data.map((item) => {
+                                data.map((item,index) => {
                                   return (
-                                    <ComCard data={item} />
+                                    <ComCard data={item} key={index}/>
                                   )
                                 })
                               }

@@ -2,9 +2,10 @@ import React from 'react'
 import { CiStar } from "react-icons/ci";
 import Image from 'next/image'
 import image from '/public/restaurant.webp'
-type Props = {}
+import { AllRestaurant } from '@/interface/interface';
 
-const product_card = (props: Props) => {
+
+const product_card = ({data} : {data:AllRestaurant}) => {
   return (
     <>
     <div className='rounded-[10px] shadow-md hover:scale-105 m-2'>

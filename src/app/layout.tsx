@@ -24,9 +24,11 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
       <html lang="en">
       <body className={noto_sans_thai.className}>
         {/* Layout UI */}
-       <SessionProvider> <NavBar />
-      <main >{children}</main>
-      <Footer /></SessionProvider>
+        <SessionProvider>
+          <NavBar />
+              <main >{children}</main>
+          <Footer />
+        </SessionProvider>  
       </body>
     </html>
       
