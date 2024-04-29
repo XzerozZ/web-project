@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import axios from 'axios'
-import UserData from '@/app/interface'
+import UserData from '@/interface/interface'
 type Props = {}
 
 const page = (props: Props) => {

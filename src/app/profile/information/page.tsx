@@ -1,72 +1,127 @@
-import React from 'react'
+"use client";
+import React, { use } from 'react'
+import { Avatar } from 'rsuite'
+import 'rsuite/dist/rsuite.min.css';
+import Comment from '@/app/components/commentComponent';
 
-type Props = {}
+import { Button,Checkbox, Label, Modal, TextInput } from "flowbite-react";
+import { useState,useEffect} from "react";
 
-const page = (props: Props) => {
-  return (
-    <>
-     
-    <div className='flex flex-col gap-3' >
-      
-   
-             <div>
-                    <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                    <input 
-                    type="text" 
-                    id="username" 
-                    // onChange={(e) => setEmail(e.target.value)}
-                    
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="email@email.com" required />
-            </div>
-            <div>
-                    <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                    <input 
-                    type="text" 
-                    id="email" 
-                    // onChange={(e) => setEmail(e.target.value)}
-                    
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="email@email.com" required />
-            </div>
-            <div className='flex flex-row gap-3 w-full justify-between'>
-                <div  className='w-full'>
-                        <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telephone</label>
-                        <input 
-                        type="text" 
-                        id="telephone" 
-                        // onChange={(e) => setEmail(e.target.value)}
-                        
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="087-123457" required />
-                </div>
-                <div  className='w-full'>
-                    <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Birthday</label>
-                    <input 
-                    type="text" 
-                    id="birthday" 
-                    // onChange={(e) => setEmail(e.target.value)}
-                    
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="email@email.com" required />
-                 </div>
+import { Uploader, Message, Loader, useToaster } from 'rsuite';
+import AvatarIcon from '@rsuite/icons/legacy/Avatar';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import PropInformation from './PropInformation';
+import axios from 'axios';
 
-            </div>
-
-            <div>
-                    <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                    <input 
-                    type="password" 
-                    id="password" 
-                    // onChange={(e) => setPassword(e.target.value)}
-                    
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="password" required />
-            </div>
+import test from 'node:test';
+import {dataInformation } from '@/interface/interface';
 
 
+const ProfilePage = () => {
 
+  
+  const router = useRouter();
+  const session = useSession();
+  useEffect(() => {
+    if (!session.data) {
+      router.push('/auth/signin');
+    }
+  }, [session,router]);
+  const [data, setData] = useState<dataInformation>({} as dataInformation);
+
+  const fetchInformation = async () => {
+        axios.get('http://localhost:3000/api/user/3')
+        .then((res) => {
+            console.log(res.data)
+            setData(res.data)
+            
+        })
+  }
+
+  useEffect(() => {
+        fetchInformation()
+        },[])
+
+
+        console.log(data);
+        
  
-      
-    </div>
-   
-    </>
-  )
+return (
+        <>
+                <div className='flex flex-col justify-center bg-[#fafafa]'>
+                        <div className='bg-[#e3e3e3] flex w-full justify-center p-5'>
+                                <div className='flex flex-row w-[1140px] justify-between gap-5 '>
+                                        <div className=''>
+                                                <div className='max-sm:hidden'>
+                                                        <Avatar circle size='xxl' />
+                                                </div>
+                                                <div className='sm:hidden'>
+                                                        <Avatar circle size='xl' />
+                                                </div>
+                                        </div>
+                                        <div className='flex flex-row grow justify-between max-sm:flex-col'>
+                                                <h1 className='my-auto max-sm:text-[20px]'>Natchapon Ponlaem</h1>
+                                                <div className='my-auto'></div>
+                                        </div>
+                                </div>
+                        </div>
+                        <div className='flex justify-center p-3'>
+                                <div className='flex gap-5 w-[1140px]'>
+                                        <div className='w-1/5  '>
+                                                <ul className='flex flex-col  p-3  bg-white rounded-[10px] gap-3'>
+                                                        <Link
+                                                                href='/profile'
+                                                                className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'
+                                                        >
+                                                                <li>
+                                                                        <h5>ภาพรวม</h5>
+                                                                </li>
+                                                        </Link>
+                                                        <Link
+                                                                href='/profile/restaurant'
+                                                                className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'
+                                                        >
+                                                                <li>
+                                                                        <h5>ร้านอาหาร</h5>
+                                                                </li>
+                                                        </Link>
+                                                        <Link
+                                                                href='/profile/blog'
+                                                                className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'
+                                                        >
+                                                                <li>
+                                                                        <h5>บทความ</h5>
+                                                                </li>
+                                                        </Link>
+                                                        <Link
+                                                                href='/profile/save'
+                                                                className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'
+                                                        >
+                                                                <li>
+                                                                        <h5>บันทึก</h5>
+                                                                </li>{" "}
+                                                        </Link>
+                                                        <Link
+                                                                href='/profile/information'
+                                                                className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'
+                                                        >
+                                                                <li>
+                                                                        <h5>ข้อมูลส่วนตัว</h5>
+                                                                </li>
+                                                        </Link>
+                                                </ul>
+                                        </div>
+                                        <div className='w-4/5'>
+                                        <PropInformation data={data} />
+                                        </div>
+                                        
+                                </div>
+                        </div>
+                </div>
+        </>
+);
 }
 
-export default page
+export default ProfilePage

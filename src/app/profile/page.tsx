@@ -4,7 +4,7 @@ import { Avatar } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
 import Comment from '@/app/components/commentComponent';
 
-import { Button,Checkbox, Label, Modal, TextInput } from "flowbite-react";
+
 import { useState,useEffect} from "react";
 
 import { Uploader, Message, Loader, useToaster } from 'rsuite';
@@ -32,17 +32,6 @@ const ProfilePage = (props: Props) => {
     }
   }, [session,router]);
 
-
-  const [email, setEmail] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [password, setPassword] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [telephone, setTelephone] = useState('')
-
-
-
- 
 
 
 
@@ -75,7 +64,7 @@ const ProfilePage = (props: Props) => {
                 <div className='w-1/5  '>
                     <ul className='flex flex-col  p-3  bg-white rounded-[10px] gap-3'>
                         <Link href='/profile' className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'><li ><h5 >ภาพรวม</h5></li></Link>
-                        <Link href='/profile/restaurant' className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'> <li ><h5>ร้านอาหาร</h5></li></Link>
+                        <Link href='/profile/comment' className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'> <li ><h5>แสดงความคิดเห็น</h5></li></Link>
                         <Link href='/profile/blog' className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'> <li ><h5>บทความ</h5></li></Link>
                         <Link href='/profile/save' className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'> <li ><h5>บันทึก</h5></li>  </Link>
                         <Link href='/profile/information' className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'> <li ><h5>ข้อมูลส่วนตัว</h5></li></Link>
@@ -95,96 +84,7 @@ const ProfilePage = (props: Props) => {
 
 
 
-    <Modal show={openModal} onClose={() => setOpenModal(false)} size="md">
-        <Modal.Header>แก้ไขข้อมูล</Modal.Header>
-        <Modal.Body>
-          <form className='w-full'>
-            <div className='flex justify-center'>
-                        <Uploader
-                listType="picture-text"
-                
-                action="//jsonplaceholder.typicode.com/posts/"
-                renderFileInfo={(file, fileElement) => {
-                return (
-                    <>
-                    <span>File Name: {file.name}</span>
-                    <p>File URL: {file.url}</p>
-                    </>
-                );
-                }}
-            >
-                <Button>อัพโหลดโปรไฟล์</Button>
-            </Uploader>
-            
-                
-            </div>
-            <div>
-                <Label>อีเมล</Label>
-                <TextInput
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                />
-            </div>
-            <div className='flex flex-row justify-between '>
-               <div>
-               <Label>ชื่อ</Label>
-                <TextInput
-                    value={firstname}
-                    onChange={(e) => setFirstname(e.target.value)}
-                    placeholder="Enter your password"
-                />
-               </div>
-               <div > 
-                <Label>นามสกุล</Label>
-                <TextInput
-                    value={lastname}
-                    onChange={(e) => setLastname(e.target.value)}
-                    placeholder="Enter your password"
-                />
-
-               </div>
-               
-
-            </div>
-           <div className='flex flex-row justify-between '>
-           <div>
-                <Label>วัน/เดือน/ปี</Label>
-                <TextInput
-                    value={birthday}
-                    onChange={(e) => setBirthday(e.target.value)}
-                    placeholder="Enter your password"
-                />
-            </div>
-            <div>
-                <Label>Telephone</Label>
-                <TextInput
-                    value={telephone}
-                    onChange={(e) => setTelephone(e.target.value)}
-                    placeholder="Enter your password"
-                />
-            </div>
-           </div>
-            <div>
-                <Label>รหัสผ่าน</Label>
-                <TextInput
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
-                />
-            </div>
-
-
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => setOpenModal(false)}>I accept</Button>
-          <Button color="gray" onClick={() => setOpenModal(false)}>
-            Decline
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
+  
     </>
   )
 }

@@ -1,9 +1,10 @@
+import { dataPersonalComment } from '@/interface/interface'
 import React from 'react'
 import { Avatar, Rate } from 'rsuite'
 
-type Props = {}
 
-const comCard = (props: Props) => {
+
+const comCard = ({data} : {data:dataPersonalComment}) => {
   return (
     <>
        <div className='flex gap-1 flex-col'>
@@ -13,10 +14,10 @@ const comCard = (props: Props) => {
             </div>
             <div className='flex flex-col'>
               <div>
-            Natchapon Ponlaem
+              {data.user.username}
               </div>
               <div>
-                <Rate defaultValue={4}  size="sm" readOnly color='orange'/><span>4</span>
+                <Rate defaultValue={0}  size="sm" readOnly color='orange'/><span>{data.user.rating}</span>
               </div>
             </div>
             <div>
@@ -25,7 +26,7 @@ const comCard = (props: Props) => {
 
         </div>
         <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem est vel ipsum doloribus sapiente velit deserunt voluptas, exercitationem quod tempore iste! Dicta quis sed quidem adipisci iusto facilis? Velit, facere.
+          {data.description}
         </div>
        </div>
     </>
