@@ -1,14 +1,15 @@
 import React from 'react'
 import Image from 'next/image'
 import image from '/public/restaurant.webp'
+import { AllBlog } from '@/interface/interface'
 
-type Props = {}
 
-const blog_card = (props: Props) => {
+
+const blog_card = ({data}: {data:AllBlog}) => {
 return (
     <div className="hover:scale-105 relative m-2">
        <div className=''>
-         <Image src={image} alt='image' sizes='100vw' className="rounded-lg "></Image>
+         <Image src={image} alt='image' sizes='100vw' className="rounded-lg " priority={true}></Image>
          <div className="absolute inset-0 bg-black opacity-0 sm:opacity-20 rounded-lg blur-sm sm:hover:opacity-0"></div>
        </div>
        

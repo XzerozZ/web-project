@@ -91,3 +91,13 @@ export interface ResType {
 export interface Category {
     name: string;
 }
+
+export interface AllBlog {
+    blog_id:     number;
+    user_id:     number;
+    res_id:      number;
+    title:       string;
+    image:       string;
+    description: string;
+    posted_date: Date;
+}

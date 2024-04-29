@@ -1,8 +1,9 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Product_card from '../components/product_card'
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import axios from 'axios';
 
 
 type Props = {}
@@ -16,7 +17,27 @@ const restaurant = (props: Props) => {
       router.push('/auth/signin');
     }
   }, [session,router]);
+   
 
+  const [dataRes, setDataRes] = useState([]);
+  const fetchRestaurant = async () => {
+    axios.get('/api/restuarant')
+    .then((res) => {
+        console.log(res.data)
+        setDataRes(res.data)
+        
+    })
+  }
+
+
+  
+  useEffect(() => {
+    fetchRestaurant()
+    if (!session.data) {
+      router.push('/auth/signin');
+    }
+  }, [session,router]);
+   
 
   
   return (
@@ -38,13 +59,9 @@ const restaurant = (props: Props) => {
               </div>
               <div className='w-3/4 max-sm:w-full'>
                   <div className='grid grid-cols-3 gap-2 max-sm:grid-cols-2  max-sm:w-full'>
-                  <Product_card />
-                  <Product_card />
-                  <Product_card />
-                  <Product_card />
-                  <Product_card />
-                  <Product_card />
-                  <Product_card />
+                    {dataRes.map((data,index) => (
+                      <Product_card data={data} key={index}/>
+                    ))}
                   
                   </div>
               </div>

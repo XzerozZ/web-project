@@ -1,9 +1,10 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import Blog_card from '../components/blog_card'
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
+import axios from 'axios';
 
 
 type Props = {}
@@ -13,8 +14,20 @@ const blog = (props: Props) => {
 
   const router = useRouter();
   const session = useSession();
+  const [dataBlog, setDataBlog] = useState([]);
+  const fetchBlog = async () => {
+    axios.get('/api/blog')
+    .then((res) => {
+        console.log(res.data)
+        setDataBlog(res.data)
+        
+    })
+  }
+
+
   useEffect(() => {
-    if (!session.data) {
+    fetchBlog()
+    if (session.data === null) {
       router.push('/auth/signin');
     }
   }, [session,router]);
@@ -37,15 +50,11 @@ const blog = (props: Props) => {
                 
                 <div className='max-sm:w-full'>
                     <div className='grid grid-cols-4 gap-1 max-sm:grid-cols-2  max-sm:w-full'>
-                      <Blog_card />
-                      <Blog_card />
-                      <Blog_card />
-                      <Blog_card />
-                      <Blog_card />
-                      <Blog_card />
-                      <Blog_card />
-                      <Blog_card />
-                      <Blog_card />
+                        {dataBlog.map((data,index) => {
+                            return (
+                                <Blog_card data={data} key={index}/>
+                            )
+                        })}
                     
                     </div>
                 </div>
