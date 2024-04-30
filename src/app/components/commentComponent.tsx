@@ -1,9 +1,10 @@
+import { Comment } from '@/interface/interface'
 import React from 'react'
 import { Avatar, Rate } from 'rsuite'
 
-type Props = {}
 
-const commentComponent = (props: Props) => {
+const commentComponent = ({data} : {data: Comment} ) => {
+  console.log(data)
   return (
     <>
        <div className='flex gap-1 flex-col'>
@@ -13,7 +14,7 @@ const commentComponent = (props: Props) => {
             </div>
             <div className='flex flex-col '>
               <div>
-            Natchapon Ponlaem
+                {data.user.username}
               </div>
               <div>
                 <Rate defaultValue={4}  size="sm" readOnly color='orange'/><span>4</span>
@@ -25,7 +26,7 @@ const commentComponent = (props: Props) => {
 
         </div>
         <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem est vel ipsum doloribus sapiente velit deserunt voluptas, exercitationem quod tempore iste! Dicta quis sed quidem adipisci iusto facilis? Velit, facere.
+          {data.description}
         </div>
        </div>
     </>

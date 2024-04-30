@@ -1,43 +1,65 @@
 "use client"; 
 import React, { useEffect, useState } from 'react'
-import { Avatar, Progress, Rate } from 'rsuite';
+import { Avatar, Loader, Progress, Rate } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import Image from 'next/image'
 import image from '/public/restaurant.webp'
 import Comment from '../../components/commentComponent';
 import { IoSearchOutline } from 'react-icons/io5';
 import { Tabs, Placeholder } from 'rsuite';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import axios from 'axios';
+
+import { AloneRestaurant } from '@/interface/interface';
 
 
 
 
 
-type Props = {
-    texts: string[];
-}
 
+const RestaurantDetail = () => {
 
-
-const RestaurantDetail = (props: Props) => {
-
-   
-    const [countClick, setCountClick] = React.useState(0); 
-    const countClickHandler = () => { 
-        setCountClick(countClick + 1); 
-    }; 
+ 
 
     const router = useRouter();
     const session = useSession();
     useEffect(() => {
-        if (!session.data) {
-        router.push('/auth/signin');
-        }
+        // if (session.data === null) {
+        // router.push('/auth/signin');
+        // }
     }, [session,router]);
 
-    
+    const params = useParams();
+    console.log(params.id)
 
+    const [dataRes, setDataRes] = useState<AloneRestaurant>();
+    const fetchRestaurant = async () => {
+        axios.get(`/api/restuarant/${params.id}`)
+        .then((res) => {
+            console.log(res.data)
+            setDataRes(res.data)
+            
+        })
+    }
+
+    const [comment, setComment] = useState([]);
+    const fetchComment = async () => {
+        axios.get(`/api/comment/res/${params.id}`)
+        .then((res) => {
+            
+            setComment(res.data)
+            
+        })
+    }
+
+    console.log(comment)
+    useEffect(() => {
+        fetchRestaurant()
+        fetchComment()
+        
+    }, []);
+      
 
   
 
@@ -48,7 +70,7 @@ const RestaurantDetail = (props: Props) => {
         width: '50%'
     }
     const [hoverValue, setHoverValue] = React.useState(3);
-
+    console.log(hoverValue);
     
     const textStyle = {
         verticalAlign: 'top',
@@ -56,24 +78,47 @@ const RestaurantDetail = (props: Props) => {
         display: 'inline-block'
       };
 
+      
      
+
+        // loading state
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  useEffect(() => {
+    if (dataRes === undefined) {
+      setIsLoading(false);
+    }
+  }, [dataRes]);
+
+  if (isLoading) {
+    return  <div className='flex justify-center h-[500px] items-center'>
+      <Loader size="md"  color='black'/>
+    </div>
+  }else{
 
   return (
     <>
      <main className='w-full  bg-[#FAFAFA]  items-center '>
         <div className='  '>
         <div className='bg-[#E3E3E3] w-full '>
-            <div className='flex justify-center py-5'>
+            <div className='flex justify-center p-5'>
                 <div className='w-[1120px] '>
                     <div className='text-[30px]'>
-                        ร้านส้มตำนายถานี
+                      {
+                            dataRes?.name
+                      }
                     </div>
                     <div className='flex flex-row'>
-                        <Rate defaultValue={1} allowHalf color='orange'/>
-                        <h3 className='text-[25px]'>1</h3>
+                        <Rate defaultValue={dataRes?.averageRating} allowHalf color='orange'/>
+                        <h3 className='text-[25px]'>{dataRes?.averageRating}</h3>
                     </div>
                     <div>
-                        ส้มตำ/อาหารอีสาน
+                      {
+                            dataRes?.categories.map((data,index) => (
+                                <span key={index} className='text-[20px]'>{data}  </span>
+                            ))
+                      }
                     </div>
                 </div>
 
@@ -82,20 +127,24 @@ const RestaurantDetail = (props: Props) => {
         <div className='w-full '>
             <div className='flex justify-center '>
             <div className=' flex flex-row justify-center  gap-5 my-10 mx-[160px] max-sm:mx-0 w-[1120px] items-start'>
-            <div className='w-1/4 n max-sm:hidden flex flex-col bg-white rounded-[10px] p-3 ' >
+            <div className='w-1/4 n max-sm:hidden flex flex-col bg-white rounded-[10px] p-3 gap-2'>
                 <div>
                     <h3>ที่อยู่</h3>
-                    <p>R3GW+638, Thammasala, Mueang Nakhon Pathom District, Nakhon Pathom 73000</p>
+                    <p>{dataRes?.address}</p>
                 </div>
                 <div>
                     <h3>เวลาเปิดร้าน</h3>
-                    <p>จันทร์ - อังคาร	10:00 - 15:00 <br/>
-                        พฤหัสบดี - อาทิตย์	10:00 - 15:00</p>
+                    <div>
+                        {
+                            dataRes?.openingHours.map((data,index) => (
+                                <p key={index}>{data}</p>
+                            ))
+                        }
+                    </div>
                 </div> 
                 <div>
                     <h3>เบอร์โทร</h3>
-                    <p>081-705-4942 <br/>
-                    095-556-1659</p>
+                    <p>{dataRes?.phone_number}</p>
                 </div>
             </div>
             <div className='w-3/4 max-sm:w-full'>
@@ -111,29 +160,36 @@ const RestaurantDetail = (props: Props) => {
                                 </div>
                         </div>
                         <div className='text-[20px] max-sm:hidden'>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis fugit corrupti dolores velit quaerat eos, laudantium, tempore modi deleniti esse nobis, quidem ut consequatur harum aperiam voluptatem consequuntur? Ut voluptates distinctio explicabo molestias magni iure repudiandae beatae, delectus consequuntur minima! Deserunt nam similique quia illo officiis ea hic modi molestias?
-                           
+                                {
+                                    dataRes?.description
+                                }                           
                         </div>
                         <div className='sm:hidden'>
                             <Tabs defaultActiveKey="1" appearance="subtle">
                                 <Tabs.Tab eventKey="1" title="ข้อมูลร้าน" >
                                     <div>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis fugit corrupti dolores velit quaerat eos, laudantium, tempore modi deleniti esse nobis, quidem ut consequatur harum aperiam voluptatem consequuntur? Ut voluptates distinctio explicabo molestias magni iure repudiandae beatae, delectus consequuntur minima! Deserunt nam similique quia illo officiis ea hic modi molestias?
+                                        {
+                                            dataRes?.description
+                                        }
                                     </div>
                                     <div className='w-full n sm:hidden flex flex-col bg-white rounded-[10px] p-3 gap-3'  >
                                         <div>
                                             <h5>ที่อยู่</h5>
-                                            <p>R3GW+638, Thammasala, Mueang Nakhon Pathom District, Nakhon Pathom 73000</p>
+                                            <p>{dataRes?.address}</p>
                                         </div>
                                         <div>
                                             <h5>เวลาเปิดร้าน</h5>
-                                            <p>จันทร์ - อังคาร	10:00 - 15:00 <br/>
-                                                พฤหัสบดี - อาทิตย์	10:00 - 15:00</p>
+                                            <div>
+                                                {
+                                                    dataRes?.openingHours.map((data,index) => (
+                                                        <p key={index}>{data}</p>
+                                                    ))
+                                                }
+                                            </div>
                                         </div> 
                                         <div>
                                             <h5>เบอร์โทร</h5>
-                                            <p>081-705-4942 <br/>
-                                            095-556-1659</p>
+                                            <p>{dataRes?.phone_number}</p>
                                         </div>
                                     </div>
                                 </Tabs.Tab>
@@ -142,15 +198,15 @@ const RestaurantDetail = (props: Props) => {
                                         <h3>แสดงความคิดเห็น</h3>
                                         <div className='showrating flex flex-row'>
                                             <div className='w-1/3 flex-col flex '>
-                                                <div className='text-[80px]'>
+                                                <div className='text-[80px] text-center'>
                                                 1 
                                                 </div>
-                                                <div className='text-[30px]'>
+                                                <div className='text-[30px] text-center'>
                                                     จาก 5
                                                 </div>
                                             </div>
-                                            <div className='w-2/3 flex flex-col '>
-                                                <div className='flex-row flex'>
+                                            <div className='w-2/3 flex flex-col p-4'>
+                                                <div className='flex-row flex '>
                                                 <Rate readOnly defaultValue={1}  size='xs' color='orange'/>
                                                 <Progress.Line percent={100} showInfo={false} strokeColor="#787F82" />
                                                 </div>
@@ -217,9 +273,13 @@ const RestaurantDetail = (props: Props) => {
                                         </div> 
                                         <div className='rounded-[10px] bg-white p-2 '>
                                             <h3>ความคิดเห็น</h3>
-                                        <div>
-                                                <Comment/>
-                                        </div>
+                                            <div className='flex flex-col gap-4 p-3'>
+                                                {
+                                                    comment.map((data,index) => (
+                                                        <Comment key={index} data={data}/>
+                                                    ))
+                                                }
+                                            </div>
                                         </div>
 
                                     </div>
@@ -234,14 +294,14 @@ const RestaurantDetail = (props: Props) => {
                         <h3>แสดงความคิดเห็น</h3>
                         <div className='showrating flex flex-row'>
                             <div className='w-1/3 flex-col flex '>
-                                <div className='text-[80px]'>
+                                <div className='text-[80px] text-center'>
                                    1 
                                 </div>
-                                <div className='text-[30px]'>
+                                <div className='text-[30px]  text-center'>
                                     จาก 5
                                 </div>
                             </div>
-                            <div className='w-2/3 flex flex-col '>
+                            <div className='w-2/3 flex flex-col p-3'>
                                 <div className='flex-row flex'>
                                 <Rate readOnly defaultValue={1}  size='xs' />
                                 <Progress.Line percent={100} showInfo={false} strokeColor="#787F82" />
@@ -311,8 +371,13 @@ const RestaurantDetail = (props: Props) => {
                     </div>
                     <div className='rounded-[10px] bg-white p-2 max-sm:hidden'>
                         <h3>ความคิดเห็น</h3>
-                       <div>
-                            <Comment/>
+                       <div className='flex flex-col gap-4 p-3'>
+                          {
+                            comment.map((data,index) => (
+                                <Comment key={index} data={data}/>
+                                
+                            ))
+                          }
                        </div>
                     </div>
                 
@@ -329,5 +394,5 @@ const RestaurantDetail = (props: Props) => {
     
     </>
   )
-}
+}}
 export default RestaurantDetail

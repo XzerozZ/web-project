@@ -13,8 +13,11 @@ const  LoginPage = (props: Props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const  Router = useRouter()
+   
+
 
     const handleSignIn = async (e:any) => {
+      
         e.preventDefault()
         try{
             console.log(email)

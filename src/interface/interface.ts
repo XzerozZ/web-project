@@ -98,3 +98,83 @@ export interface AllBlog {
     description: string;
     posted_date: Date;
 }
+
+
+
+
+//////////////////////////////////////
+
+export interface AloneRestaurant {
+    res_id:           number;
+    name:             string;
+    image:            string;
+    image_background: string;
+    phone_number:     string;
+    address:          string;
+    description:      string;
+    res_type:         ResTypeAlone[];
+    res_op:           ResOp[];
+    rating:           any[];
+    categories:       string[];
+    openingHours:     string[];
+    averageRating:    number;
+}
+
+export interface ResOp {
+    res_id:       number;
+    open_id:      number;
+    openingHours: OpeningHours;
+}
+
+export interface OpeningHours {
+    open_id:      number;
+    day_of_week:  string;
+    opening_time: string;
+    closing_time: string;
+}
+
+export interface ResTypeAlone {
+    res_id:      number;
+    category_id: number;
+    category:    CategoryAlone;
+}
+
+export interface CategoryAlone {
+    category_id: number;
+    name: string;
+
+}
+//////////////////////////////////////
+
+
+export interface Comment {
+    comment_id:  number;
+    user_id:     number;
+    res_id:      number;
+    description: string;
+    posted_date: Date;
+    user:        User;
+    restaurant:  ResCom;
+}
+
+export interface ResCom {
+    res_id:           number;
+    name:             string;
+    image:            null;
+    image_background: null;
+    phone_number:     string;
+    address:          string;
+    description:      string;
+}
+
+export interface User {
+    user_id:      number;
+    username:     string;
+    image:        string | null;
+    phone_number: string;
+    birthday:     Date;
+    email:        string;
+    password:     string;
+    role:         string;
+    rating:       any[];
+}

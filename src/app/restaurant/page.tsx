@@ -3,19 +3,19 @@ import React, { useEffect, useState } from 'react'
 import Product_card from '../components/product_card'
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+
 import axios from 'axios';
 
 
-type Props = {}
 
-const restaurant = (props: Props) => {
+const restaurant = () => {
 
   const router = useRouter();
   const session = useSession();
   useEffect(() => {
-    if (!session.data) {
-      router.push('/auth/signin');
-    }
+    // if (!session.data) {
+    //   router.push('/auth/signin');
+    // }
   }, [session,router]);
    
 
@@ -33,7 +33,7 @@ const restaurant = (props: Props) => {
   
   useEffect(() => {
     fetchRestaurant()
-    if (!session.data) {
+    if (session.data === null) {
       router.push('/auth/signin');
     }
   }, [session,router]);
