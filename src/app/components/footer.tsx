@@ -17,45 +17,46 @@ const footer = (props: Props) => {
         <div className='sm:flex justify-between w-[1120px] max-sm:w-full max-sm:grid max-sm:grid-cols-2  gap-5'>
             <div>
                 <Logo width={150} height={75}/>
-                <span className='text-[25px] '>Food blog food for you</span>
+                <h5 className='text-[25px] text-black'><span className='text-[#39db4a]'>FOOD</span> BLOG </h5>
+                <h5 className='text-[25px] text-black'><span className='text-[#39db4a]'>FOOD</span> FOR YOU</h5>
             </div>
             <div>
-            <h1 className='text-[25px] font-bold'>Useful links</h1>
+            <h1 className='text-[25px] font-bold text-[#39db4a]'>Useful links</h1>
                 <ul>
-                   <Link href="/"> <li className='text-[15px]'>About</li></Link>
-                   <Link href='/restaurant'> <li className='text-[15px]'>Restaurant</li></Link>
-                    <Link href='/blog'><li className='text-[15px]'>Blog</li></Link>
-                  <li className='text-[15px]'>FAQ</li>
+                   <Link href="/" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'> <li className='text-[15px]'>About</li></Link>
+                   <Link href='/restaurant' className='hover:text-[#39db4a] no-underline text-black hover:no-underline'> <li className='text-[15px]'>Restaurant</li></Link>
+                    <Link href='/blog' className='hover:text-[#39db4a] no-underline text-black hover:no-underline'><li className='text-[15px]'>Blog</li></Link>
+
                 </ul>
             </div>
             <div>
-            <h1 className='text-[25px] font-bold'>Main menu</h1>
+            <h1 className='text-[25px] font-bold text-[#39db4a]'>Main menu</h1>
                 <ul>
-                    <li className='text-[15px]'>Restaurant</li>
-                    <li className='text-[15px]'>Blog</li>
+                     <Link href='/restaurant' className='hover:text-[#39db4a] no-underline text-black hover:no-underline'> <li className='text-[15px]'>Restaurant</li></Link>
+                     <Link href='/blog' className='hover:text-[#39db4a] no-underline text-black hover:no-underline'><li className='text-[15px]'>Blog</li></Link>
                 </ul>
             </div>
             <div>
-            <h1 className='text-[25px] font-bold'>Contact us</h1>
+            <h1 className='text-[25px] font-bold text-[#39db4a]'>Contact us</h1>
                 <ul>
-                    <li className='text-[15px]'>wongnok@company.ac.th</li>
-                    <li className='text-[15px]'>087-1234567</li>
-                    <li className='text-[15px]'>Wongnok Community</li>       
+                    <li className='text-[15px] text-black'>wongnok@company.ac.th</li>
+                    <li className='text-[15px] text-black'>087-1234567</li>
+                    <li className='text-[15px] text-black'>Wongnok Community</li>       
                 </ul>
             </div>
 
 
 
         </div>
-        <div className='flex gap-5 justify-center mt-5'>
+        <div className='flex gap-10 justify-center mt-5'>
             <div>
-                <FaFacebook size={30}/>
+                <FaFacebook size={30} className='text-[#000]'/>
             </div>
             <div>
-                <FaInstagram size={30}/>
+                <FaInstagram size={30}  className='text-[#000]'/>
             </div>
             <div>
-                <FaYoutube size={30}/>
+                <FaYoutube size={30}  className='text-[#000]'/>
             </div>
           
         </div>

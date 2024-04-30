@@ -9,7 +9,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import Blog_card from './components/blog_card'
-
+import { Loader } from 'rsuite'
+import 'rsuite/dist/rsuite.min.css';
 
 const Home = () => {
 
@@ -41,15 +42,32 @@ const Home = () => {
   useEffect(() => {
     fetchRestaurant()
     fetchBlog()
-  if (session.data === null) {
-    router.push('/auth/signin');
-  }
+  // if (session.data === null) {
+  //   router.push('/auth/signin');
+  // }
 }, [session,router]);
 
 
   
-  
+  // loading state
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    fetchRestaurant();
+    fetchBlog();
+  }, [session, router]);
+
+  useEffect(() => {
+    if (dataRes.length > 0 && dataBlog.length > 0) {
+      setIsLoading(false);
+    }
+  }, [dataRes, dataBlog]);
+
+  if (isLoading) {
+    return  <div className='flex justify-center h-[500px] items-center'>
+      <Loader size="md"  color='black'/>
+    </div>
+  }
   return (
     
     <>
@@ -65,15 +83,15 @@ const Home = () => {
 
         </div>
         
-        <div className='w-full flex flex-col justify-center items-center gap-5 '>
-            <div className='flex justify-center bg-[#FFFFFF] rounded-[10px] h-[65px] xl:w-[1120px] max-sm:w-full max-sm:m-5'>
+        <div className='w-full flex flex-col justify-center items-center gap-3 '>
+            <div className='flex justify-center bg-[#FFFFFF] rounded-[10px] h-[65px] md:w-[1120px] max-sm:w-full max-sm:m-1'>
                   <span className='text-[#39DB4A] text-[30px] mt-3 mb-3'>Restaurant</span>
                   <span className=' text-[30px] mt-3 mb-3 mx-5'>|</span>
                   <span className=' text-[30px] mt-3 mb-3 mr-[10px]'>ร้านอาหาร</span>
 
             </div>
 
-            <div className='grid grid-cols-4 gap-6 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
+            <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
                {
                 dataRes.map((data,index) => {
                   return <Product_card key={index} data={data}/>
@@ -81,18 +99,19 @@ const Home = () => {
                }
               
             </div>
-        <Link href='/restaurant'>            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5 p-1 hover:bg-[#E8EAED]'><h3 className="text-center text-[20px] m-2">ดูทั้งหมด</h3></div>
-</Link>
+            <Link href='/restaurant' className='hover:no-underline bg-[#EAECEE] rounded-[10px] md:w-[1120px] max-sm:w-full max-sm:m-1 p-1 hover:bg-[#E8EAED]/70'>            
+                 <h3 className="text-center text-[20px] m-1 text-[#39db4a] ">ดูทั้งหมด</h3>
+            </Link>
         </div>
         <div className='w-full flex flex-col justify-center items-center gap-5 mt-3'>
-            <div className='flex justify-center bg-[#FFFFFF] rounded-[10px] h-[65px] xl:w-[1120px] max-sm:w-full max-sm:m-5'>
+            <div className='flex justify-center bg-[#FFFFFF] rounded-[10px] h-[65px] md:w-[1120px] max-sm:w-full max-sm:m-1'>
                   <span className='text-[#39DB4A] text-[30px] mt-3 mb-3 ml-[50px]'>Blog</span>
                   <span className=' text-[30px] mt-3 mb-3 mx-5'>|</span>
                   <span className=' text-[30px] mt-3 mb-3'>บทความ</span>
 
             </div>
 
-            <div className='grid grid-cols-4 gap-4  max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
+            <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
                 {
                   dataBlog.map((data,index) => {
                     return <Blog_card key={index} data={data}/>
@@ -100,8 +119,10 @@ const Home = () => {
                 }
               
             </div>
-            <Link href='/blog'>            <div className=' bg-[#EAECEE] rounded-[10px] xl:w-[1120px] max-sm:w-full max-sm:m-5 p-1 hover:bg-[#E8EAED]'><h3 className="text-center text-[20px] m-2">ดูทั้งหมด</h3></div>
-</Link>        </div>
+            <Link href='/blog' className='hover:no-underline bg-[#EAECEE] rounded-[10px] md:w-[1120px] max-sm:w-full max-sm:m-1 p-1 hover:bg-[#E8EAED]/70'>            
+                 <h3 className="text-center text-[20px] m-1 text-[#39db4a] ">ดูทั้งหมด</h3>
+            </Link>
+   </div>
 
 
    </div>

@@ -69,7 +69,7 @@ export interface dataPersonalBlog {
 export interface AllRestaurant {
     res_id:           number;
     name:             string;
-    image:            null | string;
+    image:            string;
     image_background: null | string;
     phone_number:     string;
     address:          string;

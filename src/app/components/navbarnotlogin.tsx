@@ -10,7 +10,6 @@ import { useSession,signOut } from "next-auth/react";
 
 import { IoSearchOutline } from "react-icons/io5";
 import { Dropdown } from 'flowbite-react';
-import { Span } from 'next/dist/trace';
 
 
 
@@ -75,23 +74,23 @@ const navbar = (props: Props) => {
                 </div>
             </form>
          </div>
-         <div className='max-sm:flex'>
+         <div className='max-sm:flex hidden'>
            <IoSearchOutline className='w-[25px] h-[25px] '/>
          </div>
          <div className='flex-none gap-10 flex'>
              <div>
-               <MdFavoriteBorder className='w-[25px] h-[25px]'/>
+              <Link href='/profile/save' className='hover:text-[#39db4a] no-underline text-black hover:no-underline'> <MdFavoriteBorder className='w-[25px] h-[25px] hover:text-[#39db4a]'/></Link>
              </div>
              <div>
                
                 <Dropdown label="" dismissOnClick={false} renderTrigger={() => <span><FaUser className='w-[25px] h-[25px]'/></span>}>
-                  <Dropdown.Item><Link href="/profile">Profile</Link></Dropdown.Item>
-                  <Dropdown.Item><Link href="/profile/comment">Comment</Link></Dropdown.Item>
-                  <Dropdown.Item><Link href="/profile/blog">My blog</Link></Dropdown.Item>
-                  <Dropdown.Item><Link href="/profile/save">My favorite</Link></Dropdown.Item>
-                  <Dropdown.Item><Link href="/profile/information">Information</Link></Dropdown.Item>
+                  <Dropdown.Item><Link href="/profile" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>Profile</Link></Dropdown.Item>
+                  <Dropdown.Item><Link href="/profile/comment" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>Comment</Link></Dropdown.Item>
+                  <Dropdown.Item><Link href="/profile/blog" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>My blog</Link></Dropdown.Item>
+                  <Dropdown.Item><Link href="/profile/save" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>My favorite</Link></Dropdown.Item>
+                  <Dropdown.Item><Link href="/profile/information" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>Information</Link></Dropdown.Item>
 
-                  <Dropdown.Item onClick={() => signOut({callbackUrl:'/auth/signin'})}>Sign out</Dropdown.Item>
+                  <Dropdown.Item onClick={() => signOut({callbackUrl:'/auth/signin'})} className='hover:text-[#39db4a]'>Sign out</Dropdown.Item>
                 </Dropdown>
                     
              </div>

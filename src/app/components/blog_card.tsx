@@ -9,11 +9,12 @@ import Link from 'next/link'
 const blog_card = ({data}: {data:AllBlog}) => {
 return (
   <>
-  <Link href={`/blog/${data.blog_id}`}>
-  <div className="hover:scale-105 relative m-2">
+ <div className=''>
+ <Link href={`/blog/${data.blog_id}`}>
+  <div className="hover:scale-105 relative m-1  ">
     
        <div className=''>
-         <Image src={image} alt='image' sizes='100vw' className="rounded-lg " priority={true}></Image>
+         <img src={data.image} alt='image'  className="rounded-lg aspect-square" ></img>
          <div className="absolute inset-0 bg-black opacity-0 sm:opacity-20 rounded-lg blur-sm sm:hover:opacity-0"></div>
        </div>
        
@@ -23,6 +24,7 @@ return (
        </div>
        
     </div></Link>
+ </div>
   </>
 )
 }

@@ -1,28 +1,28 @@
 import React from 'react'
 import { CiStar } from "react-icons/ci";
-import Image from 'next/image'
-import image from '/public/restaurant.webp'
+
 import { AllRestaurant } from '@/interface/interface';
 import Link from 'next/link';
+import { Rate } from 'rsuite';
 
 
 const product_card = ({data} : {data:AllRestaurant}) => {
   return (
     <>
     
-   <Link href={`/restaurant/${data.res_id}`}>
-     <div className='rounded-[10px] shadow-md hover:scale-105 m-2'>
+   <Link href={`/restaurant/${data.res_id}`} className='hover:text-black no-underline text-black hover:no-underline'>
+     <div className='rounded-[10px] shadow-md hover:scale-105 m-1'>
        
        <div >
            <div >
-               <Image src={image} alt='image'  sizes='100vw' className='rounded-t-lg'></Image>
+           <img src={data.image} alt='image'  className="rounded-t-lg aspect-square" ></img>
            </div>
-          <div className='mx-3 mt-1'>
-           <div>
-                 <h1 className='text-[20px] sm:line-clamp-2 line-clamp-1'>{data.name}</h1>
+          <div className=' flex flex-col px-3 pb-2'>
+             <div>
+                 <h1 className='text-[18px] sm:line-clamp-2 line-clamp-1'>{data.name}</h1>
              </div>
              <div className='flex '> 
-               <span ><CiStar size={25} className='m-[7px] '/></span>
+               <span >   <Rate max={1} defaultValue={1} readOnly color='yellow'/> </span>
                <span className='text-[20px] m-1'>4.43</span>
              </div>  
           </div>
