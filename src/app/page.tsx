@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import Blog_card from './components/blog_card'
 
 
 const Home = () => {
@@ -94,7 +95,7 @@ const Home = () => {
             <div className='grid grid-cols-4 gap-4  max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
                 {
                   dataBlog.map((data,index) => {
-                    return <Product_card key={index} data={data}/>
+                    return <Blog_card key={index} data={data}/>
                   })
                 }
               

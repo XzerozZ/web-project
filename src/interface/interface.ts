@@ -67,11 +67,6 @@ export interface dataPersonalBlog {
 
 
 export interface AllRestaurant {
-    message: string;
-    res:     ResInfo[];
-}
-
-export interface ResInfo {
     res_id:           number;
     name:             string;
     image:            null | string;
@@ -81,6 +76,8 @@ export interface ResInfo {
     description:      string;
     res_type:         ResType[];
 }
+
+
 
 export interface ResType {
     res_id:      number;
