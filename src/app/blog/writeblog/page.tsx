@@ -6,12 +6,24 @@ import { useSession } from 'next-auth/react';
 import { SelectPicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
+import { UserSession } from '@/interface/interface';
+import { set } from 'mongoose';
 
 
 
 const page = () => {
 
 const session = useSession();
+
+const [sessionData, setSessionData] = useState<UserSession>();
+
+   
+// ...
+useEffect(() => {
+    if (session) {
+        setSessionData(session?.data?.user);
+    }
+}, [session]);
 const [selectedImage, setSelectedImage] = useState<File | null>(null);
 const [previewImage, setPreviewImage] = useState<string | null>(null);
 
@@ -46,11 +58,13 @@ useEffect(() => {
     // }
 }, []);
 
-
+const [res_id, setRes_id] = useState('');
 const handleSubmit = async () => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
+    formData.append('user_id', sessionData?.id?.toString() ?? '');
+    formData.append('res_id', res_id);
     if (selectedImage) {
         formData.append('image', selectedImage);
     }
@@ -103,7 +117,7 @@ return (
                     onOpen={updateData}
                     onSearch={updateData}
                     renderMenu={renderMenu}
-                    onChange={(index) => console.log(index)}
+                    onSelect={(value, item, event) => setRes_id(value+1)}
                     />
                 <div className=''>
                     {previewImage ? (
