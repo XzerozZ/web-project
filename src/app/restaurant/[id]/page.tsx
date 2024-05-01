@@ -10,6 +10,9 @@ import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { AloneRestaurant, UserSession  } from '@/interface/interface';
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+
 
 
 
@@ -62,38 +65,40 @@ const RestaurantDetail = () => {
     const [postComment, setPostComment] = useState('');
 
    
-
-    
-
+   
+    console.log(dataRes,"dataRes")
     
     console.log(comment)
     useEffect(() => {
         fetchRestaurant(Value)
         fetchComment(Value)
         setSessionData(session?.data?.user);
+       
         
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
-        
+
       
         const formData = new FormData();
-        formData.append('description', postComment);
+        formData.append('description', postComment.toString());
         formData.append('res_id', Value.toString());
         formData.append('user_id', sessionData?.id?.toString() ?? '');
+        formData.append('rating', hoverValue.toString());
+        formData.append('description', 'test test');
+        formData.append('res_id', "1");
+        formData.append('user_id', "1");
+        formData.append('rating', "1");
+        
         
        
-        const RatingFormData = new FormData();
-        RatingFormData.append('rating', hoverValue.toString());
-        RatingFormData.append('res_id', Value.toString());
-        RatingFormData.append('user_id', sessionData?.id?.toString() ?? '');
-        console.log(RatingFormData,"RatingFormData");
+      
+        
         console.log(formData,"formData");
         try {
             const response = axios.post('/api/comment', formData);
             console.log(response,"response");
-            const responseRating = axios.post('/api/rating', RatingFormData);
-            console.log(responseRating,"responseRating");
+            
         } catch (error) {
             console.error(error);
         }
@@ -105,10 +110,32 @@ const RestaurantDetail = () => {
     
   
 
-    const ProgressNumber = {
-        width: '50%'
-    }
-  
+  ///////////////////////////// calculate rating  % /////////////////////////////
+    const size_comment = comment.length;
+    const per_rate_one = ((dataRes?.ratingCounts[1] ?? 0) / size_comment) * 100;
+    const per_rate_two = ((dataRes?.ratingCounts[2] ?? 0) / size_comment) * 100;
+    const per_rate_three = ((dataRes?.ratingCounts[3] ?? 0) / size_comment) * 100;
+    const per_rate_four = ((dataRes?.ratingCounts[4] ?? 0) / size_comment) * 100;
+    const per_rate_five = ((dataRes?.ratingCounts[5] ?? 0) / size_comment) * 100;
+
+    console.log(size_comment);
+    console.log(dataRes?.ratingCounts[1] ?? 0, "dataRes?.ratingCounts[1]");
+    console.log(dataRes?.ratingCounts[2] ?? 0, "dataRes?.ratingCounts[2]");
+    console.log(dataRes?.ratingCounts[3] ?? 0, "dataRes?.ratingCounts[3]");
+    console.log(dataRes?.ratingCounts[4] ?? 0,  "dataRes?.ratingCounts[4]");
+    console.log(dataRes?.ratingCounts[5] ?? 0,  "dataRes?.ratingCounts[5]");
+
+    
+    console.log(per_rate_one);
+    console.log(per_rate_two);
+    console.log(per_rate_three);
+    console.log(per_rate_four);
+    console.log(per_rate_five);
+
+
+
+
+
     console.log(hoverValue);
     
 
@@ -117,6 +144,7 @@ const RestaurantDetail = () => {
 
         // loading state
   const [isLoading, setIsLoading] = useState(true);
+
 
 
   useEffect(() => {
@@ -131,21 +159,26 @@ const RestaurantDetail = () => {
 //     </div>
 //   }else{
 
+
+  const [isFav, setIsFav] = useState(false);
+ 
+
   return (
     <>
      <main className='w-full  bg-[#FAFAFA]  items-center '>
         <div className='  '>
         <div className='bg-[#E3E3E3] w-full '>
             <div className='flex justify-center p-5'>
-                <div className='w-[1120px] '>
-                    <div className='text-[30px]'>
+                <div className='w-[1120px] flex flex-row justify-between'>
+                   <div>
+                   <div className='text-[30px]'>
                       {
                             dataRes?.name
                       }
                     </div>
                     <div className='flex flex-row'>
-                        <Rate defaultValue={dataRes?.averageRating} allowHalf color='orange'/>
-                        <h3 className='text-[25px]'>{dataRes?.averageRating}</h3>
+                        <Rate max={1} defaultValue={1} allowHalf color='orange' readOnly/>
+                        <h3 className='text-[25px]'>{dataRes?.averageRating.toFixed(2)}</h3>
                     </div>
                     <div>
                       {
@@ -154,6 +187,18 @@ const RestaurantDetail = () => {
                             ))
                       }
                     </div>
+                   </div>
+                   <div className=' my-auto'>
+                   {isFav ? (
+                      <FaHeart onClick={() => setIsFav(false)} className='text-[#ff0000]' size={35} />
+                     
+                    ) : (
+                        
+                        <FaRegHeart onClick={() => setIsFav(true)} size={35} />
+                    )}
+
+                   </div>
+                   
                 </div>
 
             </div>
@@ -185,13 +230,12 @@ const RestaurantDetail = () => {
                 <div className='  max-sm:w-full flex flex-col gap-3'>
                     <div className='rounded-[10px] bg-white p-4 flex flex-col gap-3'>
                         <div className='flex flex-row gap-3 '>
-                                <div>
-                                    <Image src={image} alt='image'  sizes='10vw' className='rounded-[10px]'></Image>
-                                </div>
-                                <div>
-                                    <Image src={image} alt='image'  sizes='10vw' className='rounded-[10px]'></Image>
-
-                                </div>
+                            <div>
+                                <img src={dataRes?.image} alt='image'  className='rounded-[10px] w-full aspect-square'></img>
+                            </div>
+                            <div>
+                                <img src={dataRes?.image_background} alt='image'  className='rounded-[10px] w-full aspect-square'></img>
+                            </div>
                         </div>
                         <div className='text-[20px] max-sm:hidden'>
                                 {
@@ -242,23 +286,23 @@ const RestaurantDetail = () => {
                                             <div className='w-2/3 flex flex-col p-4'>
                                                 <div className='flex-row flex '>
                                                 <Rate readOnly defaultValue={1}  size='xs' color='orange'/>
-                                                <Progress.Line percent={100} showInfo={false} strokeColor="#787F82" />
+                                                <Progress.Line percent={per_rate_one} showInfo={false} strokeColor="#787F82" />
                                                 </div>
                                                 <div className='flex-row flex'>
                                                 <Rate readOnly defaultValue={2}  size='xs' color='orange'/>
-                                                <Progress.Line percent={0} showInfo={false} strokeColor="#787F82" />
+                                                <Progress.Line percent={per_rate_two} showInfo={false} strokeColor="#787F82" />
                                                 </div>
                                                 <div className='flex-row flex'>
                                                 <Rate readOnly defaultValue={3}  size='xs' color='orange'/>
-                                                <Progress.Line percent={0} showInfo={false} strokeColor="#787F82" />
+                                                <Progress.Line percent={per_rate_three} showInfo={false} strokeColor="#787F82" />
                                                 </div>
                                                 <div className='flex-row flex'>
                                                 <Rate readOnly defaultValue={4}  size='xs' color='orange'/>
-                                                <Progress.Line percent={0} showInfo={false} strokeColor="#787F82" />
+                                                <Progress.Line percent={per_rate_four} showInfo={false} strokeColor="#787F82" />
                                                 </div>
                                                 <div className='flex-row flex'>
                                                 <Rate readOnly defaultValue={5}  size='xs' color='orange'/>
-                                                <Progress.Line percent={0} showInfo={false} strokeColor="#787F82" />
+                                                <Progress.Line percent={per_rate_five} showInfo={false} strokeColor="#787F82" />
                                                 </div>
                                             
                                             
@@ -346,24 +390,24 @@ const RestaurantDetail = () => {
                             </div>
                             <div className='w-2/3 flex flex-col p-3'>
                                 <div className='flex-row flex'>
-                                <Rate readOnly defaultValue={1}  size='xs' />
-                                <Progress.Line percent={100} showInfo={false} strokeColor="#787F82" />
-                                </div>
-                                <div className='flex-row flex'>
-                                <Rate readOnly defaultValue={2}  size='xs' />
-                                <Progress.Line percent={0} showInfo={false} strokeColor="#787F82" />
-                                </div>
-                                <div className='flex-row flex'>
-                                <Rate readOnly defaultValue={3}  size='xs' />
-                                <Progress.Line percent={0} showInfo={false} strokeColor="#787F82" />
-                                </div>
-                                <div className='flex-row flex'>
-                                <Rate readOnly defaultValue={4}  size='xs' />
-                                <Progress.Line percent={0} showInfo={false} strokeColor="#787F82" />
-                                </div>
-                                <div className='flex-row flex'>
-                                <Rate readOnly defaultValue={5}  size='xs' />
-                                <Progress.Line percent={0} showInfo={false} strokeColor="#787F82" />
+                                <Rate readOnly defaultValue={1}  size='xs' color='orange'/>
+                                                <Progress.Line percent={per_rate_one} showInfo={false} strokeColor="#787F82" />
+                                                </div>
+                                                <div className='flex-row flex'>
+                                                <Rate readOnly defaultValue={2}  size='xs' color='orange'/>
+                                                <Progress.Line percent={per_rate_two} showInfo={false} strokeColor="#787F82" />
+                                                </div>
+                                                <div className='flex-row flex'>
+                                                <Rate readOnly defaultValue={3}  size='xs' color='orange'/>
+                                                <Progress.Line percent={per_rate_three} showInfo={false} strokeColor="#787F82" />
+                                                </div>
+                                                <div className='flex-row flex'>
+                                                <Rate readOnly defaultValue={4}  size='xs' color='orange'/>
+                                                <Progress.Line percent={per_rate_four} showInfo={false} strokeColor="#787F82" />
+                                                </div>
+                                                <div className='flex-row flex'>
+                                                <Rate readOnly defaultValue={5}  size='xs' color='orange'/>
+                                                <Progress.Line percent={per_rate_five} showInfo={false} strokeColor="#787F82" />
                                 </div>
                                
                                

@@ -120,6 +120,7 @@ export interface AloneRestaurant {
     categories:       string[];
     openingHours:     string[];
     averageRating:    number;
+    ratingCounts:      { [key: string]: number };
 }
 
 export interface ResOp {
@@ -157,6 +158,7 @@ export interface Comment {
     posted_date: Date;
     user:        User;
     restaurant:  ResCom;
+    rating:      number;
 }
 
 export interface ResCom {

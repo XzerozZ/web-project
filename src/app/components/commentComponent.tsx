@@ -17,7 +17,7 @@ const commentComponent = ({data} : {data: Comment} ) => {
                 {data.user.username}
               </div>
               <div>
-                <Rate defaultValue={4}  size="sm" readOnly color='orange'/><span>4</span>
+                <Rate defaultValue={data.rating}  size="sm" readOnly color='orange'/><span>{data.rating}</span>
               </div>
             </div>
             <div>
