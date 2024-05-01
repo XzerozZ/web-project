@@ -1,3 +1,5 @@
+import { Session } from "inspector";
+
 export interface UserData {
     email: string;
     username: string;
@@ -182,14 +184,6 @@ export interface User {
 
 
 
-export interface sessionData {
-   email: string;
-   id: number;
-    role: string;
-    name: string;
-    randomkey: string;
-}
-
 
 export interface ratingData {
     user_id: number;
@@ -229,4 +223,20 @@ export interface UserBlog {
     email:        string;
     password:     string;
     role:         string;
+}
+
+
+//////////////////////////////////////
+
+
+// export interface SessionData {
+//     user:    UserSession;
+//     expires: Date;
+// }
+export interface UserSession {
+    name?:      string | null | undefined;
+    email?:     string | null | undefined;
+    id?:        string | null | undefined;
+    role?:      string | null | undefined;
+    randomKey?: string | null | undefined;
 }

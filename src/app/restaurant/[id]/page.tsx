@@ -9,13 +9,7 @@ import { Tabs, Placeholder } from 'rsuite';
 import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
-import { AloneRestaurant, ratingData, sessionData } from '@/interface/interface';
-import { set } from 'mongoose';
-
-
-
-
-
+import { AloneRestaurant, UserSession  } from '@/interface/interface';
 
 
 
@@ -25,13 +19,18 @@ const RestaurantDetail = () => {
 
     const router = useRouter();
     const session = useSession();
+   
 
-    // useEffect(() => {
-    //     // if (session.data === null) {
-    //     // router.push('/auth/signin');
-    //     // }
-    // }, [session,router]);
+    const [sessionData, setSessionData] = useState<UserSession>();
 
+   
+    // ...
+    useEffect(() => {
+        if (session) {
+            setSessionData(session?.data?.user);
+        }
+    }, [session]);
+    // console.log(sessionData?.id,"sessionData.id");
     const params = useParams();
     
     const Value = Number(params.id);
@@ -60,32 +59,9 @@ const RestaurantDetail = () => {
     const [hoverValue, setHoverValue] = React.useState<number>(0);
     
    
-    const [postComment, setPostComment] = useState({
-        description: '',
-       
-    });
+    const [postComment, setPostComment] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('description', postComment.description);
-        formData.append('res_id', Value.toString());
-        
-        e.preventDefault();
-        const RatingFormData = new FormData();
-        RatingFormData.append('rating', hoverValue.toString());
-        RatingFormData.append('res_id', Value.toString());
-
-
-        try {
-            const response = await axios.post('/api/comment', formData);
-            console.log(response);
-            const responseRating = await axios.post('/api/rating', RatingFormData);
-            console.log(responseRating);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+   
 
     
 
@@ -94,8 +70,34 @@ const RestaurantDetail = () => {
     useEffect(() => {
         fetchRestaurant(Value)
         fetchComment(Value)
+        setSessionData(session?.data?.user);
         
     }, []);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        
+      
+        const formData = new FormData();
+        formData.append('description', postComment);
+        formData.append('res_id', Value.toString());
+        formData.append('user_id', sessionData?.id?.toString() ?? '');
+        
+       
+        const RatingFormData = new FormData();
+        RatingFormData.append('rating', hoverValue.toString());
+        RatingFormData.append('res_id', Value.toString());
+        RatingFormData.append('user_id', sessionData?.id?.toString() ?? '');
+        console.log(RatingFormData,"RatingFormData");
+        console.log(formData,"formData");
+        try {
+            const response = await axios.post('/api/comment', formData);
+            console.log(response,"response");
+            const responseRating = await axios.post('/api/rating', RatingFormData);
+            console.log(responseRating,"responseRating");
+        } catch (error) {
+            console.error(error);
+        }
+    };
       
 
   
@@ -123,11 +125,11 @@ const RestaurantDetail = () => {
     }
   }, [dataRes]);
 
-  if (isLoading) {
-    return  <div className='flex justify-center h-[500px] items-center'>
-      <Loader size="md"  color='black'/>
-    </div>
-  }else{
+//   if (isLoading) {
+//     return  <div className='flex justify-center h-[500px] items-center'>
+//       <Loader size="md"  color='black'/>
+//     </div>
+//   }else{
 
   return (
     <>
@@ -281,23 +283,28 @@ const RestaurantDetail = () => {
                                             </div>
                                             <div className='grow'>
                                                 <div className='w-full  '>
-                                                    <form className='m-1 flex flex-col gap-3'>
+                                                    <form className='m-1 flex flex-col gap-3' onSubmit={handleSubmit}>
                                                         <div>
                                                             <span>Natchapon Ponlaem</span>
                                                         </div>
                                                         <div>
                                                         <div className='items-center w-full bg-[#EAECEE] rounded-lg relative block'>
-                                                            <div>
-                                                                <div>
-                                                                   {/* <form >
-                                                                   <input className='border-none block bg-transparent w-full border  rounded-md p-3 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' placeholder="แสดงความคิดเห็น" type="submit" name="search" />
-                                                                    <button dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2'>
+                                                           
+                                                            
+                                                                 
+                                                                   <input className='border-none block bg-transparent w-full border  rounded-md p-3 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' 
+                                                                   placeholder="แสดงความคิดเห็น" 
+                                                                   type="submit" 
+                                                                   name="search" 
+                                                                  
+                                                                   onChange={(e) => {setPostComment(e.target.value)}}></input>
+                                                                    <button dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2' type='submit'>
                                                                         <span className='m-2 text-white'>Post</span>
                                                                     </button>
-                                                                   </form> */}
-                                                                  </div>
+                                                                  
                                                                 
-                                                            </div>
+                                                                
+                                                           
                                                         </div>
                                                         </div>
                                                     </form>
@@ -390,7 +397,7 @@ const RestaurantDetail = () => {
                                                <div>
                                                 <input className='border-none block bg-transparent w-full border  rounded-md p-3 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' placeholder="แสดงความคิดเห็น" type="text" name="search"/>
                                                     <div dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2'>
-                                                        <span className='m-2 text-white'>Post</span>
+                                                      <button type='submit'>  <span className='m-2 text-white'>Post</span></button>
                                                </div>
                                                 
                                             </div>
@@ -430,5 +437,5 @@ const RestaurantDetail = () => {
     
     </>
   )
-}}
+}
 export default RestaurantDetail
