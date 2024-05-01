@@ -178,3 +178,55 @@ export interface User {
     role:         string;
     rating:       any[];
 }
+
+
+
+
+export interface sessionData {
+   email: string;
+   id: number;
+    role: string;
+    name: string;
+    randomkey: string;
+}
+
+
+export interface ratingData {
+    user_id: number;
+    res_id: number;
+    rating: number;
+}
+
+//////////////////////////////////////
+export interface AloneBlog {
+    blog_id:     number;
+    user_id:     number;
+    res_id:      number;
+    title:       string;
+    image:       string;
+    description: string;
+    posted_date: String;
+    user:        UserBlog;
+    restaurant:  RestaurantBlog;
+}
+
+export interface RestaurantBlog {
+    res_id:           number;
+    name:             string;
+    image:            null;
+    image_background: null;
+    phone_number:     string;
+    address:          string;
+    description:      string;
+}
+
+export interface UserBlog {
+    user_id:      number;
+    username:     string;
+    image:        null;
+    phone_number: string;
+    birthday:     Date;
+    email:        string;
+    password:     string;
+    role:         string;
+}

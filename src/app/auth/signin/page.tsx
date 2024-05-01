@@ -28,7 +28,7 @@ const  LoginPage = (props: Props) => {
                 password
             })
             console.log(result)
-            Router.push('/profile')
+            Router.push('/')
             
         }
         catch(err){

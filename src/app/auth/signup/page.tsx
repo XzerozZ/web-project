@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import axios from 'axios'
-import UserData from '@/interface/interface'
+import { UserData } from '@/interface/interface'
 type Props = {}
 
 const page = (props: Props) => {
@@ -19,7 +19,7 @@ const page = (props: Props) => {
 
         const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                 const { name, value } = e.target;
-                setUserData((prev) => ({
+                setUserData((prev:any) => ({
                         ...prev,
                         [name]: value,
                 }));

@@ -5,13 +5,14 @@ import 'rsuite/dist/rsuite.min.css';
 import Image from 'next/image'
 import image from '/public/restaurant.webp'
 import Comment from '../../components/commentComponent';
-import { IoSearchOutline } from 'react-icons/io5';
 import { Tabs, Placeholder } from 'rsuite';
 import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
+import { AloneRestaurant, ratingData, sessionData } from '@/interface/interface';
+import { set } from 'mongoose';
 
-import { AloneRestaurant } from '@/interface/interface';
+
 
 
 
@@ -24,18 +25,20 @@ const RestaurantDetail = () => {
 
     const router = useRouter();
     const session = useSession();
-    useEffect(() => {
-        // if (session.data === null) {
-        // router.push('/auth/signin');
-        // }
-    }, [session,router]);
+
+    // useEffect(() => {
+    //     // if (session.data === null) {
+    //     // router.push('/auth/signin');
+    //     // }
+    // }, [session,router]);
 
     const params = useParams();
-    console.log(params.id)
+    
+    const Value = Number(params.id);
 
     const [dataRes, setDataRes] = useState<AloneRestaurant>();
-    const fetchRestaurant = async () => {
-        axios.get(`/api/restuarant/${params.id}`)
+    const fetchRestaurant = async (id:Number) => {
+        axios.get(`/api/restuarant/${id}`)
         .then((res) => {
             console.log(res.data)
             setDataRes(res.data)
@@ -44,8 +47,8 @@ const RestaurantDetail = () => {
     }
 
     const [comment, setComment] = useState([]);
-    const fetchComment = async () => {
-        axios.get(`/api/comment/res/${params.id}`)
+    const fetchComment = async (id:Number) => {
+        axios.get(`/api/comment/res/${id}`)
         .then((res) => {
             
             setComment(res.data)
@@ -53,10 +56,44 @@ const RestaurantDetail = () => {
         })
     }
 
+    
+    const [hoverValue, setHoverValue] = React.useState<number>(0);
+    
+   
+    const [postComment, setPostComment] = useState({
+        description: '',
+       
+    });
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('description', postComment.description);
+        formData.append('res_id', Value.toString());
+        
+        e.preventDefault();
+        const RatingFormData = new FormData();
+        RatingFormData.append('rating', hoverValue.toString());
+        RatingFormData.append('res_id', Value.toString());
+
+
+        try {
+            const response = await axios.post('/api/comment', formData);
+            console.log(response);
+            const responseRating = await axios.post('/api/rating', RatingFormData);
+            console.log(responseRating);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    
+
+    
     console.log(comment)
     useEffect(() => {
-        fetchRestaurant()
-        fetchComment()
+        fetchRestaurant(Value)
+        fetchComment(Value)
         
     }, []);
       
@@ -69,14 +106,9 @@ const RestaurantDetail = () => {
     const ProgressNumber = {
         width: '50%'
     }
-    const [hoverValue, setHoverValue] = React.useState(3);
+  
     console.log(hoverValue);
     
-    const textStyle = {
-        verticalAlign: 'top',
-        lineHeight: '42px',
-        display: 'inline-block'
-      };
 
       
      
@@ -256,10 +288,14 @@ const RestaurantDetail = () => {
                                                         <div>
                                                         <div className='items-center w-full bg-[#EAECEE] rounded-lg relative block'>
                                                             <div>
-                                                                <input className='border-none block bg-transparent w-full border  rounded-md p-3 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' placeholder="แสดงความคิดเห็น" type="text" name="search"/>
-                                                                    <div dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2'>
+                                                                <div>
+                                                                   {/* <form >
+                                                                   <input className='border-none block bg-transparent w-full border  rounded-md p-3 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' placeholder="แสดงความคิดเห็น" type="submit" name="search" />
+                                                                    <button dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2'>
                                                                         <span className='m-2 text-white'>Post</span>
-                                                            </div>
+                                                                    </button>
+                                                                   </form> */}
+                                                                  </div>
                                                                 
                                                             </div>
                                                         </div>
