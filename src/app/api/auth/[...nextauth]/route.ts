@@ -1,12 +1,21 @@
 import { PrismaClient } from '@prisma/client'
 import { compare } from 'bcrypt'
+import { randomUUID, randomBytes } from 'crypto'
 import NextAuth, { type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 const prisma = new PrismaClient()
 export const authOptions: NextAuthOptions = {
+  jwt: {
+    maxAge: 60 * 60 * 24 * 30,
+  },
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 *60,
+    updateAge: 24 * 60 * 60,
+    generateSessionToken: () => {
+      return randomUUID?.() ?? randomBytes(32).toString("hex")
+    }
   },
   providers: [
     CredentialsProvider({
@@ -47,7 +56,9 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           name: user.username,
           role: user.role,
-          randomKey: "Shooting_Majestic_Star_Dragon"
+          randomKey: "Shooting_Majestic_Star_Dragon",
+          iat : Math.floor(Date.now() / 1000),
+          exp : Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 30)
         }
       }
     })
@@ -60,6 +71,7 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           id: token.id,
+          role: token.role,
           randomKey: token.randomKey
         }
       }
@@ -71,6 +83,7 @@ export const authOptions: NextAuthOptions = {
         return {
           ...token,
           id: u.id,
+          role: u.role,
           randomKey: u.randomKey
         }
       }

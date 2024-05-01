@@ -11,7 +11,8 @@ export async function POST( req : Request ) {
             data : {
                 user_id : parseInt(formData.get('user_id') as string),
                 res_id : parseInt(formData.get('res_id') as string),
-                description : formData.get('description') as string
+                description : formData.get('description') as string,
+                rating : parseInt(formData.get('rating') as string)
             }
         })
         await prisma.$disconnect();

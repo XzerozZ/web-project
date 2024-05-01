@@ -9,11 +9,7 @@ export async function GET(req : Request,{params} : {params : { id : string}}){
                 res_id : parseInt(params.id)
             },
             include : {
-                user : {
-                    include : {
-                        rating : true
-                    }
-                } ,
+                user : true ,
                 restaurant : true
             }
         })

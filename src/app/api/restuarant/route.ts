@@ -112,10 +112,7 @@ export async function GET() {
             }
         });
         await prisma.$disconnect();
-        return Response.json({
-            message : "Success" ,
-            res
-        })
+        return Response.json(res)
     }
     catch(error){
         await prisma.$disconnect();
@@ -251,11 +248,6 @@ export async function DELETE(req: Request) {
                 }
             }),
             prisma.comment.deleteMany({
-                where : {
-                    res_id : id
-                }
-            }),
-            prisma.rating.deleteMany({
                 where : {
                     res_id : id
                 }
