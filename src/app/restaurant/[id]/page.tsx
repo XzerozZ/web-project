@@ -90,9 +90,9 @@ const RestaurantDetail = () => {
         console.log(RatingFormData,"RatingFormData");
         console.log(formData,"formData");
         try {
-            const response = await axios.post('/api/comment', formData);
+            const response = axios.post('/api/comment', formData);
             console.log(response,"response");
-            const responseRating = await axios.post('/api/rating', RatingFormData);
+            const responseRating = axios.post('/api/rating', RatingFormData);
             console.log(responseRating,"responseRating");
         } catch (error) {
             console.error(error);
@@ -295,8 +295,8 @@ const RestaurantDetail = () => {
                                                                    <input className='border-none block bg-transparent w-full border  rounded-md p-3 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' 
                                                                    placeholder="แสดงความคิดเห็น" 
                                                                    type="submit" 
-                                                                   name="search" 
-                                                                  
+                                                                   name="comment" 
+                                                                   value={postComment}
                                                                    onChange={(e) => {setPostComment(e.target.value)}}></input>
                                                                     <button dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2' type='submit'>
                                                                         <span className='m-2 text-white'>Post</span>
@@ -388,14 +388,20 @@ const RestaurantDetail = () => {
                             </div>
                             <div className='grow'>
                                  <div className='w-full  '>
-                                    <form className='m-1 flex flex-col gap-3'>
+                                    <form className='m-1 flex flex-col gap-3' onSubmit={handleSubmit}>
                                         <div>
                                             <span>Natchapon Ponlaem</span>
                                         </div>
                                         <div>
                                         <div className='items-center w-full bg-[#EAECEE] rounded-lg relative block'>
                                                <div>
-                                                <input className='border-none block bg-transparent w-full border  rounded-md p-3 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' placeholder="แสดงความคิดเห็น" type="text" name="search"/>
+                                                <input className='border-none block bg-transparent w-full border  rounded-md p-3 focus:outline-none focus:border-none focus:ring-0  sm:text-sm'
+                                                placeholder="แสดงความคิดเห็น" 
+                                                type="text"
+                                                name="comment" 
+                                                value={postComment}
+                                                onChange={(e) => {setPostComment(e.target.value)}}
+                                                 />
                                                     <div dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2'>
                                                       <button type='submit'>  <span className='m-2 text-white'>Post</span></button>
                                                </div>

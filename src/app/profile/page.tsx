@@ -33,6 +33,8 @@ const ProfilePage = (props: Props) => {
   }, [session,router]);
 
 
+  
+
 
 
 
@@ -52,9 +54,7 @@ const ProfilePage = (props: Props) => {
                 </div>
                 <div className='flex flex-row grow justify-between max-sm:flex-col'>
                     <h1 className='my-auto max-sm:text-[20px]'>Natchapon Ponlaem</h1>
-                    <div className='my-auto'>
-                        <button onClick={() => setOpenModal(true)}>แก้ไขข้อมูล</button>
-                    </div>
+                   
 
                 </div>
             </div>
@@ -72,9 +72,9 @@ const ProfilePage = (props: Props) => {
 
                 </div>
                 <div className='w-4/5 bg-white rounded-[10px] p-5 gap-5 flex flex-col'>
+                    {/* <Comment />
                     <Comment />
-                    <Comment />
-                    <Comment />
+                    <Comment /> */}
                     
                 </div>
         </div>
