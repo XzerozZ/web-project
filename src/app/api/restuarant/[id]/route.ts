@@ -1,5 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 
+interface RatingCounts {
+    [key: number]: number;
+  }
 // localhost:3000/api/restuarant/[id]
 export async function GET(req : Request,{ params }: { params: { id: string } }) {
     const prisma = new PrismaClient();
@@ -19,16 +22,26 @@ export async function GET(req : Request,{ params }: { params: { id: string } }) 
                         openingHours : true
                     }
                 },
-                rating : true
+                comment : true
             }
         })
         await prisma.$disconnect();
         if (resId) {
             const categories = resId.res_type.map(type => type.category.name);
-            const ratings = resId.rating.map(r => r.rating);
+            const ratings = resId.comment.map(r => r.rating);
             const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b) / ratings.length : 0;
             const openingHours = resId.res_op.map(op => `${op.openingHours.day_of_week}: ${op.openingHours.opening_time}-${op.openingHours.closing_time}`);
-            const resWithData = { ...resId , categories , openingHours , averageRating};
+            const ratingCounts: RatingCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+            ratings.forEach((rating) => {
+                ratingCounts[rating]++;
+              });
+            const resWithData = { 
+                ...resId , 
+                categories , 
+                openingHours , 
+                averageRating ,
+                ratingCounts
+            };
             return Response.json(resWithData);
         } else {
             return Response.json({
