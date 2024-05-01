@@ -87,7 +87,6 @@ model comment {
   user               user          @relation(fields: [user_id], references: [user_id])
 }
 model favorite {
-  fav_id             Int           @id @default(autoincrement())
   user_id            Int
   res_id             Int
   restaurant         restaurant    @relation(fields: [res_id], references: [res_id])

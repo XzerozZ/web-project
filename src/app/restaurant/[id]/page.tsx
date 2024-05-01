@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, Loader, Progress, Rate } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
-import Image from 'next/image'
-import image from '/public/restaurant.webp'
 import Comment from '../../components/commentComponent';
 import { Tabs, Placeholder } from 'rsuite';
 import { useParams, useRouter } from 'next/navigation';
@@ -85,11 +83,7 @@ const RestaurantDetail = () => {
         formData.append('res_id', Value.toString());
         formData.append('user_id', sessionData?.id?.toString() ?? '');
         formData.append('rating', hoverValue.toString());
-        formData.append('description', 'test test');
-        formData.append('res_id', "1");
-        formData.append('user_id', "1");
-        formData.append('rating', "1");
-        
+       
         
        
       
@@ -161,7 +155,44 @@ const RestaurantDetail = () => {
 
 
   const [isFav, setIsFav] = useState(false);
- 
+     
+
+  const handleFav = async () => {
+    
+    setIsFav(true)
+    console.log(sessionData?.id?.toString())
+    console.log(Value.toString())
+
+    const formData = new FormData();
+    formData.append('user_id', sessionData?.id?.toString() ?? '');
+    formData.append('res_id', Value.toString());
+    
+    const res = axios.post('/api/favorite', formData).then((res) => {
+        console.log(res);
+    
+    })
+
+   
+  };
+
+
+  const deleteFav = async () => {
+    
+    setIsFav(false)
+    console.log(sessionData?.id?.toString())
+    console.log(Value.toString())
+
+    const formData = new FormData();
+    formData.append('user_id', sessionData?.id?.toString() ?? '');
+    formData.append('res_id', Value.toString());
+    
+    const res = axios.delete('/api/favorite', { data: formData }).then((res) => {
+        console.log(res);
+    
+    })
+
+   
+  };
 
   return (
     <>
@@ -190,11 +221,11 @@ const RestaurantDetail = () => {
                    </div>
                    <div className=' my-auto'>
                    {isFav ? (
-                      <FaHeart onClick={() => setIsFav(false)} className='text-[#ff0000]' size={35} />
+                      <FaHeart onClick={() => deleteFav()} className='text-[#ff0000]' size={35} />
                      
                     ) : (
                         
-                        <FaRegHeart onClick={() => setIsFav(true)} size={35} />
+                        <FaRegHeart onClick={() => handleFav()} size={35} />
                     )}
 
                    </div>
