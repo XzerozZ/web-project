@@ -58,18 +58,21 @@ useEffect(() => {
     // }
 }, []);
 
-const [res_id, setRes_id] = useState('');
+const [resName, setResName] = useState('');
 const handleSubmit = async () => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
     formData.append('user_id', sessionData?.id?.toString() ?? '');
-    formData.append('res_id', res_id);
+    formData.append('name', resName);
     if (selectedImage) {
         formData.append('image', selectedImage);
     }
     console.log(formData);
-    axios.post('/api/blog', formData);
+    axios.post('/api/blog', formData).then((res) => {
+        console.log(res.data);
+    
+    });
 }
 const restaurantNames = (dataRes as { name: string }[]).map(dataRes => dataRes.name);
 
@@ -117,7 +120,7 @@ return (
                     onOpen={updateData}
                     onSearch={updateData}
                     renderMenu={renderMenu}
-                    onSelect={(value, item, event) => setRes_id(value+1)}
+                    onSelect={(value) => setResName(value)}
                     />
                 <div className=''>
                     {previewImage ? (

@@ -27,7 +27,7 @@ model user  {
 }
 model restaurant  {
   res_id            Int        @id @default(autoincrement())
-  name              String     @db.VarChar(255)
+  name              String     @db.VarChar(255) @unique
   image             String?    @db.Text
   image_background  String?    @db.Text
   phone_number      String     @db.VarChar(12)
