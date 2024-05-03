@@ -69,17 +69,16 @@ export interface dataPersonalBlog {
 
 
 export interface AllRestaurant {
+    
     res_id:           number;
     name:             string;
     image:            string;
-    image_background: null | string;
+    image_background: string;
     phone_number:     string;
     address:          string;
     description:      string;
     res_type:         ResType[];
 }
-
-
 
 export interface ResType {
     res_id:      number;
@@ -241,4 +240,22 @@ export interface UserSession {
     id?:        string | null | undefined;
     role?:      string | null | undefined;
     randomKey?: string | null | undefined;
+}
+
+
+export interface SearchRestaurant {
+    res_id: number;
+    name: string;
+    image: string;
+    image_background: string;
+    phone_number: string;
+    address: string;
+    description: string;
+    res_type: {
+        res_id: number;
+        category_id: number;
+        category: {
+            name: string;
+        };
+    }[];
 }

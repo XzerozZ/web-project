@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { FaUser } from "react-icons/fa";
@@ -10,19 +10,43 @@ import { useSession,signOut } from "next-auth/react";
 
 import { IoSearchOutline } from "react-icons/io5";
 import { Dropdown } from 'flowbite-react';
+import axios from 'axios';
+import { AllBlog, AllRestaurant, AloneBlog, SearchRestaurant } from '@/interface/interface';
+import SearchBar from './searchbar';
 
 
 
-type Props = {
- 
-}
-
-const navbar = (props: Props) => {
+const navbar = () => {
 
   const session = useSession();
   console.log("session from navbar",session);
-
+  const [dataBlog, setDataBlog] = useState<AllBlog>({} as AllBlog);
  
+  const [data, setData] = useState<(SearchRestaurant)[]>([]);
+
+    const fetchRestaurant = async () => {
+        axios.get('/api/restuarant')
+            .then((res) => {
+                console.log(res.data)
+                setData(res.data)
+  
+            })
+    }
+ 
+  const fetchBlog = async () => {
+      axios.get('/api/blog')
+          .then((res) => {
+              console.log(res.data)
+              setDataBlog(res.data)
+
+          })
+  }
+  
+
+  useEffect(() => {
+      fetchRestaurant();
+      fetchBlog();
+  }, []);
   
   
   if (session.data === null){
@@ -37,7 +61,8 @@ const navbar = (props: Props) => {
         <div className=' max-sm:hidden grow'>
            <form className='m-1'>
                 <div className='items-center w-full bg-[#EAECEE] rounded-lg relative block'>
-                  <input className='border-none block bg-transparent w-full border  rounded-md p-4 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' placeholder="ร้านอาหาร บทความ" type="text" name="search"/>
+                  <input className='border-none block bg-transparent w-full border  rounded-md p-4 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' placeholder="ร้านอาหาร บทความ" type="text" name="search"
+                   />
                   <div dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2'>
                     <span className='m-2 '><IoSearchOutline className='w-[25px] h-[25px] '/></span>
                 
@@ -64,15 +89,7 @@ const navbar = (props: Props) => {
            
          </div>
          <div className=' max-sm:hidden grow'>
-            <form className='m-1'>
-                 <div className='items-center w-full bg-[#EAECEE] rounded-lg relative block'>
-                   <input className='border-none block bg-transparent w-full border  rounded-md p-4 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' placeholder="ร้านอาหาร บทความ" type="text" name="search"/>
-                   <div dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2'>
-                     <span className='m-2 '><IoSearchOutline className='w-[25px] h-[25px] '/></span>
-                 
-                   </div>
-                </div>
-            </form>
+            <SearchBar  data={data}/>
          </div>
          <div className='max-sm:flex hidden'>
            <IoSearchOutline className='w-[25px] h-[25px] '/>
