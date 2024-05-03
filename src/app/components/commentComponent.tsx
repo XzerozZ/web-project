@@ -4,7 +4,7 @@ import { Avatar, Rate } from 'rsuite'
 
 
 const commentComponent = ({data} : {data: Comment} ) => {
-  console.log(data)
+  
   return (
     <>
        <div className='flex gap-1 flex-col'>

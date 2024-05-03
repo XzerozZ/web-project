@@ -50,7 +50,7 @@ const Searchbar = ({data,dataBlog} : {data : SearchRestaurant[],dataBlog : AllBl
         <>
         <div className='static'>
 
-                    <form className='m-1'>
+                    <form className='m-5'>
                         <div className='items-center w-full bg-[#EAECEE] rounded-lg relative block'>
                             <input
                                 className='border-none block bg-transparent w-full border rounded-md p-4 focus:outline-none focus:border-none focus:ring-0 sm:text-sm'
@@ -69,7 +69,7 @@ const Searchbar = ({data,dataBlog} : {data : SearchRestaurant[],dataBlog : AllBl
                     {search === '' ? (
                              <div></div>
                         ) : (
-                            <div className='flex flex-col  bg-white p-4 rounded-xl shadow-md'>
+                            <div className='flex flex-col '>
                                 <ul>
                                     {filteredData.map((restaurant) => (
                                        <Link href={`/restaurant/${restaurant.res_id}`} key={restaurant.res_id} onClick={() => setSearch('')} className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>

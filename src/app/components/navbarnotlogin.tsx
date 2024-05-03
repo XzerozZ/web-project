@@ -1,18 +1,18 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { FaUser } from "react-icons/fa";
 import { MdFavoriteBorder } from "react-icons/md";
-import { MdFavorite } from "react-icons/md";
 import Logo from './image-component/logo'
 import { useSession,signOut } from "next-auth/react";
-
 import { IoSearchOutline } from "react-icons/io5";
 import { Dropdown } from 'flowbite-react';
 import axios from 'axios';
-import { AllBlog, AllRestaurant, AloneBlog, SearchRestaurant } from '@/interface/interface';
+import { AllBlog, SearchRestaurant } from '@/interface/interface';
 import SearchBar from './searchbar';
+import { Drawer } from 'rsuite';
+import SearchbarRes from './serachbar_res';
+
 
 
 
@@ -20,8 +20,7 @@ const navbar = () => {
 
   const session = useSession();
   console.log("session from navbar",session);
-  const [dataBlog, setDataBlog] = useState<AllBlog>({} as AllBlog);
- 
+  const [dataBlog , setDataBlog] = useState<(AllBlog)[]>([]);
   const [data, setData] = useState<(SearchRestaurant)[]>([]);
 
     const fetchRestaurant = async () => {
@@ -47,6 +46,10 @@ const navbar = () => {
       fetchRestaurant();
       fetchBlog();
   }, []);
+
+
+  const [open, setOpen] = React.useState(false);
+  
   
   
   if (session.data === null){
@@ -89,12 +92,13 @@ const navbar = () => {
            
          </div>
          <div className=' max-sm:hidden grow'>
-            <SearchBar  data={data}/>
+            <SearchBar  data={data} dataBlog={dataBlog}/>
          </div>
-         <div className='max-sm:flex hidden'>
-           <IoSearchOutline className='w-[25px] h-[25px] '/>
-         </div>
+         
          <div className='flex-none gap-10 flex'>
+            <div className='max-sm:flex hidden'>
+              <IoSearchOutline className='w-[25px] h-[25px] ' onClick={() => setOpen(true)}/>
+            </div>
              <div>
               <Link href='/profile/save' className='hover:text-[#39db4a] no-underline text-black hover:no-underline'> <MdFavoriteBorder className='w-[25px] h-[25px] hover:text-[#39db4a]'/></Link>
              </div>
@@ -102,10 +106,10 @@ const navbar = () => {
                
                 <Dropdown label="" dismissOnClick={false} renderTrigger={() => <span><FaUser className='w-[25px] h-[25px]'/></span>}>
                   <Dropdown.Item><Link href="/profile" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>Profile</Link></Dropdown.Item>
+                  <Dropdown.Item><Link href="/blog/writeblog" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>Write your blog</Link></Dropdown.Item>
                   <Dropdown.Item><Link href="/profile/comment" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>Comment</Link></Dropdown.Item>
                   <Dropdown.Item><Link href="/profile/blog" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>My blog</Link></Dropdown.Item>
-                  <Dropdown.Item><Link href="/profile/save" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>My favorite</Link></Dropdown.Item>
-                  <Dropdown.Item><Link href="/profile/information" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>Information</Link></Dropdown.Item>
+                  <Dropdown.Item><Link href="/profile/save" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>favorite</Link></Dropdown.Item>
 
                   <Dropdown.Item onClick={() => signOut({callbackUrl:'/auth/signin'})} className='hover:text-[#39db4a]'>Sign out</Dropdown.Item>
                 </Dropdown>
@@ -113,6 +117,13 @@ const navbar = () => {
              </div>
          </div>
      </div>
+     <Drawer size='xs' open={open} onClose={() => setOpen(false)}>
+        <Drawer.Body >
+          <SearchbarRes data={data} dataBlog={dataBlog}/>
+        </Drawer.Body>
+      </Drawer>
+
+     
     </nav>
     
     </>

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 import axios from 'axios';
+import { FaV } from 'react-icons/fa6';
 
 
 
@@ -24,15 +25,17 @@ const restaurant = () => {
     axios.get('/api/restuarant')
     .then((res) => {
         console.log(res.data)
-        setDataRes(res.data)
+        setDataRes(res.data.message)
         
     })
   }
 
 
+
   
   useEffect(() => {
     fetchRestaurant()
+    
     if (session.data === null) {
       router.push('/auth/signin');
     }

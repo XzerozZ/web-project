@@ -14,12 +14,14 @@ import { FaHeart } from "react-icons/fa";
 
 
 
-const RestaurantDetail = () => {
+ const RestaurantDetail = () => {
 
  
 
+    
+    const session =  useSession();
     const router = useRouter();
-    const session = useSession();
+    // ... rest of the code
    
 
     const [sessionData, setSessionData] = useState<UserSession>();
@@ -37,6 +39,15 @@ const RestaurantDetail = () => {
     const Value = Number(params.id);
 
     const [dataRes, setDataRes] = useState<AloneRestaurant>();
+
+    const [comment, setComment] = useState([]);
+    const [hoverValue, setHoverValue] = React.useState<number>(0);
+    
+   
+    const [postComment, setPostComment] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+    const [isFav, setIsFav] = useState(false);
+  
     const fetchRestaurant = async (id:Number) => {
         axios.get(`/api/restuarant/${id}`)
         .then((res) => {
@@ -46,7 +57,8 @@ const RestaurantDetail = () => {
         })
     }
 
-    const [comment, setComment] = useState([]);
+
+   
     const fetchComment = async (id:Number) => {
         axios.get(`/api/comment/res/${id}`)
         .then((res) => {
@@ -57,16 +69,8 @@ const RestaurantDetail = () => {
     }
 
     
-    const [hoverValue, setHoverValue] = React.useState<number>(0);
-    
-   
-    const [postComment, setPostComment] = useState('');
 
-   
-   
-    console.log(dataRes,"dataRes")
-    
-    console.log(comment)
+
     useEffect(() => {
         fetchRestaurant(Value)
         fetchComment(Value)
@@ -82,7 +86,7 @@ const RestaurantDetail = () => {
         formData.append('description', postComment.toString());
         formData.append('res_id', Value.toString());
         formData.append('user_id', sessionData?.id?.toString() ?? '');
-        formData.append('rating', hoverValue.toString());
+        formData.append('rating', hoverValue.toString() );
        
         
        
@@ -99,49 +103,44 @@ const RestaurantDetail = () => {
     };
       
 
-  
-
-    
-  
-
   ///////////////////////////// calculate rating  % /////////////////////////////
     const size_comment = comment.length;
     const per_rate_one = ((dataRes?.ratingCounts[1] ?? 0) / size_comment) * 100;
     const per_rate_two = ((dataRes?.ratingCounts[2] ?? 0) / size_comment) * 100;
     const per_rate_three = ((dataRes?.ratingCounts[3] ?? 0) / size_comment) * 100;
     const per_rate_four = ((dataRes?.ratingCounts[4] ?? 0) / size_comment) * 100;
-    const per_rate_five = ((dataRes?.ratingCounts[5] ?? 0) / size_comment) * 100;
-
-    console.log(size_comment);
-    console.log(dataRes?.ratingCounts[1] ?? 0, "dataRes?.ratingCounts[1]");
-    console.log(dataRes?.ratingCounts[2] ?? 0, "dataRes?.ratingCounts[2]");
-    console.log(dataRes?.ratingCounts[3] ?? 0, "dataRes?.ratingCounts[3]");
-    console.log(dataRes?.ratingCounts[4] ?? 0,  "dataRes?.ratingCounts[4]");
-    console.log(dataRes?.ratingCounts[5] ?? 0,  "dataRes?.ratingCounts[5]");
-
-    
-    console.log(per_rate_one);
-    console.log(per_rate_two);
-    console.log(per_rate_three);
-    console.log(per_rate_four);
-    console.log(per_rate_five);
-
-
-
-
-
-    console.log(hoverValue);
-    
-
-      
+    const per_rate_five = ((dataRes?.ratingCounts[5] ?? 0) / size_comment) * 100
      
 
         // loading state
-  const [isLoading, setIsLoading] = useState(true);
+
+  // check is fav
+  const [FavCheck, setFavCheck] = useState('');
+    const favCheckdata = async () => {
+    const formData = new FormData();
+    formData.append('user_id', sessionData?.id?.toString() ?? '1');
+    formData.append('res_id', Value.toString() ?? '1');
+    axios.post('/api/favcheck', formData).then((res) => {  
+        setFavCheck(res.data.message);
+    })
+    if (FavCheck === 'Not Added') {
+        setIsFav(false);
+    }
+    else if (FavCheck === 'Already Added'){
+        setIsFav(true);
+    }
+
+    
+
+
+       
+}
 
 
 
   useEffect(() => {
+    favCheckdata()
+    console.log(FavCheck, "FavCheck")
     if (dataRes === undefined) {
       setIsLoading(false);
     }
@@ -154,7 +153,7 @@ const RestaurantDetail = () => {
 //   }else{
 
 
-  const [isFav, setIsFav] = useState(false);
+  
      
 
   const handleFav = async () => {
