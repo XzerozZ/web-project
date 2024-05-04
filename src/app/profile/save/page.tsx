@@ -17,18 +17,33 @@ const page = () => {
   const router = useRouter();
   const {data:session ,status} = useSession();
   const [sessionData, setSessionData] = useState<UserSession>();
-  const [data, setData] = useState<dataInformation>({} as dataInformation);
+  const [fav, setFav] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [data, setDataUser] = useState<dataInformation>({} as dataInformation);
 
 
 
  
  
-  const fetchFavorite = async (user:any) => {
-        await axios.get(`/api/save/${user}`)
+  const fetchFav = async (email:any) => {
+        const formData = new FormData();
+        formData.append('email', email)
+        console.log(email)
+        await axios.post(`/api/favorite/user`,formData)
         .then((res) => {
             console.log(res.data)
-            setData(res.data)
+            setFav(res.data)
+            
+            
+        })
+  }
+  const fetchInformation = async (email:any) => {
+        const formData = new FormData();
+        formData.append('email',email)
+        await axios.post(`/api/user/`,formData)
+        .then((res) => {
+            console.log(res.data)
+            setDataUser(res.data)
             
             
         })
@@ -38,12 +53,13 @@ const page = () => {
   
 useEffect(() => {
                         
-console.log(session?.user?.email)
-                        if (session) {
-                                 fetchFavorite(session.user?.email);
-                                 setIsLoading(false);
-                        }
-                if (status === 'unauthenticated') {
+
+                if (session) {
+                        fetchFav(session?.user?.email);
+                        fetchInformation(session?.user?.email)
+                        setIsLoading(false);
+                }
+                else if (status === 'unauthenticated') {
                         router.push('/auth/signin');
                 }
         
@@ -107,7 +123,7 @@ return (
                                                 </ul>
                                         </div>
                                         <div className='w-4/5 max-sm:w-full'>
-                                       
+                                        
                                         </div>
                                         
                                 </div>

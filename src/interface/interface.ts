@@ -32,13 +32,14 @@ export interface dataInformation {
     posted_date: Date;
     user:        User;
     restaurant:  Restaurant;
+    rating:      number;
 }
 
 export interface Restaurant {
     res_id:           number;
     name:             string;
-    image:            null;
-    image_background: null;
+    image:            string;
+    image_background: string;
     phone_number:     string;
     address:          string;
     description:      string;
@@ -47,7 +48,7 @@ export interface Restaurant {
 export interface User {
     user_id:      number;
     username:     string;
-    image:        null | string;
+    image:        string;
     phone_number: string;
     birthday:     Date;
     email:        string;
@@ -161,6 +162,7 @@ export interface Comment {
     rating:      number;
 }
 
+
 export interface ResCom {
     res_id:           number;
     name:             string;
@@ -174,7 +176,7 @@ export interface ResCom {
 export interface User {
     user_id:      number;
     username:     string;
-    image:        string | null;
+    image:        string;
     phone_number: string;
     birthday:     Date;
     email:        string;

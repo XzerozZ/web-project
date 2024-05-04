@@ -7,10 +7,10 @@ import { Avatar, Rate } from 'rsuite'
 const comCard = ({data} : {data:dataPersonalComment}) => {
   return (
     <>
-       <div className='flex gap-1 flex-col'>
+       <div className='flex gap-1 flex-col bg-white p-2'>
        <div className='flex flex-row gap-3' >
             <div>
-              <Avatar circle  />
+              <Avatar circle src={data.user.image} />
             </div>
             <div className='flex flex-col'>
               <div>

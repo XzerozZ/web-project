@@ -19,18 +19,21 @@ const ProfilePage = () => {
   const router = useRouter();
   const {data:session ,status} = useSession();
   const [sessionData, setSessionData] = useState<UserSession>();
-  const [data, setData] = useState<dataInformation>({} as dataInformation);
+  const [data, setDataUser] = useState<dataInformation>({} as dataInformation);
   const [isLoading, setIsLoading] = useState(true);
 
 
 
  
  
-  const fetchInformation = async (user:any) => {
-        await axios.get(`/api/user/${user}`)
+  const fetchInformation = async (email:any) => {
+        const formData = new FormData();
+        formData.append('email', email)
+        console.log(email)
+        await axios.post(`/api/user/`,formData)
         .then((res) => {
             console.log(res.data)
-            setData(res.data)
+            setDataUser(res.data)
             
             
         })
@@ -40,12 +43,12 @@ const ProfilePage = () => {
   
 useEffect(() => {
                         
-console.log(session?.user?.email)
-                        if (session) {
-                                 fetchInformation(session.user?.email);
+
+                if (session) {
+                                 fetchInformation(session?.user?.email);
                                  setIsLoading(false);
                         }
-                if (status === 'unauthenticated') {
+                else if (status === 'unauthenticated') {
                         router.push('/auth/signin');
                 }
         

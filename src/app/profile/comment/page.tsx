@@ -1,6 +1,6 @@
 "use client";
 import React, { use } from 'react'
-import { Avatar } from 'rsuite'
+import { Avatar, Loader } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
 
 import { useState,useEffect} from "react";
@@ -8,43 +8,69 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
-
-import test from 'node:test';
 import {UserSession, dataInformation } from '@/interface/interface';
-import { set } from 'mongoose';
+import ComCard from './component/comCard';
 
-
-const ProfilePage = () => {
+const page = () => {
 
   
   const router = useRouter();
-  const session = useSession();
+  const {data:session ,status} = useSession();
   const [sessionData, setSessionData] = useState<UserSession>();
-  const [data, setData] = useState<dataInformation>({} as dataInformation);
+  const [fav, setFav] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setDataUser] = useState<dataInformation>({} as dataInformation);
+
+
 
  
-  const fetchInformation = async () => {
-        await axios.get(`/api/user/${sessionData?.id}`)
+ 
+  const fetchFav = async (email:any) => {
+        const formData = new FormData();
+        formData.append('email', email)
+        console.log(email)
+        await axios.post(`/api/comment/user`,formData)
         .then((res) => {
             console.log(res.data)
-            setData(res.data)
+            setFav(res.data)
+            
+            
+        })
+  }
+  const fetchInformation = async (email:any) => {
+        const formData = new FormData();
+        formData.append('email',email)
+        await axios.post(`/api/user/`,formData)
+        .then((res) => {
+            console.log(res.data)
+            setDataUser(res.data)
             
             
         })
   }
 
-  useEffect(() => {
-      
-    setSessionData(session?.data?.user);
-    fetchInformation()
-if (!session.data) {
-  router.push('/auth/signin');
-}
-}, [session,router]);
 
+  
+useEffect(() => {
+                        
 
+                if (session) {
+                        fetchFav(session?.user?.email);
+                        fetchInformation(session?.user?.email)
+                        setIsLoading(false);
+                }
+                else if (status === 'unauthenticated') {
+                        router.push('/auth/signin');
+                }
         
- 
+        }, [session]);
+
+
+  if (isLoading) {
+    return  <div className='flex justify-center h-[500px] items-center'>
+      <Loader size="md"  color='black'/>
+    </div>
+  }
 return (
         <>
                 <div className='flex flex-col justify-center bg-[#fafafa]'>
@@ -96,8 +122,12 @@ return (
                                                       
                                                 </ul>
                                         </div>
-                                        <div className='w-4/5 max-sm:w-full'>
-                                      
+                                        <div className='w-4/5 max-sm:w-full flex flex-col gap-3'>
+                                              {
+                                                fav.map((item,index) => {
+                                                        return <ComCard data={item} key={index}/>
+                                                })
+                                              }
                                         </div>
                                         
                                 </div>
@@ -107,4 +137,4 @@ return (
 );
 }
 
-export default ProfilePage
+export default page

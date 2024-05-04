@@ -1,14 +1,20 @@
 'use server'
 import { PrismaClient } from '@prisma/client';
 
-// localhost:3000/api/favorite/user/[id] //fav ของuser
+// localhost:3000/api/favorite/user //fav ของuser
 //GET
-export async function GET(req : Request,{ params }: { params: { id: string } }) {
+export async function POST(req : Request) {
     const prisma = new PrismaClient();
     try {
+        const formData = await req.formData();
+        const user  = await prisma.user.findUnique({
+            where : {
+                email : formData.get('email') as string
+            }
+        })
         const userfav = await prisma.favorite.findMany({
             where : {
-                user_id : parseInt(params.id)
+                user_id : user?.user_id
             },
             include : {
                 user : true ,

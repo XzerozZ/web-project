@@ -5,6 +5,33 @@ import { formatPhoneNumber } from '../format/phonenumber';
 import { upLoadIMG } from '../admin/supa';
 
 
+
+export async function POST(req : Request){
+    const prisma = new PrismaClient();
+    try{
+        const formData = await req.formData();
+        const user  = await prisma.user.findUnique({
+            where : {
+                email : formData.get('email') as string
+            }
+        })
+        await prisma.$disconnect();
+        return Response.json(
+            user
+        )
+    }
+    catch(error){
+        return new Response(
+            JSON.stringify({
+                error: "User Not Found"
+            }),
+            {
+                status: 404
+            }
+        );
+    }
+}
+
 export async function PUT( req : Request ) {
     const prisma = new PrismaClient();
     try {
