@@ -63,11 +63,11 @@ const Home = () => {
     }
   }, [dataRes, dataBlog]);
 
-  // if (isLoading) {
-  //   return  <div className='flex justify-center h-[500px] items-center'>
-  //     <Loader size="md"  color='black'/>
-  //   </div>
-  // }
+  if (isLoading) {
+    return  <div className='flex justify-center h-[500px] items-center'>
+      <Loader size="md"  color='black'/>
+    </div>
+  }
   return (
     
     <>

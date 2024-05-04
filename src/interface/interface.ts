@@ -12,9 +12,10 @@ export interface UserData {
 }
 
 export interface dataInformation {
+    length: number;
     birthday: string;
     email: string;
-    image : string | null;
+    image : string ;
     password: string;
     phone_number: string;
     role: string;
@@ -259,3 +260,11 @@ export interface SearchRestaurant {
         };
     }[];
 }
+export interface UserSession2 {
+    name?:      string ;
+    email?:     string ;
+    id?:        string ;
+    role?:      string ;
+    randomKey?: string ;
+}
+
