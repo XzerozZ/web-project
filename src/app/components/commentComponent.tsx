@@ -7,10 +7,10 @@ const commentComponent = ({data} : {data: Comment} ) => {
   
   return (
     <>
-       <div className='flex gap-1 flex-col'>
+       <div className='flex flex-col'>
        <div className='flex flex-row gap-3'>
             <div>
-              <Avatar circle  />
+              <Avatar circle src={data.user.image} />
             </div>
             <div className='flex flex-col '>
               <div>
@@ -28,6 +28,7 @@ const commentComponent = ({data} : {data: Comment} ) => {
         <div>
           {data.description}
         </div>
+        <hr />
        </div>
     </>
   )

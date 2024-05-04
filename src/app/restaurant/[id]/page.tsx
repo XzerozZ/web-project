@@ -7,7 +7,7 @@ import { Tabs, Placeholder } from 'rsuite';
 import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
-import { AloneRestaurant, UserSession  } from '@/interface/interface';
+import { AloneRestaurant, UserSession, dataInformation  } from '@/interface/interface';
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 
@@ -47,6 +47,20 @@ import { FaHeart } from "react-icons/fa";
     const [postComment, setPostComment] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [isFav, setIsFav] = useState(false);
+    const [dataUser, setDataUser] = useState<dataInformation>({} as dataInformation);
+
+    const fetchUser = async (email:any) => {
+        const formData = new FormData();
+        formData.append('email', email)
+        console.log(email)
+        await axios.post(`/api/user/`,formData)
+        .then((res) => {
+            console.log(res.data)
+            setDataUser(res.data)
+            
+            
+        })
+    }
   
     const fetchRestaurant = async (id:Number) => {
         axios.get(`/api/restuarant/${id}`)
@@ -116,6 +130,7 @@ import { FaHeart } from "react-icons/fa";
 
   // check is fav
   const [FavCheck, setFavCheck] = useState('');
+    const {data:session_data ,status} = useSession();
     const favCheckdata = async () => {
     const formData = new FormData();
     formData.append('user_id', sessionData?.id?.toString() ?? '1');
@@ -140,17 +155,13 @@ import { FaHeart } from "react-icons/fa";
 
   useEffect(() => {
     favCheckdata()
+    fetchUser(session_data?.user?.email);
+  
     console.log(FavCheck, "FavCheck")
     if (dataRes === undefined) {
       setIsLoading(false);
     }
   }, [dataRes]);
-
-//   if (isLoading) {
-//     return  <div className='flex justify-center h-[500px] items-center'>
-//       <Loader size="md"  color='black'/>
-//     </div>
-//   }else{
 
 
   
@@ -192,6 +203,13 @@ import { FaHeart } from "react-icons/fa";
 
    
   };
+
+    if (isLoading) {
+    return  <div className='flex justify-center h-[500px] items-center'>
+      <Loader size="md"  color='black'/>
+    </div>
+    }
+
 
   return (
     <>
@@ -353,29 +371,29 @@ import { FaHeart } from "react-icons/fa";
                                         </div>
                                         <div className='comment flex flex-row justify-between m-10'>
                                             <div className=''>
-                                            <Avatar size="lg" circle />
+                                            <Avatar size="lg" circle src={dataUser.image}/>
                                             </div>
                                             <div className='grow'>
                                                 <div className='w-full  '>
                                                     <form className='m-1 flex flex-col gap-3' onSubmit={handleSubmit}>
                                                         <div>
-                                                            <span>Natchapon Ponlaem</span>
+                                                            <span>{dataUser.username}</span>
                                                         </div>
                                                         <div>
                                                         <div className='items-center w-full bg-[#EAECEE] rounded-lg relative block'>
                                                            
                                                             
                                                                  
-                                                                   <input className='border-none block bg-transparent w-full border  rounded-md p-3 focus:outline-none focus:border-none focus:ring-0  sm:text-sm' 
-                                                                   placeholder="แสดงความคิดเห็น" 
-                                                                   type="submit" 
-                                                                   name="comment" 
-                                                                   value={postComment}
-                                                                   onChange={(e) => {setPostComment(e.target.value)}}></input>
-                                                                    <button dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2' type='submit'>
-                                                                        <span className='m-2 text-white'>Post</span>
-                                                                    </button>
-                                                                  
+                                                        <input className='border-none block bg-transparent w-full border  rounded-md p-3 focus:outline-none focus:border-none focus:ring-0  sm:text-sm'
+                                                placeholder="แสดงความคิดเห็น" 
+                                                type="text"
+                                                name="comment" 
+                                                value={postComment}
+                                                onChange={(e) => {setPostComment(e.target.value)}}
+                                                 />
+                                                    <div dir='rtl' className='bg-[#39DB4A] rounded-s-lg w-[40px] text-center align-center absolute inset-y-0 right-0 flex items-center pl-2'>
+                                                      <button type='submit'>  <span className='m-2 text-white'>Post</span></button>
+                                                      </div>
                                                                 
                                                                 
                                                            
@@ -458,13 +476,13 @@ import { FaHeart } from "react-icons/fa";
                         </div>
                         <div className='comment flex flex-row justify-between m-10'>
                             <div className=''>
-                            <Avatar size="lg" circle />
+                            <Avatar size="lg" circle src={dataUser.image}/>
                             </div>
                             <div className='grow'>
                                  <div className='w-full  '>
                                     <form className='m-1 flex flex-col gap-3' onSubmit={handleSubmit}>
                                         <div>
-                                            <span>Natchapon Ponlaem</span>
+                                            <span>{dataUser.username}</span>
                                         </div>
                                         <div>
                                         <div className='items-center w-full bg-[#EAECEE] rounded-lg relative block'>
