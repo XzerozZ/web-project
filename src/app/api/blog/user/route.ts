@@ -2,12 +2,18 @@ import { PrismaClient } from '@prisma/client';
 
 // localhost:3000/api/blog/res/[id] //blog ที่userโพสต์
 // GET
-export async function GET(req : Request,{ params }: { params: { id: string } }) {
+export async function GET(req : Request) {
     const prisma = new PrismaClient();
     try {
+        const formData = await req.formData();
+        const user  = await prisma.user.findUnique({
+            where : {
+                email : formData.get('email') as string
+            }
+        })
         const blogbyuserId = await prisma.blog.findMany({
             where : {
-                user_id : parseInt(params.id)
+                user_id : user?.user_id
             },
             include : {
                 user : true , 
