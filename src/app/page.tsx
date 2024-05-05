@@ -22,6 +22,9 @@ const Home = () => {
   
 
   const [dataRes, setDataRes] = useState([]);
+  
+
+
   const fetchRestaurant = async () => {
     axios.get('/api/restuarant')
     .then((res) => {
