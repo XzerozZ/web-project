@@ -29,7 +29,6 @@ export async function GET(req : Request,{ params }: { params: { id: string } }) 
         if (resId) {
             const categories = resId.res_type.map(type => type.category.name);
             const ratings = resId.comment.map(r => r.rating);
-            const averageRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b) / ratings.length : 0;
             const openingHours = resId.res_op.map(op => `${op.openingHours.day_of_week}: ${op.openingHours.opening_time}-${op.openingHours.closing_time}`);
             const ratingCounts: RatingCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
             ratings.forEach((rating) => {
@@ -39,7 +38,6 @@ export async function GET(req : Request,{ params }: { params: { id: string } }) 
                 ...resId , 
                 categories , 
                 openingHours , 
-                averageRating ,
                 ratingCounts
             };
             return Response.json(resWithData);

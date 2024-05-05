@@ -33,6 +33,7 @@ model restaurant  {
   phone_number      String     @db.VarChar(12)
   address           String     @db.Text
   description       String     @db.Text
+  averageRating     Float      @default(0.0)
   res_op            res_op[]
   blog              blog[]
   comment           comment[]

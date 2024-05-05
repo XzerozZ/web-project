@@ -108,11 +108,15 @@ export async function GET() {
                             }
                         }
                     }
-                }
+                },
+                comment : true
             }
         });
+
         await prisma.$disconnect();
-        return Response.json(res)
+        return Response.json(
+            res
+        )
     }
     catch(error){
         await prisma.$disconnect();

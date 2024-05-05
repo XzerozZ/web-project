@@ -7,14 +7,33 @@ export async function POST( req : Request ) {
     const prisma = new PrismaClient();
     try{
         const formData = await req.formData();
+        const userId = parseInt(formData.get('user_id') as string);
+        const resId = parseInt(formData.get('res_id') as string);
+        const description = formData.get('description') as string;
+        const rating = parseInt(formData.get('rating') as string);
         const newcom = await prisma.comment.create({
             data : {
-                user_id : parseInt(formData.get('user_id') as string),
-                res_id : parseInt(formData.get('res_id') as string),
-                description : formData.get('description') as string,
-                rating : parseInt(formData.get('rating') as string)
+                user_id: userId,
+                res_id: resId,
+                description: description,
+                rating: rating
             }
         })
+        const comments = await prisma.comment.findMany({
+            where: { 
+                res_id: resId 
+            }
+        });
+        const totalRating = comments.reduce((acc, curr) => acc + curr.rating, 0);
+        const averageRating = totalRating / comments.length;
+        await prisma.restaurant.update({
+            where: { 
+                res_id: resId 
+            },
+            data: { 
+                averageRating: averageRating 
+            }
+        });
         await prisma.$disconnect();
         return Response.json(newcom)
     }
