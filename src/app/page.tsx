@@ -11,6 +11,7 @@ import axios from 'axios'
 import Blog_card from './components/blog_card'
 import { Loader } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
+import Headtopic from './components/headtopic'
 
 const Home = () => {
 
@@ -84,12 +85,8 @@ const Home = () => {
         </div>
         
         <div className='w-full flex flex-col justify-center items-center gap-3 '>
-            <div className='flex justify-center bg-[#FFFFFF] rounded-[10px] h-[65px] md:w-[1120px] max-sm:w-full max-sm:m-1'>
-                  <span className='text-[#39DB4A] text-[30px] mt-3 mb-3'>Restaurant</span>
-                  <span className=' text-[30px] mt-3 mb-3 mx-5'>|</span>
-                  <span className=' text-[30px] mt-3 mb-3 mr-[10px]'>ร้านอาหาร</span>
-
-            </div>
+          
+            <Headtopic name="Restaurant" th_name="ร้านอาหาร"/>
 
             <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
                {
@@ -104,12 +101,8 @@ const Home = () => {
             </Link>
         </div>
         <div className='w-full flex flex-col justify-center items-center gap-5 mt-3'>
-            <div className='flex justify-center bg-[#FFFFFF] rounded-[10px] h-[65px] md:w-[1120px] max-sm:w-full max-sm:m-1'>
-                  <span className='text-[#39DB4A] text-[30px] mt-3 mb-3 ml-[50px]'>Blog</span>
-                  <span className=' text-[30px] mt-3 mb-3 mx-5'>|</span>
-                  <span className=' text-[30px] mt-3 mb-3'>บทความ</span>
-
-            </div>
+           
+            <Headtopic name="Blog" th_name="บทความ"/>
 
             <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
                 {

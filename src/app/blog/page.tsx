@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { Loader } from 'rsuite';
 
 
 type Props = {}
@@ -15,6 +16,8 @@ const blog = (props: Props) => {
   const router = useRouter();
   const session = useSession();
   const [dataBlog, setDataBlog] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const {data:sessionCheck ,status} = useSession();
   const fetchBlog = async () => {
     axios.get('/api/blog')
     .then((res) => {
@@ -27,10 +30,30 @@ const blog = (props: Props) => {
 
   useEffect(() => {
     fetchBlog()
-    if (session.data === null) {
-      router.push('/auth/signin');
+    
+    
+  }, []);
+
+  useEffect(() => {
+                        
+
+    if (session) {
+                    
+                     setIsLoading(false);
+            }
+    else if (status === 'unauthenticated') {
+            router.push('/auth/signin');
     }
-  }, [session,router]);
+
+}, [session]);
+
+if (isLoading) {
+  return  <div className='flex justify-center h-[500px] items-center'>
+    <Loader size="md"  color='black'/>
+  </div>
+}
+
+
 
   return (
     <>

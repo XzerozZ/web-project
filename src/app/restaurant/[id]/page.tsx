@@ -202,13 +202,25 @@ import { FaHeart } from "react-icons/fa";
     })
 
    
-  };
+  };  
+  useEffect(() => {
+                        
 
-    if (isLoading) {
+    if (session) {
+                    
+                     setIsLoading(false);
+            }
+    else if (status === 'unauthenticated') {
+            router.push('/auth/signin');
+    }
+
+}, [session]);
+
+if (isLoading) {
     return  <div className='flex justify-center h-[500px] items-center'>
       <Loader size="md"  color='black'/>
     </div>
-    }
+  }
 
 
   return (

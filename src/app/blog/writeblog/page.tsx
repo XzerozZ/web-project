@@ -3,10 +3,11 @@ import axios from 'axios';
 import React, { ChangeEvent, use, useEffect, useState } from 'react'
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { useSession } from 'next-auth/react';
-import { SelectPicker } from 'rsuite';
+import { Loader, SelectPicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
 import { UserSession } from '@/interface/interface';
+import router from 'next/router';
 
 
 
@@ -15,6 +16,8 @@ const page = () => {
 const session = useSession();
 
 const [sessionData, setSessionData] = useState<UserSession>();
+const [isLoading, setIsLoading] = useState(true);
+const { data: sessionCheck, status } = useSession();
 
    
 // ...
@@ -95,6 +98,24 @@ const renderMenu = (menu:any) => {
     return menu;
   };
 
+  useEffect(() => {
+                        
+
+    if (session) {
+                    
+                     setIsLoading(false);
+            }
+    else if (status === 'unauthenticated') {
+            router.push('/auth/signin');
+    }
+
+}, [session]);
+
+if (isLoading) {
+    return  <div className='flex justify-center h-[500px] items-center'>
+      <Loader size="md"  color='black'/>
+    </div>
+  }
 
 
 return (

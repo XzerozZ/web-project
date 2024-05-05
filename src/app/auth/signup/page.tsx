@@ -1,9 +1,8 @@
 "use client"
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import axios from 'axios'
 import { UserData } from '@/interface/interface'
 import { FaCloudUploadAlt } from 'react-icons/fa'
-import { set } from 'mongoose'
 type Props = {}
 
 const page = () => {
@@ -16,22 +15,19 @@ const page = () => {
                 role: 'user',
                 image: '',
         });
-        const [selectedImage, setSelectedImage] = React.useState<File | ''>();
-        const [previewImage, setPreviewImage] = React.useState<string | null>(null);
-      
-
-
+        const [selectedImage, setSelectedImage] = useState<File | null>(null);
+        const [previewImage, setPreviewImage] = useState<string | null>(null);
+        
         const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-               
+            const file = e.target.files?.[0];
+            if (file) {
                 setSelectedImage(file);
                 const reader = new FileReader();
                 reader.onloadend = () => {
-                setPreviewImage(reader.result as string);
+                    setPreviewImage(reader.result as string);
                 };
                 reader.readAsDataURL(file);
-        }
+            }
         };
 
 
@@ -43,10 +39,10 @@ const page = () => {
                         [name]: value,
                 }));
         };
-
+        console.log(selectedImage)
         console.log(userData)
-        const handleSubmit = () => {
-               
+        const handleSubmit = (e:any) => {
+                e.preventDefault();
                 console.log(selectedImage,'image');
                 const formData = new FormData();
                 formData.append('email', userData.email);
@@ -58,11 +54,11 @@ const page = () => {
                 if (selectedImage) {
                         formData.append('image', selectedImage);
                     }
-                // console.log(formData);
-                // axios.post('/api/auth/register', formData)
-                //         .then((res) => {
-                //                 console.log(res);
-                //         });
+                console.log(formData);
+                axios.post('/api/auth/register', formData)
+                        .then((res) => {
+                                console.log(res);
+                        });
                 console.log(formData)
                 
              
@@ -100,6 +96,7 @@ const page = () => {
                         
                     />
                 </div>
+                
        
             </div>
 

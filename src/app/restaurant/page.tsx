@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 
 import axios from 'axios';
 import { FaV } from 'react-icons/fa6';
+import { Loader } from 'rsuite';
 
 
 
@@ -13,11 +14,8 @@ const restaurant = () => {
 
   const router = useRouter();
   const session = useSession();
-  useEffect(() => {
-    // if (!session.data) {
-    //   router.push('/auth/signin');
-    // }
-  }, [session,router]);
+  const [isLoading, setIsLoading] = useState(true);
+  const {data:sessionCheck ,status} = useSession();
    
 
   const [dataRes, setDataRes] = useState([]);
@@ -36,12 +34,29 @@ const restaurant = () => {
   useEffect(() => {
     fetchRestaurant()
     
-    if (session.data === null) {
-      router.push('/auth/signin');
-    }
-  }, [session,router]);
    
+  }, []);
+   
+  useEffect(() => {
+                        
 
+    if (session) {
+                  
+                     setIsLoading(false);
+            }
+    else if (status === 'unauthenticated') {
+            router.push('/auth/signin');
+    }
+
+}, [session]);
+
+
+  
+  if (isLoading) {
+    return  <div className='flex justify-center h-[500px] items-center'>
+      <Loader size="md"  color='black'/>
+    </div>
+  }
   
   return (
     <>

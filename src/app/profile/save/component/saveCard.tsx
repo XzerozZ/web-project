@@ -2,10 +2,12 @@ import React from 'react'
 import ImageRes from '/public/restaurant.webp'
 import Image from 'next/image'
 import {  SaveData } from '@/interface/interface'
+import Link from 'next/link'
 
 
 const saveCard = ({data} : {data : SaveData}) => {
   return (
+    <Link href={`/restaurant/${data.res_id}` } className='hover:text-black no-underline text-black hover:no-underline'>
     <div className="flex flex-row gap-3 bg-white rounded-[10px]">
     <div className="w-1/3">
       <img src={data.restaurant.image} alt="" className='aspect-square rounded-l-[10px]'/>
@@ -19,6 +21,7 @@ const saveCard = ({data} : {data : SaveData}) => {
       </div>
     </div>
   </div>
+    </Link>
   )
 }
 export default saveCard
