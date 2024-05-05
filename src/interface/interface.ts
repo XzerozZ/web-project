@@ -77,6 +77,7 @@ export interface AllRestaurant {
     image:            string;
     image_background: string;
     phone_number:     string;
+    averageRating:    number;
     address:          string;
     description:      string;
     res_type:         ResType[];
@@ -289,3 +290,31 @@ export interface UserSave {
     password:     string;
     role:         string;
 }
+
+//////////////////////////////////////
+export interface Ranking {
+    res_id:           number;
+    name:             string;
+    image:            string;
+    image_background: string;
+    phone_number:     string;
+    address:          string;
+    description:      string;
+    averageRating:    number;
+    res_type:         RankType[];
+}
+
+export interface RankType {
+    res_id:      number;
+    category_id: number;
+    category:    CatRank;
+}
+
+export interface CatRank {
+    res_id:        number;  
+    name: string;
+    averageRating: number;
+    category: string;
+}
+
+// Co

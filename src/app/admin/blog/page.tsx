@@ -1,9 +1,10 @@
 import React from 'react'
 
-type Props = {}
 
-export const page = (props: Props) => {
+
+const page = () => {
   return (
     <div>page</div>
   )
 }
+export default page

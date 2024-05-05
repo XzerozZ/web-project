@@ -81,14 +81,14 @@ return (
                                 <div className='flex flex-row w-[1140px] justify-between gap-5 '>
                                         <div className=''>
                                                 <div className='max-sm:hidden'>
-                                                        <Avatar circle size='xxl' src={data.image}/>
+                                                        <Avatar circle size='xxl' src={data?.image}/>
                                                 </div>
                                                 <div className='sm:hidden'>
-                                                        <Avatar circle size='xl' src={data.image}/>
+                                                        <Avatar circle size='xl' src={data?.image}/>
                                                 </div>
                                         </div>
                                         <div className='flex flex-row grow justify-between max-sm:flex-col'>
-                                                <h1 className='my-auto max-sm:text-[20px]'>{data.username}</h1>
+                                                <h1 className='my-auto max-sm:text-[20px]'>{data?.username}</h1>
                                                 <div className='my-auto'></div>
                                         </div>
                                 </div>

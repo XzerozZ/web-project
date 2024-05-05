@@ -10,14 +10,14 @@ const comCard = ({data} : {data:dataPersonalComment}) => {
        <div className='flex gap-1 flex-col bg-white px-5 py-3 rounded-lg'>
        <div className='flex flex-row gap-3' >
             <div>
-              <Avatar circle size='md'  src={data.user.image}/>
+              <Avatar circle size='md'  src={data?.user.image}/>
             </div>
             <div className='flex flex-col'>
               <div>
-              {data.user.username}
+              {data?.user.username}
               </div>
               <div>
-                <Rate defaultValue={5}  size="sm" readOnly color='orange'/><span>{data.user.rating}</span>
+                <Rate defaultValue={5}  size="sm" readOnly color='orange'/><span>{data?.user.rating}</span>
               </div>
             </div>
             <div>
@@ -26,7 +26,7 @@ const comCard = ({data} : {data:dataPersonalComment}) => {
 
         </div>
         <div>
-          {data.description}
+          {data?.description}
         </div>
        </div>
     </>

@@ -94,6 +94,7 @@ import { FaHeart } from "react-icons/fa";
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
 
       
         const formData = new FormData();
@@ -383,13 +384,13 @@ if (isLoading) {
                                         </div>
                                         <div className='comment flex flex-row justify-between m-10'>
                                             <div className=''>
-                                            <Avatar size="lg" circle src={dataUser.image}/>
+                                            <Avatar size="lg" circle src={dataUser?.image }/>
                                             </div>
                                             <div className='grow'>
                                                 <div className='w-full  '>
                                                     <form className='m-1 flex flex-col gap-3' onSubmit={handleSubmit}>
                                                         <div>
-                                                            <span>{dataUser.username}</span>
+                                                            <span>{dataUser?.username }</span>
                                                         </div>
                                                         <div>
                                                         <div className='items-center w-full bg-[#EAECEE] rounded-lg relative block'>
@@ -488,13 +489,13 @@ if (isLoading) {
                         </div>
                         <div className='comment flex flex-row justify-between m-10'>
                             <div className=''>
-                            <Avatar size="lg" circle src={dataUser.image}/>
+                            <Avatar size="lg" circle src={dataUser?.image }/>
                             </div>
                             <div className='grow'>
                                  <div className='w-full  '>
                                     <form className='m-1 flex flex-col gap-3' onSubmit={handleSubmit}>
                                         <div>
-                                            <span>{dataUser.username}</span>
+                                            <span>{dataUser?.username }</span>
                                         </div>
                                         <div>
                                         <div className='items-center w-full bg-[#EAECEE] rounded-lg relative block'>

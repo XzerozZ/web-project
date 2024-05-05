@@ -12,6 +12,9 @@ import Blog_card from './components/blog_card'
 import { Loader } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
 import Headtopic from './components/headtopic'
+import { LuCrown } from "react-icons/lu";
+import { Modal } from 'flowbite-react'
+import TableRanking from './components/tableRanking'
 
 const Home = () => {
 
@@ -22,6 +25,16 @@ const Home = () => {
   
 
   const [dataRes, setDataRes] = useState([]);
+  const [foodRanking, setFoodRanking] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const fetchRanking = async () => {
+    axios.get('/api/leaderboard')
+    .then((res) => {
+        console.log(res.data)
+        setFoodRanking(res.data)
+        
+    })
+  }
   
 
 
@@ -46,6 +59,7 @@ const Home = () => {
   useEffect(() => {
     fetchRestaurant()
     fetchBlog()
+    fetchRanking()
   // if (session.data === null) {
   //   router.push('/auth/signin');
   // }
@@ -79,7 +93,7 @@ const Home = () => {
    <div className='w-full  bg-[#FAFAFA]'>
         <div className='flex justify-center gap-10 pt-[60px]  mb-11 '>
             <div className='md:m-[140px] md:mr-0'>
-              <Poster width={400} height={150}/>
+              <Poster width={400} height={150} />
             </div>
             <div className=' max-sm:hidden '>
               <Image src={poster2} alt='image' width={500} className='rounded-lg' priority={true} ></Image>
@@ -89,8 +103,14 @@ const Home = () => {
         
         <div className='w-full flex flex-col justify-center items-center gap-3 '>
           
-            <Headtopic name="Restaurant" th_name="ร้านอาหาร"/>
-
+            <div className='relative max-sm:w-full'>
+            
+             <Headtopic name="Restaurant" th_name="ร้านอาหาร" />
+             
+             <div className='absolute bottom-4 right-2 overlay'>
+                <LuCrown className='text-[#39db4a]  ' size='30' onClick={() => setOpenModal(true)}/>
+              </div>
+            </div>
             <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
                {
                 dataRes.map((data,index) => {
@@ -122,6 +142,13 @@ const Home = () => {
 
 
    </div>
+   <Modal show={openModal} onClose={() => setOpenModal(false)}>
+      <Modal.Header>Food Ranking</Modal.Header>
+        <Modal.Body>
+         <TableRanking data={foodRanking}/>
+        </Modal.Body>
+       
+      </Modal>
     </>
   )
 }
