@@ -364,7 +364,7 @@ import { FaHeart } from "react-icons/fa";
                                                 <div className='flex flex-col justify-center w-[340px] shadow-xl  p-5 m-3 rounded-lg'>
                                                     <div className='text-center'> 
                                                         <h3 className='text-bold text-[25px] '>ให้คะแนนร้านนี้</h3>
-                                                        <Rate defaultValue={2} onChangeActive={setHoverValue} color='orange'/>
+                                                        <Rate defaultValue={5} onChangeActive={setHoverValue} color='orange'/>
                                                 
                                                     </div>
                                                 </div>

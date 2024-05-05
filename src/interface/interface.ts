@@ -203,7 +203,7 @@ export interface AloneBlog {
     title:       string;
     image:       string;
     description: string;
-    posted_date: String;
+    posted_date: string;
     user:        UserBlog;
     restaurant:  RestaurantBlog;
 }
@@ -270,3 +270,22 @@ export interface UserSession2 {
     randomKey?: string ;
 }
 
+
+
+export interface SaveData {
+    user_id:    number;
+    res_id:     number;
+    user:       User;
+    restaurant: Restaurant;
+}
+
+export interface UserSave {
+    user_id:      number;
+    username:     string;
+    image:        string;
+    phone_number: string;
+    birthday:     Date;
+    email:        string;
+    password:     string;
+    role:         string;
+}

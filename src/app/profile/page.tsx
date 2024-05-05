@@ -11,6 +11,7 @@ import axios from 'axios';
 import {UserSession, dataInformation } from '@/interface/interface';
 import PropInformation from './PropInformation';
 import { set } from 'mongoose';
+import { SideBar } from './component_profile/SideBar';
 
 
 const ProfilePage = () => {
@@ -82,34 +83,7 @@ return (
                         <div className='flex justify-center p-3'>
                                 <div className='flex gap-5 w-[1140px]'>
                                         <div className='w-1/5 max-sm:hidden '>
-                                                <ul className='flex flex-col  p-3  bg-white rounded-[10px] gap-3'>
-                                                       
-                                                        <Link
-                                                                href='/profile/restaurant'
-                                                                className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'
-                                                        >
-                                                                <li>
-                                                                        <h5>ความคิดเห็น</h5>
-                                                                </li>
-                                                        </Link>
-                                                        <Link
-                                                                href='/profile/blog'
-                                                                className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'
-                                                        >
-                                                                <li>
-                                                                        <h5>บทความ</h5>
-                                                                </li>
-                                                        </Link>
-                                                        <Link
-                                                                href='/profile/save'
-                                                                className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'
-                                                        >
-                                                                <li>
-                                                                        <h5>บันทึก</h5>
-                                                                </li>{" "}
-                                                        </Link>
-                                                      
-                                                </ul>
+                                               <SideBar />
                                         </div>
                                         <div className='w-4/5 max-sm:w-full'>
                                         <PropInformation data={data} />

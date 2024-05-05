@@ -35,6 +35,12 @@ const BlogDetail = (props: Props) => {
   }, []);
 
   console.log(dataBlog)
+
+  const formatDateTime = (dateTime: string) => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateTime);
+    return date.toLocaleDateString(undefined, options);
+  };
   
     
   return (
@@ -53,7 +59,7 @@ const BlogDetail = (props: Props) => {
                        }
                     </div>
                     <div>
-                    Published {dataBlog?.posted_date}
+                    Published {formatDateTime(dataBlog?.posted_date || '')}
                     </div>
                 </div>
             </div>

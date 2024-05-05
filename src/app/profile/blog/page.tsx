@@ -9,6 +9,9 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import {UserSession, dataInformation } from '@/interface/interface';
+import BlogCard from './component/blogCard';
+import { SideBar } from '../component_profile/SideBar';
+
 
 
 const page = () => {
@@ -17,7 +20,7 @@ const page = () => {
   const router = useRouter();
   const {data:session ,status} = useSession();
   const [sessionData, setSessionData] = useState<UserSession>();
-  const [fav, setFav] = useState([]);
+  const [Blog, setBlog] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [data, setDataUser] = useState<dataInformation>({} as dataInformation);
 
@@ -25,14 +28,14 @@ const page = () => {
 
  
  
-  const fetchFav = async (email:any) => {
+  const fetchBlog = async (email:any) => {
         const formData = new FormData();
         formData.append('email', email)
         console.log(email)
         await axios.post(`/api/blog/user`,formData)
         .then((res) => {
             console.log(res.data)
-            setFav(res.data)
+            setBlog(res.data)
             
             
         })
@@ -55,7 +58,7 @@ useEffect(() => {
                         
 
                 if (session) {
-                        fetchFav(session?.user?.email);
+                        fetchBlog(session?.user?.email);
                         fetchInformation(session?.user?.email)
                         setIsLoading(false);
                 }
@@ -93,37 +96,14 @@ return (
                         <div className='flex justify-center p-3'>
                                 <div className='flex gap-5 w-[1140px]'>
                                         <div className='w-1/5 max-sm:hidden '>
-                                                <ul className='flex flex-col  p-3  bg-white rounded-[10px] gap-3'>
-                                                       
-                                                        <Link
-                                                                href='/profile/restaurant'
-                                                                className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'
-                                                        >
-                                                                <li>
-                                                                        <h5>ความคิดเห็น</h5>
-                                                                </li>
-                                                        </Link>
-                                                        <Link
-                                                                href='/profile/blog'
-                                                                className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'
-                                                        >
-                                                                <li>
-                                                                        <h5>บทความ</h5>
-                                                                </li>
-                                                        </Link>
-                                                        <Link
-                                                                href='/profile/save'
-                                                                className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]  bg-gray-50 hover:no-underline'
-                                                        >
-                                                                <li>
-                                                                        <h5>บันทึก</h5>
-                                                                </li>{" "}
-                                                        </Link>
-                                                      
-                                                </ul>
+                                               <SideBar />
                                         </div>
-                                        <div className='w-4/5 max-sm:w-full'>
-                                       
+                                        <div className='w-4/5 max-sm:w-full flex flex-col gap-3'>
+                                                {
+                                                Blog.map((data,index) => {
+                                                        return <BlogCard data={data} key={index}/>
+                                                })
+                                                }
                                         </div>
                                         
                                 </div>

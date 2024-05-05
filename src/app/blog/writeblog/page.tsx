@@ -7,7 +7,6 @@ import { SelectPicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
 import { UserSession } from '@/interface/interface';
-import { set } from 'mongoose';
 
 
 
@@ -57,7 +56,7 @@ useEffect(() => {
     //   router.push('/auth/signin');
     // }
 }, []);
-
+console.log(selectedImage);
 const [resName, setResName] = useState('');
 const handleSubmit = async () => {
     const formData = new FormData();

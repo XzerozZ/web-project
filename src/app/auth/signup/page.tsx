@@ -1,10 +1,12 @@
 "use client"
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import axios from 'axios'
 import { UserData } from '@/interface/interface'
+import { FaCloudUploadAlt } from 'react-icons/fa'
+import { set } from 'mongoose'
 type Props = {}
 
-const page = (props: Props) => {
+const page = () => {
         const [userData, setUserData] = React.useState<UserData>({
                 email: '',
                 username: '',
@@ -14,6 +16,23 @@ const page = (props: Props) => {
                 role: 'user',
                 image: '',
         });
+        const [selectedImage, setSelectedImage] = React.useState<File | ''>();
+        const [previewImage, setPreviewImage] = React.useState<string | null>(null);
+      
+
+
+        const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+               
+                setSelectedImage(file);
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                setPreviewImage(reader.result as string);
+                };
+                reader.readAsDataURL(file);
+        }
+        };
 
 
 
@@ -26,22 +45,27 @@ const page = (props: Props) => {
         };
 
         console.log(userData)
-        const handleSubmit = (e: React.FormEvent) => {
-                e.preventDefault()
-
-            const formData = new FormData();
-            formData.append('email', userData.email);
-            formData.append('username', userData.username);
-            formData.append('phone_number', userData.phone_number);
-            formData.append('birthday', userData.birthday);
-            formData.append('password', userData.password);
-            formData.append('role', userData.role);
-            formData.append('image', userData.image);
-            console.log(formData)
-            axios.post('/api/auth/register',formData )
-                .then((res) => {
-                        console.log(res)
-                })
+        const handleSubmit = () => {
+               
+                console.log(selectedImage,'image');
+                const formData = new FormData();
+                formData.append('email', userData.email);
+                formData.append('username', userData.username);
+                formData.append('phone_number', userData.phone_number);
+                formData.append('birthday', userData.birthday);
+                formData.append('password', userData.password);
+                formData.append('role', userData.role);
+                if (selectedImage) {
+                        formData.append('image', selectedImage);
+                    }
+                // console.log(formData);
+                // axios.post('/api/auth/register', formData)
+                //         .then((res) => {
+                //                 console.log(res);
+                //         });
+                console.log(formData)
+                
+             
         }
    
                 
@@ -50,8 +74,35 @@ const page = (props: Props) => {
     <>
      <div className='flex justify-center bg-[#FAFAFA] py-[100px] max-sm:p-[50px]'>
     <div >
+    <h1 className='text-center text-[40px]'>Sign up</h1>
         <form onSubmit={handleSubmit} className='flex flex-col w-[450px] gap-5 max-sm:p-10'>
-        <h1 className='text-center text-[40px]'>Sign up</h1>
+            <div className='flex justify-center'>
+            <div className=''>
+                    {previewImage ? (
+                        <label htmlFor='uploadImage'>
+                            <img className='w-[100px] h-[100px] rounded-full'
+                                src={previewImage}
+                                alt='Preview'
+                               
+                            />
+                        </label>
+                    ) : (
+                        <label htmlFor='uploadImage' className='cursor-pointer my-auto w-[100px] h-[100px] bg-[#d9d9d9] flex justify-center rounded-full'>
+                            <FaCloudUploadAlt className='my-auto text-[#b3b3b1] text-5xl' />
+                        </label>
+                    )}
+                   
+                    <input
+                        id='uploadImage'
+                        type='file'
+                        style={{ display: 'none' }}
+                        onChange={handleImageChange}
+                        
+                    />
+                </div>
+       
+            </div>
+
              <div>
                     <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
                     <input 
