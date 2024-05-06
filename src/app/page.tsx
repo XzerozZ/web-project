@@ -15,13 +15,27 @@ import Headtopic from './components/headtopic'
 import { LuCrown } from "react-icons/lu";
 import { Modal } from 'flowbite-react'
 import TableRanking from './components/tableRanking'
+import { dataInformation } from '@/interface/interface'
 
 const Home = () => {
 
   
   
+ 
   const router = useRouter();
-  const session = useSession();
+  const {data:session ,status} = useSession();
+  const [user, setUser] = useState<dataInformation>({} as dataInformation);
+  const fetchUser = async () => {
+      const formData = new FormData();
+      formData.append('email', session?.user?.email || '');
+      await axios.post(`/api/user/`, formData)
+      .then((res) => {
+          console.log(res.data);
+          setUser(res.data);
+      });
+  }
+
+
   
 
   const [dataRes, setDataRes] = useState([]);
@@ -60,21 +74,24 @@ const Home = () => {
     fetchRestaurant()
     fetchBlog()
     fetchRanking()
+    fetchUser()
+    if (user?.role === 'admin') {
+        router.push('/admin/restaurant')
+    }
+    else if (user?.role === 'user') {
+        console.log('user')
+    }
   // if (session.data === null) {
   //   router.push('/auth/signin');
   // }
-}, [session,router]);
+}, [session,router,user]);
 
 
   
   // loading state
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetchRestaurant();
-    fetchBlog();
-  }, [session, router]);
-
+ 
   useEffect(() => {
     if (dataRes.length > 0 && dataBlog.length > 0) {
       setIsLoading(false);

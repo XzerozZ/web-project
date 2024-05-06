@@ -72,12 +72,10 @@ const restaurant = () => {
         <div className='flex justify-center '>
             <div className='w-[1140px]'>
               <div className=' flex flex-row justify-center items-center gap-5 my-10  max-sm:mx-3'>
-              <div className='w-1/4 max-sm:hidden'>
-                      filter
-              </div>
-              <div className='w-3/4 max-sm:w-full'>
+             
+              <div className='w-full max-sm:w-full'>
                   <div className='grid grid-cols-3 gap-2 max-sm:grid-cols-2  max-sm:w-full'>
-                    {dataRes.map((data,index) => (
+                    {dataRes?.map((data,index) => (
                       <Product_card data={data} key={index}/>
                     ))}
                   

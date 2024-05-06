@@ -1,9 +1,9 @@
 "use client"
 import axios from 'axios';
-import {Sidebar } from 'flowbite-react';
+import {Modal, Sidebar } from 'flowbite-react';
 import { Table } from "flowbite-react";
 
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, use, useEffect, useState } from 'react'
 import { RiAdminFill } from 'react-icons/ri';
 import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser } from "react-icons/hi";
 
@@ -11,9 +11,26 @@ import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser } f
 import 'rsuite/dist/rsuite.min.css';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { set } from 'mongoose';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { dataInformation } from '@/interface/interface';
+
 
 const page = () => {
     const [data, setData] = useState([]);
+    const router = useRouter();
+    const {data:session ,status} = useSession();
+    const [user, setUser] = useState<dataInformation>({} as dataInformation);
+    const [openModal, setOpenModal] = useState(false);
+    const fetchUser = async () => {
+        const formData = new FormData();
+        formData.append('email', session?.user?.email || '');
+        await axios.post(`/api/user/`, formData)
+        .then((res) => {
+            console.log(res.data);
+            setUser(res.data);
+        });
+    }
    
    
 
@@ -28,7 +45,10 @@ const page = () => {
       }
 
     useEffect(() => {
-        fetchBlog(),[]})
+        fetchBlog()
+        fetchUser()
+       } , []);
+       
 
    
     const deleteRestaurant = (id:any) => {
@@ -57,9 +77,13 @@ const page = () => {
           <Sidebar.Item href="/admin/blog" icon={HiInbox}>
             Blog
           </Sidebar.Item>
-          <Sidebar.Item href="/admin/comment" icon={HiUser}>
-            Comment
+          <Sidebar.Item href="/admin/addrestaurant" icon={HiInbox}>
+            Add Restaurant
           </Sidebar.Item>
+          <Sidebar.Item href="/admin/editrestaurant" icon={HiInbox}>
+            Edit Restaurant
+          </Sidebar.Item>
+         
          
         </Sidebar.ItemGroup>
       </Sidebar.Items>
@@ -112,7 +136,28 @@ const page = () => {
 		</div>
 	</div>
 </div>
-
+<Modal show={openModal} onClose={() => setOpenModal(false)}>
+        <Modal.Header>Terms of Service</Modal.Header>
+        <Modal.Body>
+          <div className="space-y-6">
+            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+              With less than a month to go before the European Union enacts new consumer privacy laws for its citizens,
+              companies around the world are updating their terms of service agreements to comply.
+            </p>
+            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+              The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant
+              to ensure a common set of data rights in the European Union. It requires organizations to notify users as
+              soon as possible of high-risk data breaches that could personally affect them.
+            </p>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button onClick={() => setOpenModal(false)}>I accept</button>
+          <button color="gray" onClick={() => setOpenModal(false)}>
+            Decline
+          </button>
+        </Modal.Footer>
+      </Modal>
 </>
   )
 }
