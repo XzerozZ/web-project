@@ -42,15 +42,12 @@ const page = () => {
     const [edit, setEdit] = useState({
         res_id: '',
         res_name: '',
-        res_address: '',
-        res_rating: '',
-        res_image: '',
+        address: '',
+        phone_number: '',
+        description: ''
     
     })
-    const [dataRes, setDataRes] = useState({
-       
-    
-    })
+   
    
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -70,6 +67,18 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     }
 };
 
+const handleImageChange2 = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+        setSelectedImage2(file);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setPreviewImage2(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+    }
+};
+
     const fetchRestaurant = async () => {
         axios.get('/api/restuarant')
         .then((res) => {
@@ -79,11 +88,34 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         })
       }
 
+      console.log(edit.res_id)
+      console.log(edit.res_name)
+      console.log(edit.address)
+     
+      console.log(selectedImage)
+      console.log(selectedImage2)
+      console.log(edit.description)
+
    
 
-    const editRestaurant = (id:any) => {
+    const editRestaurant = (e:any) => {
+        e.preventDefault();
         const formData = new FormData();
-        axios.put(`/api/restaurant`,formData)
+        formData.append('id',edit.res_id)
+        formData.append('name',edit.res_name)
+        formData.append('address',edit.address)
+        formData.append('phone_number',edit.phone_number)
+        formData.append('image',selectedImage as Blob)
+        formData.append('image_background',selectedImage2 as Blob)
+        formData.append('description',edit.description)
+
+        axios.put(`/api/restuarant`,formData).then((res) => {
+            console.log(res.data)
+        })
+       
+      
+
+
     }
 
     const deleteRestaurant = (id:any) => {
@@ -98,7 +130,7 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setDataRes((prev:any) => ({
+    setEdit((prev:any) => ({
             ...prev,
             [name]: value,
     }))}
@@ -245,30 +277,41 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                               </div>
                                <div className='w-1/2'>
                               {previewImage2 ? (
-                                      <label htmlFor='uploadImage'>
-                                      <img className='w-[100px] h-[100px] rounded-md'
+                                      <label htmlFor='uploadImage2'>
+                                      <img className='w-[100px] h-[100px] rounded-md '
                                               src={previewImage2}
                                               alt='Preview'
                                       
                                       />
                                       </label>
                               ) : (
-                                      <label htmlFor='uploadImage' className='cursor-pointer my-auto  bg-[#d9d9d9] flex justify-center rounded-md h-[200px] '>
+                                      <label htmlFor='uploadImage2' className='cursor-pointer my-auto  bg-[#d9d9d9] flex justify-center rounded-md h-[200px] '>
                                       <FaCloudUploadAlt className='my-auto text-[#b3b3b1] text-5xl' />
                                       </label>
                               )}
                               
                               <input
-                                      id='uploadImage'
+                                      id='uploadImage2'
                                       type='file'
                                       style={{ display: 'none' }}
-                                      onChange={handleImageChange}
+                                      onChange={handleImageChange2}
                                       
                               />
                               </div>
                               
                               
               
+                      </div>
+                      <div>
+                              <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Restaurant id</label>
+                              <input 
+                              type="text" 
+                              id="res_id" 
+                             
+                              onChange={handleChange}
+                              name='res_id'
+                              
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="Restaurant id" required />
                       </div>
 
                       <div>
@@ -317,7 +360,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                               type="text" 
                               id="description" 
                             
-                              name='descripition'
+                              name='description'
                               onChange={handleChange}
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="description" required />
                       </div>

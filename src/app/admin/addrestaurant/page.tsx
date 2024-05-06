@@ -75,6 +75,18 @@ const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     }
 };
 
+const handleImageChange2 = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+        setSelectedImage2(file);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setPreviewImage2(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+    }
+};
+
     
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -195,24 +207,24 @@ const AddRestaurant = (e:any) => {
                               </div>
                                <div className='w-1/2'>
                               {previewImage2 ? (
-                                      <label htmlFor='uploadImage'>
-                                      <img className='w-[100px] h-[100px] rounded-md'
+                                      <label htmlFor='uploadImage2'>
+                                      <img className='w-[100px] h-[100px] rounded-md '
                                               src={previewImage2}
                                               alt='Preview'
                                       
                                       />
                                       </label>
                               ) : (
-                                      <label htmlFor='uploadImage' className='cursor-pointer my-auto  bg-[#d9d9d9] flex justify-center rounded-md h-[200px] '>
+                                      <label htmlFor='uploadImage2' className='cursor-pointer my-auto  bg-[#d9d9d9] flex justify-center rounded-md h-[200px] '>
                                       <FaCloudUploadAlt className='my-auto text-[#b3b3b1] text-5xl' />
                                       </label>
                               )}
                               
                               <input
-                                      id='uploadImage'
+                                      id='uploadImage2'
                                       type='file'
                                       style={{ display: 'none' }}
-                                      onChange={handleImageChange}
+                                      onChange={handleImageChange2}
                                       
                               />
                               </div>

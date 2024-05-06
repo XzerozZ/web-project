@@ -47,21 +47,32 @@ export async function PUT( req : Request ) {
                 message : "User not found"
             })
         }
-        if(formData.has('username')) {
-            existingUser.username = formData.get('username') as string;
+        if (formData.has('username')) {
+            const username = formData.get('username') as string;
+            if (username.trim() !== '') {
+                existingUser.username = username;
+            }
         }
-        if(formData.has("phone_number")) {
+        if (formData.has('phone_number')) {
             const phoneNumber = formData.get('phone_number') as string;
-            existingUser.phone_number = await formatPhoneNumber(phoneNumber)
+            if (phoneNumber.trim() !== '') {
+                existingUser.phone_number = await formatPhoneNumber(phoneNumber);
+            }
         }
-        if(formData.has('password')) {
-            const Password = formData.get('password') as string
-            const hashedPassword = bcrypt.hashSync(Password, 10)
-            existingUser.password = hashedPassword
+        if (formData.has('password')) {
+            const password = formData.get('password') as string;
+            if (password.trim() !== '') {
+                const hashedPassword = bcrypt.hashSync(password, 10);
+                existingUser.password = hashedPassword;
+            }
         }
         if (formData.has('image') && formData.get('image') instanceof File) {
-            existingUser.image = await upLoadIMG(formData.get('image') as File);
+            const imageFile = formData.get('image') as File;
+            if (imageFile.size > 0) {
+                existingUser.image = await upLoadIMG(imageFile);
+            }
         }
+        
 
         const updatedUser = await prisma.user.update({
             where : {
