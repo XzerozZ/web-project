@@ -21,6 +21,7 @@ model user  {
   email         String     @db.VarChar(255) @unique
   password      String     @db.VarChar(255)
   role          String     @db.VarChar @default("user")
+  OTP           OTP[]
   blog          blog[]
   comment       comment[]
   favorite      favorite[]
@@ -93,4 +94,10 @@ model favorite {
   restaurant         restaurant    @relation(fields: [res_id], references: [res_id])
   user               user          @relation(fields: [user_id], references: [user_id])
   @@unique([user_id,res_id])
+}
+model OTP {
+  otp_id  Int  @id @default(autoincrement())
+  user_id Int
+  OTP     String @db.VarChar(6) @unique
+  user    user @relation(fields: [user_id], references: [user_id])
 }
