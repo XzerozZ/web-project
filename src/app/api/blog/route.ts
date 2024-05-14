@@ -13,10 +13,15 @@ export async function POST( req : Request ) {
                 image = await upLoadIMG(value);
             }
         }
+        const res = await prisma.restaurant.findUnique({
+            where : {
+                name : formData.get('name') as string
+            }
+        })
         const newblog = await prisma.blog.create({
             data : {
                 user_id: parseInt(formData.get('user_id') as string),
-                res_id: parseInt(formData.get('res_id') as string),
+                res_id: res?.res_id as number,
                 title: formData.get('title') as string,
                 image: image,
                 description: formData.get('description') as string

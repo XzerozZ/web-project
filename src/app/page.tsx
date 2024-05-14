@@ -1,113 +1,173 @@
-import Image from "next/image";
+"use client"
+import React, { useEffect, useState } from 'react'
+import Poster from './components/image-component/poster'
+import Product_card from './components/product_card'
+import Image from 'next/image'
+import poster2 from '/public/poster2.png'
+import Link from 'next/link'
+import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation'
+import axios from 'axios'
+import Blog_card from './components/blog_card'
+import { Loader } from 'rsuite'
+import 'rsuite/dist/rsuite.min.css';
+import Headtopic from './components/headtopic'
+import { LuCrown } from "react-icons/lu";
+import { Modal } from 'flowbite-react'
+import TableRanking from './components/tableRanking'
+import { dataInformation } from '@/interface/interface'
 
-export default function Home() {
+const Home = () => {
+
+  
+  
+ 
+  const router = useRouter();
+  const {data:session ,status} = useSession();
+  const [user, setUser] = useState<dataInformation>({} as dataInformation);
+  const fetchUser = async () => {
+      const formData = new FormData();
+      formData.append('email', session?.user?.email || '');
+      await axios.post(`/api/user/`, formData)
+      .then((res) => {
+          console.log(res.data);
+          setUser(res.data);
+      });
+  }
+
+
+  
+
+  const [dataRes, setDataRes] = useState([]);
+  const [foodRanking, setFoodRanking] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const fetchRanking = async () => {
+    axios.get('/api/leaderboard')
+    .then((res) => {
+        console.log(res.data)
+        setFoodRanking(res.data)
+        
+    })
+  }
+  
+
+
+  const fetchRestaurant = async () => {
+    axios.get('/api/restuarant')
+    .then((res) => {
+        console.log(res.data)
+        setDataRes(res.data)
+        
+    })
+  }
+
+  const [dataBlog, setDataBlog] = useState([]);
+  const fetchBlog = async () => {
+    axios.get('/api/blog')
+    .then((res) => {
+        console.log(res.data)
+        setDataBlog(res.data)
+        
+    })
+  }
+  useEffect(() => {
+    fetchRestaurant()
+    fetchBlog()
+    fetchRanking()
+    fetchUser()
+    if (user?.role === 'admin') {
+        router.push('/admin/restaurant')
+    }
+    else if (user?.role === 'user') {
+        console.log('user')
+    }
+  // if (session.data === null) {
+  //   router.push('/auth/signin');
+  // }
+}, [session,router,user]);
+
+
+  
+  // loading state
+  const [isLoading, setIsLoading] = useState(true);
+
+ 
+  useEffect(() => {
+    if (dataRes.length > 0 && dataBlog.length > 0) {
+      setIsLoading(false);
+    }
+  }, [dataRes, dataBlog]);
+
+  if (isLoading) {
+    return  <div className='flex justify-center h-[500px] items-center'>
+      <Loader size="md"  color='black'/>
+    </div>
+  }
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    
+    <>
+    
+   <div className='w-full  bg-[#FAFAFA]'>
+        <div className='flex justify-center gap-10 pt-[60px]  mb-11 '>
+            <div className='md:m-[140px] md:mr-0'>
+              <Poster width={400} height={150} />
+            </div>
+            <div className=' max-sm:hidden '>
+              <Image src={poster2} alt='image' width={500} className='rounded-lg' priority={true} ></Image>
+            </div>
+
         </div>
-      </div>
+        
+        <div className='w-full flex flex-col justify-center items-center gap-3 '>
+          
+            <div className='relative max-sm:w-full'>
+            
+             <Headtopic name="Restaurant" th_name="ร้านอาหาร" />
+             
+             <div className='absolute bottom-4 right-2 overlay'>
+                <LuCrown className='text-[#39db4a]  ' size='30' onClick={() => setOpenModal(true)}/>
+              </div>
+            </div>
+            <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
+               {
+                dataRes.map((data,index) => {
+                  return <Product_card key={index} data={data}/>
+                })
+               }
+              
+            </div>
+            <Link href='/restaurant' className='hover:no-underline bg-[#EAECEE] rounded-[10px] md:w-[1120px] max-sm:w-full max-sm:m-1 p-1 hover:bg-[#E8EAED]/70'>            
+                 <h3 className="text-center text-[20px] m-1 text-[#39db4a] ">ดูทั้งหมด</h3>
+            </Link>
+        </div>
+        <div className='w-full flex flex-col justify-center items-center gap-5 mt-3'>
+           
+            <Headtopic name="Blog" th_name="บทความ"/>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+            <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
+                {
+                  dataBlog.map((data,index) => {
+                    return <Blog_card key={index} data={data}/>
+                  })
+                }
+              
+            </div>
+            <Link href='/blog' className='hover:no-underline bg-[#EAECEE] rounded-[10px] md:w-[1120px] max-sm:w-full max-sm:m-1 p-1 hover:bg-[#E8EAED]/70'>            
+                 <h3 className="text-center text-[20px] m-1 text-[#39db4a] ">ดูทั้งหมด</h3>
+            </Link>
+   </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+   </div>
+   <Modal show={openModal} onClose={() => setOpenModal(false)}>
+      <Modal.Header>Food Ranking</Modal.Header>
+        <Modal.Body>
+         <TableRanking data={foodRanking}/>
+        </Modal.Body>
+       
+      </Modal>
+    </>
+  )
 }
+
+export default Home

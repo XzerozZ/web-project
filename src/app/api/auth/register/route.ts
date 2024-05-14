@@ -30,6 +30,7 @@ export async function POST(req : Request){
         const newuser = await prisma.user.create({
             data : {
                 username: formData.get('username') as string,
+                image : image,
                 phone_number : formData.get('phone_number') as string, // 1234567890
                 birthday : formData.get('birthday') as string, // 1998-03-08
                 email : formData.get('email') as string,

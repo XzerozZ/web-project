@@ -108,11 +108,15 @@ export async function GET() {
                             }
                         }
                     }
-                }
+                },
+                comment : true
             }
         });
+
         await prisma.$disconnect();
-        return Response.json(res)
+        return Response.json(
+            res
+        )
     }
     catch(error){
         await prisma.$disconnect();
@@ -146,24 +150,41 @@ export async function PUT(req: Request) {
         }
 
         if (formData.has('name')) {
-            existingRestaurant.name = formData.get('name') as string;
+            const name = formData.get('name') as string;
+            if (name.trim() !== '') {
+                existingRestaurant.name = name;
+            }
         }
         if (formData.has('phone_number')) {
             const phoneNumber = formData.get('phone_number') as string;
-            existingRestaurant.phone_number = await formatPhoneNumber(phoneNumber);
+            if (phoneNumber.trim() !== '') {
+                existingRestaurant.phone_number = await formatPhoneNumber(phoneNumber);
+            }
         }
         if (formData.has('address')) {
-            existingRestaurant.address = formData.get('address') as string;
+            const address = formData.get('address') as string;
+            if (address.trim() !== '') {
+                existingRestaurant.address = address;
+            }
         }
         if (formData.has('description')) {
-            existingRestaurant.description = formData.get('description') as string;
+            const description = formData.get('description') as string;
+            if (description.trim() !== '') {
+                existingRestaurant.description = description;
+            }
         }
         if (formData.has('image') && formData.get('image') instanceof File) {
-            existingRestaurant.image = await upLoadIMG(formData.get('image') as File);
+            const imageFile = formData.get('image') as File;
+            if (imageFile.size > 0) {
+                existingRestaurant.image = await upLoadIMG(imageFile);
+            }
         }
         if (formData.has('image_background') && formData.get('image_background') instanceof File) {
-            existingRestaurant.image_background = await upLoadIMG(formData.get('image_background') as File);
-        }
+            const backgroundImageFile = formData.get('image_background') as File;
+            if (backgroundImageFile.size > 0) {
+                existingRestaurant.image_background = await upLoadIMG(backgroundImageFile);
+            }
+        }        
 
         const updatedRestaurant = await prisma.restaurant.update({
             where: {

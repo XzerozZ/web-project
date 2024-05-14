@@ -27,12 +27,13 @@ model user  {
 }
 model restaurant  {
   res_id            Int        @id @default(autoincrement())
-  name              String     @db.VarChar(255)
+  name              String     @db.VarChar(255) @unique
   image             String?    @db.Text
   image_background  String?    @db.Text
   phone_number      String     @db.VarChar(12)
   address           String     @db.Text
   description       String     @db.Text
+  averageRating     Float      @default(0.0)
   res_op            res_op[]
   blog              blog[]
   comment           comment[]
@@ -87,7 +88,6 @@ model comment {
   user               user          @relation(fields: [user_id], references: [user_id])
 }
 model favorite {
-  fav_id             Int           @id @default(autoincrement())
   user_id            Int
   res_id             Int
   restaurant         restaurant    @relation(fields: [res_id], references: [res_id])

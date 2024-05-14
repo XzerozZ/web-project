@@ -37,7 +37,10 @@ export async function DELETE( req : Request ) {
         const id = parseInt(formData.get('id') as string);
         await prisma.favorite.delete({
             where : {
-                fav_id : id
+                user_id_res_id : {
+                    user_id : parseInt(formData.get('user_id') as string),
+                    res_id : parseInt(formData.get('res_id') as string)
+                }
             }
         })
         await prisma.$disconnect();
