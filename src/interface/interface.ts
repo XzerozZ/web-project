@@ -315,6 +315,7 @@ export interface CatRank {
     name: string;
     averageRating: number;
     category: string;
+    image: string;
 }
 
 // Co

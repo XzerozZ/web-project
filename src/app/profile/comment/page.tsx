@@ -24,6 +24,7 @@ const page = () => {
 
 
 
+
  
  
   const fetchFav = async (email:any) => {
@@ -59,6 +60,7 @@ useEffect(() => {
                         fetchFav(session?.user?.email);
                         fetchInformation(session?.user?.email)
                         setIsLoading(false);
+                       
                 }
                 else if (status === 'unauthenticated') {
                         router.push('/auth/signin');

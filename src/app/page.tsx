@@ -75,12 +75,7 @@ const Home = () => {
     fetchBlog()
     fetchRanking()
     fetchUser()
-    if (user?.role === 'admin') {
-        router.push('/admin/restaurant')
-    }
-    else if (user?.role === 'user') {
-        console.log('user')
-    }
+   
   // if (session.data === null) {
   //   router.push('/auth/signin');
   // }
@@ -120,13 +115,11 @@ const Home = () => {
         
         <div className='w-full flex flex-col justify-center items-center gap-3 '>
           
-            <div className='relative max-sm:w-full'>
+            <div className=' max-sm:w-full'>
             
              <Headtopic name="Restaurant" th_name="ร้านอาหาร" />
              
-             <div className='absolute bottom-4 right-2 overlay'>
-                <LuCrown className='text-[#39db4a]  ' size='30' onClick={() => setOpenModal(true)}/>
-              </div>
+            
             </div>
             <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
                {
@@ -159,13 +152,7 @@ const Home = () => {
 
 
    </div>
-   <Modal show={openModal} onClose={() => setOpenModal(false)}>
-      <Modal.Header>Food Ranking</Modal.Header>
-        <Modal.Body>
-         <TableRanking data={foodRanking}/>
-        </Modal.Body>
-       
-      </Modal>
+
     </>
   )
 }

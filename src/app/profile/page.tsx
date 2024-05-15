@@ -26,6 +26,7 @@ const ProfilePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
 
+  const [isAdmin, setIsAdmin] = useState(false);
 
 
  
@@ -101,15 +102,25 @@ const handleSubmit = (e:any) => {
 useEffect(() => {
                         
 
-                if (session) {
+                if (session) {  
+                                console.log(data.role)
                                  fetchInformation(session?.user?.email);
                                  setIsLoading(false);
+                                if (data){
+                                        if (data.role === 'admin') {
+                                                setIsAdmin(true)
+                                                console.log('admin')
+                                        }else if (data.role === 'user'){
+                                                setIsAdmin(false)
+                                                console.log('not admin')
+                                        }
+                                }
                         }
                 else if (status === 'unauthenticated') {
                         router.push('/auth/signin');
                 }
         
-        }, [session]);
+        }, [session,data]);
 
 
   if (isLoading) {
@@ -134,6 +145,11 @@ return (
                                                 <h1 className='my-auto max-sm:text-[20px]'>{data.username}</h1>
                                                 <div className='my-auto'></div>
                                         </div>
+                                        <div>
+                                                {
+                                                        isAdmin ? <Link href='/admin/restaurant'><h1 className='text-white bg-[#39db4a] rounded-[8px] px-3 py-2 m-3 text-lg'>Admin</h1></Link> : <div>test</div>
+                                                }
+                                        </div>
                                 </div>
                         </div>
                         <div className='flex justify-center p-3'>
@@ -141,7 +157,7 @@ return (
                                         <div className='w-1/5 max-sm:hidden '>
                                                <SideBar />
                                         </div>
-                                        <div className='w-4/5 max-sm:w-full'>
+                                        <div className='w-4/5 max-sm:w-full p-3'>
                                         <PropInformation data={data} />
                                         <div className='flex justify-end'>
                                                 <button onClick={() => setOpenModal(true)} className='text-white bg-[#39db4a] rounded-[8px] px-3 py-2 m-3'>Edit profile</button>

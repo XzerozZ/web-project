@@ -8,25 +8,32 @@ import { useSession,signOut } from "next-auth/react";
 import { IoSearchOutline } from "react-icons/io5";
 import { Dropdown } from 'flowbite-react';
 import axios from 'axios';
-import { AllBlog, SearchRestaurant } from '@/interface/interface';
+import { AllBlog, SearchRestaurant, dataInformation } from '@/interface/interface';
 import SearchBar from './searchbar';
 import { Drawer } from 'rsuite';
 import SearchbarRes from './serachbar_res';
 
+import { LuCrown } from "react-icons/lu";
 
 
 
 const navbar = () => {
 
-  const session = useSession();
-  console.log("session from navbar",session);
+ 
+ 
   const [dataBlog , setDataBlog] = useState<(AllBlog)[]>([]);
   const [data, setData] = useState<(SearchRestaurant)[]>([]);
+
+  const session = useSession();
+ 
+
+  
+  
 
     const fetchRestaurant = async () => {
         axios.get('/api/restuarant')
             .then((res) => {
-                console.log(res.data)
+              
                 setData(res.data)
   
             })
@@ -35,7 +42,7 @@ const navbar = () => {
   const fetchBlog = async () => {
       axios.get('/api/blog')
           .then((res) => {
-              console.log(res.data)
+        
               setDataBlog(res.data)
 
           })
@@ -45,6 +52,11 @@ const navbar = () => {
   useEffect(() => {
       fetchRestaurant();
       fetchBlog();
+     
+     
+    
+    
+    
   }, []);
 
 
@@ -52,7 +64,7 @@ const navbar = () => {
   
   
   
-  if (session.data === null){
+  if (session.data === null || undefined){
   return (
    <>
    <nav className='bg-[#fff] flex justify-center h-[120px] items-center w-full max-sm:p-3'>
@@ -99,8 +111,12 @@ const navbar = () => {
             <div className='max-sm:flex hidden'>
               <IoSearchOutline className='w-[25px] h-[25px] ' onClick={() => setOpen(true)}/>
             </div>
+            <div>
+            <Link className='hover:text-[#39db4a] focus:text-[#39db4a] no-underline text-black hover:no-underline' href="/leaderboard"><LuCrown className='w-[25px] h-[25px] hover:text-[#39db4a]' /></Link>
+
+            </div>
              <div>
-              <Link href='/profile/save' className='hover:text-[#39db4a] no-underline text-black hover:no-underline'> <MdFavoriteBorder className='w-[25px] h-[25px] hover:text-[#39db4a]'/></Link>
+              <Link href='/profile/save' className='hover:text-[#39db4a] focus:text-[#39db4a] no-underline text-black hover:no-underline'> <MdFavoriteBorder className='w-[25px] h-[25px] hover:text-[#39db4a]'/></Link>
              </div>
              <div>
                
@@ -110,6 +126,7 @@ const navbar = () => {
                   <Dropdown.Item><Link href="/profile/comment" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>Comment</Link></Dropdown.Item>
                   <Dropdown.Item><Link href="/profile/blog" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>My blog</Link></Dropdown.Item>
                   <Dropdown.Item><Link href="/profile/save" className='hover:text-[#39db4a] no-underline text-black hover:no-underline'>favorite</Link></Dropdown.Item>
+                 
 
                   <Dropdown.Item onClick={() => signOut({callbackUrl:'/auth/signin'})} className='hover:text-[#39db4a]'>Sign out</Dropdown.Item>
                 </Dropdown>

@@ -23,7 +23,7 @@ const product_card = ({data} : {data:AllRestaurant}) => {
              </div>
              <div className='flex '> 
                <span >   <Rate max={1} defaultValue={1} readOnly color='yellow'/> </span>
-               <span className='text-[20px] m-1'>{data.averageRating}</span>
+               <span className='text-[20px] m-1'>{data.averageRating.toFixed(2)}</span>
              </div>  
           </div>
        </div>

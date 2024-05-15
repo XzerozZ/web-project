@@ -1,4 +1,5 @@
 import { dataPersonalComment } from '@/interface/interface'
+import Link from 'next/link'
 import React from 'react'
 import { Avatar, Rate } from 'rsuite'
 
@@ -7,7 +8,8 @@ import { Avatar, Rate } from 'rsuite'
 const comCard = ({data} : {data:dataPersonalComment}) => {
   return (
     <>
-       <div className='flex gap-1 flex-col bg-white px-5 py-3 rounded-lg'>
+      <Link href={`/restaurant/${data?.res_id}`} className='text-black hover:no-underline no-underline active:no-underline hover:scale-105 hover:border hover:border-[#39db4a] hover:rounded-md'>
+      <div className='flex gap-1 flex-col bg-white px-5 py-3 rounded-lg'>
        <div className='flex flex-row gap-3' >
             <div>
               <Avatar circle size='md'  src={data?.user.image}/>
@@ -29,6 +31,7 @@ const comCard = ({data} : {data:dataPersonalComment}) => {
           {data?.description}
         </div>
        </div>
+      </Link>
     </>
   )
 }
