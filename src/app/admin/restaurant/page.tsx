@@ -194,9 +194,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           <Sidebar.Item href="/admin/addrestaurant" icon={HiInbox}>
             Add Restaurant
           </Sidebar.Item>
-          <Sidebar.Item href="/admin/editrestaurant" icon={HiInbox}>
-            Edit Restaurant
-          </Sidebar.Item>
+        
          
          
         </Sidebar.ItemGroup>
