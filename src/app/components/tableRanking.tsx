@@ -1,15 +1,23 @@
 import {  CatRank } from '@/interface/interface'
 import { Table } from 'flowbite-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 
 
  const tableRanking = ({data} : {data: CatRank[]}) => {
+  const router = useRouter()
+
+
+  const onClicktoRestaurant = (id: number) => {
+    router.push(`/restaurant/${id}`)
+    
+  }
   return (
     <>
-     <div className="overflow-x-auto">
-      <Table>
+     <div className="w-full">
+      <Table >
         <Table.Head>
           <Table.HeadCell>Rank</Table.HeadCell>
           <Table.HeadCell>Restaurant name</Table.HeadCell>
@@ -21,12 +29,20 @@ import React from 'react'
           {
             data.map((item, index) => (
                 
-              <Table.Row key={index}>
-               
-                <Table.Cell> <Link href={`/restaurant/${item.res_id}`} className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]   hover:no-underline'>{index + 1} </Link></Table.Cell>
-                <Table.Cell> <Link href={`/restaurant/${item.res_id}`} className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]   hover:no-underline'>{item.name}</Link></Table.Cell>
-                <Table.Cell> <Link href={`/restaurant/${item.res_id}`} className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]   hover:no-underline'>{item.averageRating}</Link></Table.Cell>
-                
+              <Table.Row key={index} className='hover:bg-[#39DB4A]/5 text-black p-3 hover:text-[#39DB4A] rounded-[10px]   hover:no-underline' onClick={() => onClicktoRestaurant(item.res_id)}>
+           
+          
+              <Table.Cell> {index + 1} </Table.Cell>
+
+            
+             
+              <Table.Cell> {item.name}</Table.Cell>
+
+             
+           
+                      <Table.Cell> {item.averageRating}</Table.Cell>
+                  
+              
                
               </Table.Row>
             ))

@@ -22,6 +22,12 @@ const page = () => {
     const [user, setUser] = useState<dataInformation>({} as dataInformation);
     const [isLoading, setIsLoading] = useState(true);
     const [openModal, setOpenModal] = useState(false);
+    const [IdEdit, setEditId] = useState(0);
+
+    const setButton = (id:any) => {
+      setOpenModal(true);
+      setEditId(id);
+    }
     const fetchUser = async () => {
         const formData = new FormData();
         formData.append('email', session?.user?.email || '');
@@ -188,9 +194,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           <Sidebar.Item href="/admin/addrestaurant" icon={HiInbox}>
             Add Restaurant
           </Sidebar.Item>
-          <Sidebar.Item href="/admin/editrestaurant" icon={HiInbox}>
-            Edit Restaurant
-          </Sidebar.Item>
+        
          
          
         </Sidebar.ItemGroup>
@@ -226,7 +230,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                     <Table.Cell>{(item as { address:string})?.address}</Table.Cell>
                     <Table.Cell>
                         <div className='flex gap-5'>
-                            <button className="font-medium text-[#39db4a] hover:underline dark:text-[#39db4a]/50"  onClick={() => setOpenModal(true)}>
+                            <button className="font-medium text-[#39db4a] hover:underline dark:text-[#39db4a]/50"  onClick={() => setButton((item as { res_id: string })?.res_id)}>
                                 Edit
                             </button>
                             <button onClick={() => deleteRestaurant( (item as { res_id: string })?.res_id)} className="font-medium text-[#ff0000] hover:underline dark:text-[#ff0000]/50">
@@ -307,7 +311,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                               <input 
                               type="text" 
                               id="res_id" 
-                             
+                              value={IdEdit}
                               onChange={handleChange}
                               name='res_id'
                               

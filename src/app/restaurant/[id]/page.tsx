@@ -93,8 +93,8 @@ import { FaHeart } from "react-icons/fa";
         
     }, []);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
+     
 
       
         const formData = new FormData();
@@ -338,7 +338,7 @@ if (isLoading) {
                                         <div className='showrating flex flex-row'>
                                             <div className='w-1/3 flex-col flex '>
                                                 <div className='text-[80px] text-center'>
-                                                1 
+                                                {dataRes?.averageRating.toFixed(1)} 
                                                 </div>
                                                 <div className='text-[30px] text-center'>
                                                     จาก 5
@@ -443,7 +443,7 @@ if (isLoading) {
                         <div className='showrating flex flex-row'>
                             <div className='w-1/3 flex-col flex '>
                                 <div className='text-[80px] text-center'>
-                                   1 
+                                {dataRes?.averageRating.toFixed(1)} 
                                 </div>
                                 <div className='text-[30px]  text-center'>
                                     จาก 5
