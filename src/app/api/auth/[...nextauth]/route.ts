@@ -3,12 +3,18 @@ import { compare } from 'bcrypt'
 import { randomUUID, randomBytes } from 'crypto'
 import NextAuth, { type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { Auth } from '../../interface/interface'
+
+const authConfig : Auth = {
+  key : process.env.NEXT_AUTH_SECRET || '' ,
+}
 
 const prisma = new PrismaClient()
 export const authOptions: NextAuthOptions = {
   jwt: {
     maxAge: 60 * 60 * 24 * 30,
   },
+  secret : authConfig.key,
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 *60,
