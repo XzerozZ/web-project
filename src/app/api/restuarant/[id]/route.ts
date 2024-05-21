@@ -1,11 +1,12 @@
-import { PrismaClient } from '@prisma/client';
+'use server'
+import prisma from '../../utils/prisma';
 
 interface RatingCounts {
     [key: number]: number;
-  }
+}
+
 // localhost:3000/api/restuarant/[id]
 export async function GET(req : Request,{ params }: { params: { id: string } }) {
-    const prisma = new PrismaClient();
     try {
         const resId = await prisma.restaurant.findUnique({
             where : {

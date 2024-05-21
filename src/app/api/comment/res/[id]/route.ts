@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+'use server'
+import prisma from '../../../utils/prisma';
 
 // localhost:3000/api/comment/res/[id] // ดูคอมเม้นของร้านค้านั้นๆ
 export async function GET(req : Request,{params} : {params : { id : string}}){
-    const prisma = new PrismaClient();
     try{
         const commentofres = await prisma.comment.findMany({
             where : {

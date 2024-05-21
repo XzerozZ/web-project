@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+'use server'
+import prisma from '../../utils/prisma';
 
 // localhost:3000/api/comment/user // ดูคอมเม้นของuserว่าเคยเม้นอะไรบ้าง
 export async function POST(req : Request){
-    const prisma = new PrismaClient();
     try{
         const formData = await req.formData();
         const user  = await prisma.user.findUnique({

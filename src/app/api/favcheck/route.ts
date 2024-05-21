@@ -1,10 +1,9 @@
-import { PrismaClient } from '@prisma/client';
-import e from 'express';
+'use server'
+import prisma from '../utils/prisma';
 
 //localhost:3000/api/favorite
 //POST
 export async function POST( req : Request ) {
-    const prisma = new PrismaClient();
     try {
         const formData = await req.formData();
         const fav = await prisma.favorite.findUnique({

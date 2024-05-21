@@ -1,10 +1,10 @@
-import { PrismaClient } from '@prisma/client';
+'use server'
+import prisma from '../utils/prisma';
 import { upLoadIMG } from '../admin/supa';
-// localhost:3000/api/comment
 
+// localhost:3000/api/comment
 //POST
 export async function POST( req : Request ) {
-    const prisma = new PrismaClient();
     try {
         const formData = await req.formData();
         let image: string | null = null;
@@ -45,7 +45,6 @@ export async function POST( req : Request ) {
 
 //GET
 export async function GET() {
-    const prisma = new PrismaClient();
     try {
         const blogs = await prisma.blog.findMany()
         await prisma.$disconnect();
@@ -66,7 +65,6 @@ export async function GET() {
 
 //PUT(UPDATE/EDIT)
 export async function PUT( req : Request ){
-    const prisma = new PrismaClient();
     try {
         const formData = await req.formData();
         const id = parseInt(formData.get('id') as string);
@@ -118,7 +116,6 @@ export async function PUT( req : Request ){
 
 //DELETE
 export async function DELETE( req : Request ) {
-    const prisma = new PrismaClient();
     try{
         const formData = await req.formData();
         const id = parseInt(formData.get('id') as string);

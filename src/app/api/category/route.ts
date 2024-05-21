@@ -1,8 +1,7 @@
 'use server'
-import { PrismaClient } from '@prisma/client';
+import prisma from '../utils/prisma';
 
 export async function POST( req : Request ) {
-    const prisma = new PrismaClient();
     try{
         const formData = await req.formData();
         const newcategory = await prisma.res_type.create({
@@ -28,7 +27,6 @@ export async function POST( req : Request ) {
 }
 
 export async function DELETE( req : Request ) {
-    const prisma = new PrismaClient();
     try { 
         const formData = await req.formData();
         await prisma.res_type.delete({

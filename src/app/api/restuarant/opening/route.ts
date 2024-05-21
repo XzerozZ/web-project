@@ -1,8 +1,7 @@
 'use server'
-import { PrismaClient } from '@prisma/client';
+import prisma from '../../utils/prisma';
 
 export async function DELETE( req : Request ) {
-    const prisma = new PrismaClient();
     try { 
         const formData = await req.formData();
         const id = parseInt(formData.get('id') as string);

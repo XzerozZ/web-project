@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+'use server'
+import prisma from '../../../utils/prisma';
 
 // localhost:3000/api/blog/res/[id] //blog ของ ร้านอาหารนั้นๆ
 export async function GET(req : Request,{ params }: { params: { id: string } }) {
-    const prisma = new PrismaClient();
     try {
         const blogbyresId = await prisma.blog.findMany({
             where : {

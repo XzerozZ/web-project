@@ -1,8 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+'use server'
+import prisma from '../../utils/prisma';
 import bcrypt from 'bcrypt';
 
 export async function POST( req : Request ) {
-    const prisma = new PrismaClient();
     try{
         const formData = await req.formData();
         const email = formData.get('email') as string

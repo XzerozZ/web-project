@@ -1,12 +1,11 @@
 'use server'
-import { PrismaClient } from '@prisma/client';
+import prisma from '../utils/prisma';
 import { formatPhoneNumber } from '../format/phonenumber';
 import { upLoadIMG } from '../admin/supa';
 
 //localhost:3000/api/restuarant
 //POST
 export async function POST(req: Request) {
-    const prisma = new PrismaClient();
     try {
         const formData = await req.formData();
         let image: string | null = null;
@@ -96,7 +95,6 @@ export async function POST(req: Request) {
   
 //GET
 export async function GET() {
-    const prisma = new PrismaClient();
     try {
         const res = await prisma.restaurant.findMany({
             include : {
@@ -133,7 +131,6 @@ export async function GET() {
 
 //PUT(UPDATE/EDIT)
 export async function PUT(req: Request) {
-    const prisma = new PrismaClient();
     try {
         const formData = await req.formData();
         const id = parseInt(formData.get('id') as string);
@@ -222,7 +219,6 @@ export async function PUT(req: Request) {
 
 //DELETE
 export async function DELETE(req: Request) {
-    const prisma = new PrismaClient();
     try {
         const formData = await req.formData();
         const id = parseInt(formData.get('id') as string);

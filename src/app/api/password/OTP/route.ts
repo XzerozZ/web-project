@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+'use server'
+import prisma from "../../utils/prisma";
 
 export async function POST( req : Request ) {
-    const prisma = new PrismaClient();
     try {
         const formData = await req.formData();
         const OTP = formData.get('OTP') as string

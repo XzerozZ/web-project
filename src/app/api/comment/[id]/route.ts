@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+'use server'
+import prisma from '../../utils/prisma';
 
 // localhost:3000/api/comment/[id]
 export async function GET(req : Request,{ params }: { params: { id: string } }) {
-    const prisma = new PrismaClient();
     try {
         const commentId = await prisma.comment.findUnique({
             where : {

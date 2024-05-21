@@ -1,10 +1,9 @@
 'use server'
-import { PrismaClient } from '@prisma/client';
+import prisma from '../utils/prisma';
 
 //localhost:3000/api/comment
 //POST
 export async function POST( req : Request ) {
-    const prisma = new PrismaClient();
     try{
         const formData = await req.formData();
         const userId = parseInt(formData.get('user_id') as string);
@@ -52,7 +51,6 @@ export async function POST( req : Request ) {
 
 //PUT(UPDATE/EDIT)
 export async function PUT( req : Request ) {
-    const prisma = new PrismaClient();
     try{
         const formData = await req.formData();
         const id = parseInt(formData.get('id') as string);
@@ -97,7 +95,6 @@ export async function PUT( req : Request ) {
 
 //DELETE
 export async function DELETE( req : Request ) {
-    const prisma = new PrismaClient();
     try { 
         const formData = await req.formData();
         const id = parseInt(formData.get('id') as string);

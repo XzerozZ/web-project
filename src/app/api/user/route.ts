@@ -1,5 +1,5 @@
 'use server'
-import { PrismaClient } from '@prisma/client';
+import prisma from '../utils/prisma';
 import bcrypt from 'bcrypt';
 import { formatPhoneNumber } from '../format/phonenumber';
 import { upLoadIMG } from '../admin/supa';
@@ -7,7 +7,6 @@ import { upLoadIMG } from '../admin/supa';
 
 
 export async function POST(req : Request){
-    const prisma = new PrismaClient();
     try{
         const formData = await req.formData();
         const user  = await prisma.user.findUnique({
@@ -33,7 +32,6 @@ export async function POST(req : Request){
 }
 
 export async function PUT( req : Request ) {
-    const prisma = new PrismaClient();
     try {
         const formData = await req.formData();
         const id = parseInt(formData.get('id') as string)

@@ -1,11 +1,10 @@
 'use server'
 import bcrypt from 'bcrypt';
-import { PrismaClient } from '@prisma/client';
+import prisma from '../../utils/prisma';
 import { formatPhoneNumber } from '../../format/phonenumber';
 import { upLoadIMG } from '../../admin/supa';
 
 export async function POST(req : Request){
-    const prisma = new PrismaClient();
     try {
         const formData = await req.formData();
         let image: string | null = null;

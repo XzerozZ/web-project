@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+'use server'
+import prisma from '../../utils/prisma';
 
 // localhost:3000/api/user/[id]
 export async function GET(req : Request,{ params }: { params: { email: string } }){
-    const prisma = new PrismaClient();
     try{
         const userid = await prisma.user.findUnique({
             where: {
