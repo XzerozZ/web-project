@@ -4,8 +4,6 @@ import bcrypt from 'bcrypt';
 import { formatPhoneNumber } from '../format/phonenumber';
 import { upLoadIMG } from '../admin/supa';
 
-
-
 export async function POST(req : Request){
     try{
         const formData = await req.formData();

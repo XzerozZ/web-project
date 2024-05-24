@@ -11,21 +11,29 @@ export async function POST(req : Request) {
                 email : formData.get('email') as string
             }
         })
-        const userfav = await prisma.favorite.findMany({
-            where : {
-                user_id : user?.user_id
-            },
-            include : {
-                user : true ,
-                restaurant : true
+        if(user){
+            const userfav = await prisma.favorite.findMany({
+                where : {
+                    user_id : user?.user_id
+                },
+                include : {
+                    user : true ,
+                    restaurant : true
+                }
+            })
+            await prisma.$disconnect();
+            if(userfav) {
+                return Response.json(userfav)
+            } else {
+                return Response.json({
+                    message : "Not have any your favorite Restuarant(s)"
+                })
             }
-        })
-        await prisma.$disconnect();
-        if(userfav) {
-            return Response.json(userfav)
-        } else {
+        }
+        else{
+            await prisma.$disconnect();
             return Response.json({
-                message : "Not have any your favorite Restuarant(s)"
+                message : "Not found this user"
             })
         }
     }

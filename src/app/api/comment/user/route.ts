@@ -10,21 +10,30 @@ export async function POST(req : Request){
                 email : formData.get('email') as string
             }
         })
-        const commentofuser = await prisma.comment.findMany({
-            where : {
-                user_id : user?.user_id
-            },
-            include : {
-                user : true,
-                restaurant : true
+        if(user){
+            const commentofuser = await prisma.comment.findMany({
+                where : {
+                    user_id : user.user_id
+                },
+                include : {
+                    user : true,
+                    restaurant : true
+                }
+            })
+            await prisma.$disconnect();
+            if (commentofuser) {
+                return Response.json(commentofuser);
+            } 
+            else {
+                return Response.json({
+                    message : "Not have any comments now"
+                })
             }
-        })
-        await prisma.$disconnect();
-        if (commentofuser) {
-            return Response.json(commentofuser);
-        } else {
+        }
+        else{
+            await prisma.$disconnect();
             return Response.json({
-                message : "Not have any comments now"
+                message : "Not found this User"
             })
         }
     }

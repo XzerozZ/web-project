@@ -11,21 +11,29 @@ export async function POST(req : Request) {
                 email : formData.get('email') as string
             }
         })
-        const blogbyuserId = await prisma.blog.findMany({
-            where : {
-                user_id : user?.user_id
-            },
-            include : {
-                user : true , 
-                restaurant : true ,
+        if(user){
+            const blogbyuserId = await prisma.blog.findMany({
+                where : {
+                    user_id : user?.user_id
+                },
+                include : {
+                    user : true , 
+                    restaurant : true ,
+                }
+            })
+            await prisma.$disconnect();
+            if (blogbyuserId) {
+                return Response.json(blogbyuserId);
+            } else {
+                return Response.json({
+                    message : "Not have any blogs"
+                })
             }
-        })
-        await prisma.$disconnect();
-        if (blogbyuserId) {
-            return Response.json(blogbyuserId);
-        } else {
+        }
+        else{
+            await prisma.$disconnect();
             return Response.json({
-                message : "Not have any blogs"
+                message : "Not Added"
             })
         }
     }
