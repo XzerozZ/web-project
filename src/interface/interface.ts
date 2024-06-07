@@ -8,6 +8,7 @@ export interface UserData {
     password: string;
     role: string;
     image: string;
+    confirm: string;
 
 }
 

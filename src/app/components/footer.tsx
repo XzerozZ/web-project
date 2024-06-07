@@ -12,7 +12,7 @@ type Props = {}
 const footer = (props: Props) => {
   return (
    <>   
-   <footer className='bg-[#fff] flex justify-center  items-center w-full  max-sm:p-5 p-5'>
+   <footer className='bg-[#fff] flex justify-center  items-center w-full  max-sm:p-5 p-5 '>
         <div>
         <div className='sm:flex justify-between w-[1120px] max-sm:w-full max-sm:grid max-sm:grid-cols-2  gap-5'>
             <div>

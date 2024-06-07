@@ -27,6 +27,7 @@ const ProfilePage = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const [isAdmin, setIsAdmin] = useState(false);
+  const [UserEmail, setUserEmail] = useState(session?.user?.email);
 
 
  
@@ -47,7 +48,7 @@ const ProfilePage = () => {
        
         username: '',
         phone_number: '',
-        
+        // birthday:'',
         password: '',
       
         image: '',
@@ -82,10 +83,10 @@ const handleSubmit = (e:any) => {
         e.preventDefault();
         
         const formData = new FormData();
-        formData.append('id', String(data.user_id));
+        formData.append('id', String(data?.user_id));
         formData.append('username', userData.username);
         formData.append('phone_number', userData.phone_number);
-   
+        // formData.append('birthday', userData.birthday);
         formData.append('password', userData.password);
         if (selectedImage) {
                         formData.append('image', selectedImage);
@@ -103,46 +104,45 @@ useEffect(() => {
                         
 
                 if (session) {  
-                                console.log(data.role)
-                                 fetchInformation(session?.user?.email);
-                                 setIsLoading(false);
+                                console.log(data?.role)
+                                setUserEmail(session?.user?.email)      
+                                fetchInformation(UserEmail);
+                                setIsLoading(false);
                                 if (data){
-                                        if (data.role === 'admin') {
+                                        if (data?.role === 'admin') {
                                                 setIsAdmin(true)
                                                 console.log('admin')
-                                        }else if (data.role === 'user'){
+                                        }else if (data?.role === 'user'){
                                                 setIsAdmin(false)
                                                 console.log('not admin')
                                         }
                                 }
                         }
-                else if (status === 'unauthenticated') {
-                        router.push('/auth/signin');
-                }
+                
         
         }, [session,data]);
 
 
   if (isLoading) {
-    return  <div className='flex justify-center h-[500px] items-center'>
+    return  <div className='flex justify-center h-[1000px] items-center'>
       <Loader size="md"  color='black'/>
     </div>
   }
 return (
         <>
-                <div className='flex flex-col justify-center bg-[#fafafa]'>
-                        <div className='bg-[#e3e3e3] flex w-full justify-center p-5'>
+                <div className='flex flex-col justify-center bg-[#fafafa] '>
+                        <div className='bg-[#e3e3e3] flex w-full justify-center p-5 '>
                                 <div className='flex flex-row w-[1140px] justify-between gap-5 '>
                                         <div className=''>
                                                 <div className='max-sm:hidden'>
-                                                        <Avatar circle size='xxl' src={data.image}/>
+                                                        <Avatar circle size='xxl' src={data?.image}/>
                                                 </div>
                                                 <div className='sm:hidden'>
-                                                        <Avatar circle size='xl' src={data.image}/>
+                                                        <Avatar circle size='xl' src={data?.image}/>
                                                 </div>
                                         </div>
                                         <div className='flex flex-row grow justify-between max-sm:flex-col'>
-                                                <h1 className='my-auto max-sm:text-[20px]'>{data.username}</h1>
+                                                <h1 className='my-auto max-sm:text-[20px]'>{data?.username}</h1>
                                                 <div className='my-auto'></div>
                                         </div>
                                         <div>
@@ -152,7 +152,7 @@ return (
                                         </div>
                                 </div>
                         </div>
-                        <div className='flex justify-center p-3'>
+                        <div className='flex justify-center p-3 min-h-screen'>
                                 <div className='flex gap-5 w-[1140px]'>
                                         <div className='w-1/5 max-sm:hidden '>
                                                <SideBar />
@@ -212,9 +212,10 @@ return (
                                         onChange={handleChange}
                                         name='username'
                                         
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="email@email.com" required />
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="username"  />
                                 </div>
                                 
+                              
                                 <div className='flex flex-row gap-3 w-full justify-between'>
                                         <div  className='w-full'>
                                                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telephone</label>
@@ -224,10 +225,14 @@ return (
                                                 name='phone_number'
                                                 onChange={handleChange}
                                                 
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="087-123457" required />
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="087-XXXXXXX"  />
                                         </div>
+                                     
                                 
                                 </div>
+
+                                
+                        
 
                                 <div>
                                         <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
@@ -237,7 +242,7 @@ return (
                                         onChange={handleChange}
                                         name='password'
                                         
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="password" required />
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="password"  />
                                 </div>
 
 

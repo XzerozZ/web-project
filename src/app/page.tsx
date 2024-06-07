@@ -37,8 +37,6 @@ const Home = () => {
 
   const [dataRes, setDataRes] = useState([]);
  
-  const [openModal, setOpenModal] = useState(false);
-
 
 
   const fetchRestaurant = async () => {
@@ -77,13 +75,13 @@ const Home = () => {
 
  
   useEffect(() => {
-    if (dataRes.length > 0 && dataBlog.length > 0) {
+    if (dataRes.length >= 0 && dataBlog.length >= 0) {
       setIsLoading(false);
     }
   }, [dataRes, dataBlog]);
 
   if (isLoading) {
-    return  <div className='flex justify-center h-[500px] items-center'>
+    return  <div className='flex justify-center h-[1000px] items-center'>
       <Loader size="md"  color='black'/>
     </div>
   }
@@ -91,7 +89,7 @@ const Home = () => {
     
     <>
     
-   <div className='w-full  bg-[#FAFAFA]'>
+   <div className='w-full  bg-[#FAFAFA] min-h-screen'>
         <div className='flex justify-center gap-10 pt-[60px]  mb-11 '>
             <div className='md:m-[140px] md:mr-0'>
               <Poster width={400} height={150} />

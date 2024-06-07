@@ -42,7 +42,7 @@ const PropInformation = ({data} : {data:dataInformation}) => {
          <div  className='w-full'>
                  <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Birthday</label>
                  <div  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" >
-                        {data?.birthday}</div>
+                        {data?.birthday?.slice(0,10)}</div>
          </div>
 
      </div>
