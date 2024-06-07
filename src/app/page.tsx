@@ -12,9 +12,6 @@ import Blog_card from './components/blog_card'
 import { Loader } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
 import Headtopic from './components/headtopic'
-import { LuCrown } from "react-icons/lu";
-import { Modal } from 'flowbite-react'
-import TableRanking from './components/tableRanking'
 import { dataInformation } from '@/interface/interface'
 
 const Home = () => {
@@ -39,17 +36,9 @@ const Home = () => {
   
 
   const [dataRes, setDataRes] = useState([]);
-  const [foodRanking, setFoodRanking] = useState([]);
+ 
   const [openModal, setOpenModal] = useState(false);
-  const fetchRanking = async () => {
-    axios.get('/api/leaderboard')
-    .then((res) => {
-        console.log(res.data)
-        setFoodRanking(res.data)
-        
-    })
-  }
-  
+
 
 
   const fetchRestaurant = async () => {
@@ -73,7 +62,7 @@ const Home = () => {
   useEffect(() => {
     fetchRestaurant()
     fetchBlog()
-    fetchRanking()
+    
     fetchUser()
    
   // if (session.data === null) {
