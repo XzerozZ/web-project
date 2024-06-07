@@ -1,4 +1,3 @@
-'use server'
 import prisma from '../../utils/prisma';
 import { compare } from 'bcrypt'
 import { randomUUID, randomBytes } from 'crypto'
