@@ -291,10 +291,10 @@ if (isLoading) {
                 <div className='  max-sm:w-full flex flex-col gap-3'>
                     <div className='rounded-[10px] bg-white p-4 flex flex-col gap-3'>
                         <div className='flex flex-row gap-3 '>
-                            <div>
+                            <div className='w-1/2'>
                                 <img src={dataRes?.image} alt='image'  className='rounded-[10px] w-full aspect-square'></img>
                             </div>
-                            <div>
+                            <div className='w-1/2'>
                                 <img src={dataRes?.image_background} alt='image'  className='rounded-[10px] w-full aspect-square'></img>
                             </div>
                         </div>
