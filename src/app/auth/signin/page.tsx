@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2'
 import Link from 'next/link';
+import { set } from 'mongoose';
 type Props = {}
 
 const  LoginPage = (props: Props) => {
@@ -14,8 +15,8 @@ const  LoginPage = (props: Props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const  Router = useRouter()
-   
-
+    const [result2, setResult] = useState<any>('')
+    console.log(result2,'result2');
 
     const handleSignIn = async (e:any) => {
       
@@ -28,6 +29,10 @@ const  LoginPage = (props: Props) => {
                 email,
                 password
             }).then((res) => {
+                setResult(res)
+                console.log(res?.error);
+
+                
                 Swal.fire({
                 icon: 'success',
                 title: 'Login Success',

@@ -14,6 +14,7 @@ import { set } from 'mongoose';
 import { SideBar } from './component_profile/SideBar';
 import { Button, Modal } from 'flowbite-react';
 import { FaCloudUploadAlt } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 
 
 const ProfilePage = () => {
@@ -95,6 +96,12 @@ const handleSubmit = (e:any) => {
         axios.put('/api/user', formData)
                 .then((res) => {
                         console.log(res);
+                        Swal.fire({
+                                icon: 'success',
+                                title: 'Profile updated',
+                                showConfirmButton: false,
+                                timer: 1500
+                        })
                 });
         console.log(formData)}
 
@@ -139,6 +146,7 @@ return (
                                                 </div>
                                                 <div className='sm:hidden'>
                                                         <Avatar circle size='xl' src={data?.image}/>
+                                                       
                                                 </div>
                                         </div>
                                         <div className='flex flex-row grow justify-between max-sm:flex-col'>
@@ -147,7 +155,7 @@ return (
                                         </div>
                                         <div>
                                                 {
-                                                        isAdmin ? <Link href='/admin/restaurant'><h1 className='text-white bg-[#39db4a] rounded-[8px] px-3 py-2 m-3 text-lg'>Admin</h1></Link> : <div>test</div>
+                                                        isAdmin ? <Link href='/admin/restaurant'><h1 className='text-white bg-[#39db4a] rounded-[8px] px-3 py-2 m-3 text-lg'>Admin</h1></Link> : <div></div>
                                                 }
                                         </div>
                                 </div>

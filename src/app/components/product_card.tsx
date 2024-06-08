@@ -16,7 +16,9 @@ const product_card = ({data} : {data:AllRestaurant}) => {
        
        <div >
            <div >
-           <Image src={data.image} alt='image'  className="rounded-t-lg aspect-square" ></Image>
+           
+          <Image src={data.image} alt='image' width={300} height={100} className="rounded-t-lg aspect-square" />
+          
            </div>
           <div className=' flex flex-col px-3 pb-2'>
              <div>

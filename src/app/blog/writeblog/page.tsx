@@ -8,6 +8,7 @@ import 'rsuite/dist/rsuite.min.css';
 import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
 import { UserSession } from '@/interface/interface';
 import router from 'next/router';
+import Swal from 'sweetalert2';
 
 
 
@@ -74,7 +75,14 @@ const handleSubmit = async () => {
     axios.post('/api/blog', formData).then((res) => {
         console.log(res.data);
     
-    });
+    }).then(() => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Blog has been published',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    })
 }
 const restaurantNames = (dataRes as { name: string }[]).map(dataRes => dataRes.name);
 

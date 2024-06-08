@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { Loader } from 'rsuite';
+import 'rsuite/dist/rsuite.min.css';
 
 
 type Props = {}

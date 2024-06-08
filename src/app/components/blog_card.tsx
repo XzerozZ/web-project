@@ -14,7 +14,7 @@ return (
   <div className="hover:scale-105 relative m-1  ">
     
        <div className=''>
-         <img src={data.image} alt='image'  className="rounded-lg aspect-square" ></img>
+         <Image src={data.image} width={500} height={300} alt='image'  className="rounded-lg aspect-square" ></Image>
          <div className="absolute inset-0 bg-black opacity-0 sm:opacity-20 rounded-lg blur-sm sm:hover:opacity-0"></div>
        </div>
        

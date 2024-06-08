@@ -7,6 +7,7 @@ import { FaCloudUploadAlt } from 'react-icons/fa';
 import { HiChartPie, HiInbox } from 'react-icons/hi';
 import { SelectPicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
+import Swal from 'sweetalert2';
 
 const page = () => {
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -143,12 +144,20 @@ const AddRestaurant = (e:any) => {
     axios.post('/api/restuarant',formData).then((res) => {
         console.log(res.data)
     
+    }).then(() => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Add Restaurant Success',
+            showConfirmButton: false,
+            timer: 1500
+            
+        })
     })
 }
 
   return (
    <>
-   <div className='flex justify-center'>
+   <div className='flex justify-center '>
 	<div>
 	
 	</div>

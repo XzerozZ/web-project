@@ -15,6 +15,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { dataInformation } from '@/interface/interface';
 import { Loader, SelectPicker } from 'rsuite';
+import Swal from 'sweetalert2';
 
 const page = () => {
     const router = useRouter();
@@ -117,6 +118,14 @@ const handleImageChange2 = (e: ChangeEvent<HTMLInputElement>) => {
 
         axios.put(`/api/restuarant`,formData).then((res) => {
             console.log(res.data)
+        }).then(() => {
+            Swal.fire({
+                title: 'Success',
+                text: 'Edit success',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+           
+            })
         })
        
       

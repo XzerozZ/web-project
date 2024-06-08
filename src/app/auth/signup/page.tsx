@@ -3,10 +3,13 @@ import React, { ChangeEvent, useState } from 'react'
 import axios from 'axios'
 import { UserData } from '@/interface/interface'
 import { FaCloudUploadAlt } from 'react-icons/fa'
+
 import Swal from 'sweetalert2'
+import { useRouter } from 'next/navigation'
 
 
 const page = () => {
+    const  Router = useRouter()
         const [userData, setUserData] = React.useState<UserData>({
                 email: '',
                 username: '',
@@ -77,6 +80,7 @@ const page = () => {
                             showConfirmButton: false,
                             timer: 1500
                             })
+                        Router.push('/auth/signin')
                     });
                 }
                 console.log(formData)

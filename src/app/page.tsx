@@ -4,7 +4,7 @@ import Poster from './components/image-component/poster'
 import Product_card from './components/product_card'
 import Image from 'next/image'
 import poster2 from '/public/poster2.png'
-import Link from 'next/link'
+import  Link  from 'next/link';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
