@@ -9,7 +9,7 @@ const comCard = ({data} : {data:dataPersonalComment}) => {
   
   return (
     <>
-      <Link href={`/restaurant/${data?.res_id}`} className='hover:text-black text-black hover:no-underline no-underline active:no-underline hover:border hover:border-[#39db4a] hover:rounded-md'>
+      <Link href={`/restaurant/${data?.res_id}`} className='hover:text-black text-black hover:no-underline no-underline active:no-underline hover:border hover:border-[#39db4a] hover:rounded-[10px]'>
       <div className='flex gap-1 flex-col bg-white px-5 py-3 rounded-lg'>
        <div className='flex flex-row gap-3' >
             <div>

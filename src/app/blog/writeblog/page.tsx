@@ -63,6 +63,7 @@ useEffect(() => {
 console.log(selectedImage);
 const [resName, setResName] = useState('');
 const handleSubmit = async () => {
+    
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
@@ -74,14 +75,13 @@ const handleSubmit = async () => {
     console.log(formData);
     axios.post('/api/blog', formData).then((res) => {
         console.log(res.data);
-    
-    }).then(() => {
         Swal.fire({
             icon: 'success',
             title: 'Blog has been published',
             showConfirmButton: false,
             timer: 1500
         })
+    
     })
 }
 const restaurantNames = (dataRes as { name: string }[]).map(dataRes => dataRes.name);

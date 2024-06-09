@@ -34,7 +34,7 @@ const page = () => {
         <>
                 
                 <div className='flex flex-col justify-center bg-[#fafafa]  text-black min-h-screen'>
-                                <div className='bg-[#fafafa] flex w-full justify-center p-5 h-[800px]'>
+                                <div className='bg-[#fafafa] flex w-full justify-center p-5 '>
                                                 <div className='flex flex-col w-[1140px]  gap-5 '>
                                                         <div>
                                                                 <h1 className='text-[40px]'>Leaderboard</h1>

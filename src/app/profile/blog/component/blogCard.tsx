@@ -19,7 +19,7 @@ const blogCard = ({data} : {data:dataPersonalBlog}) => {
   
 
   return (
-  <Link href={`/blog/${data.blog_id}`} className='text-black hover:text-black hover:no-underline hover:border hover:border-[#39db4a]'>
+  <Link href={`/blog/${data.blog_id}`} className='text-black hover:text-black hover:no-underline hover:border hover:border-[#39db4a] hover:rounded-[10px]'>
     <div className="flex flex-row gap-3 bg-white rounded-[10px]  justify-between">
       <div className="w-1/3">
         <Image width={500} height={300} src={data?.image} alt="" className='aspect-square rounded-l-[10px]'/>

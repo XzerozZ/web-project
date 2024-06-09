@@ -22,7 +22,7 @@ const product_card = ({data} : {data:AllRestaurant}) => {
            </div>
           <div className=' flex flex-col px-3 pb-2'>
              <div>
-                 <h1 className='text-[18px] sm:line-clamp-2 line-clamp-1'>{data.name}</h1>
+                 <h1 className='text-[18px] line-clamp-1'>{data.name}</h1>
              </div>
              <div className='flex '> 
                <span >   <Rate max={1} defaultValue={1} readOnly color='yellow'/> </span>

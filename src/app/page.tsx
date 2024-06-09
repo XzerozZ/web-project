@@ -75,7 +75,7 @@ const Home = () => {
 
  
   useEffect(() => {
-    if (dataRes.length >= 0 && dataBlog.length >= 0) {
+    if (dataRes.length > 0 && dataBlog.length >= 0) {
       setIsLoading(false);
     }
   }, [dataRes, dataBlog]);
@@ -85,63 +85,65 @@ const Home = () => {
       <Loader size="md"  color='black'/>
     </div>
   }
-  return (
+  else {
+    return (
     
-    <>
-    
-   <div className='w-full  bg-[#FAFAFA] min-h-screen'>
-        <div className='flex justify-center gap-10 pt-[60px]  mb-11 '>
-            <div className='md:m-[140px] md:mr-0'>
-              <Poster width={400} height={150} />
-            </div>
-            <div className=' max-sm:hidden '>
-              <Image src={poster2} alt='image' width={500} className='rounded-lg' priority={true} ></Image>
-            </div>
-
-        </div>
-        
-        <div className='w-full flex flex-col justify-center items-center gap-3 '>
+      <>
+      
+     <div className='w-full  bg-[#FAFAFA] min-h-screen'>
+          <div className='flex justify-center gap-10 pt-[60px]  mb-11 '>
+              <div className='md:m-[140px] md:mr-0'>
+                <Poster width={400} height={150} />
+              </div>
+              <div className=' max-sm:hidden '>
+                <Image src={poster2} alt='image' width={500} className='rounded-lg' priority={true} ></Image>
+              </div>
+  
+          </div>
           
-            <div className=' max-sm:w-full'>
+          <div className='w-full flex flex-col justify-center items-center gap-3 '>
             
-             <Headtopic name="Restaurant" th_name="ร้านอาหาร" />
-             
-            
-            </div>
-            <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
-               {
-                dataRes.map((data,index) => {
-                  return <Product_card key={index} data={data}/>
-                })
-               }
+              <div className=' max-sm:w-full'>
               
-            </div>
-            <Link href='/restaurant' className='hover:no-underline bg-[#EAECEE] rounded-[10px] md:w-[1120px] max-sm:w-full max-sm:m-1 p-1 hover:bg-[#E8EAED]/70'>            
-                 <h3 className="text-center text-[20px] m-1 text-[#39db4a] ">ดูทั้งหมด</h3>
-            </Link>
-        </div>
-        <div className='w-full flex flex-col justify-center items-center gap-5 mt-3'>
-           
-            <Headtopic name="Blog" th_name="บทความ"/>
-
-            <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
-                {
-                  dataBlog.map((data,index) => {
-                    return <Blog_card key={index} data={data}/>
+               <Headtopic name="Restaurant" th_name="ร้านอาหาร" />
+               
+              
+              </div>
+              <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
+                 {
+                  dataRes.map((data,index) => {
+                    return <Product_card key={index} data={data}/>
                   })
-                }
-              
-            </div>
-            <Link href='/blog' className='hover:no-underline bg-[#EAECEE] rounded-[10px] md:w-[1120px] max-sm:w-full max-sm:m-1 p-1 hover:bg-[#E8EAED]/70'>            
-                 <h3 className="text-center text-[20px] m-1 text-[#39db4a] ">ดูทั้งหมด</h3>
-            </Link>
-   </div>
-
-
-   </div>
-
-    </>
-  )
+                 }
+                
+              </div>
+              <Link href='/restaurant' className='hover:no-underline bg-[#EAECEE] rounded-[10px] md:w-[1120px] max-sm:w-full max-sm:m-1 p-1 hover:bg-[#E8EAED]/70'>            
+                   <h3 className="text-center text-[20px] m-1 text-[#39db4a] ">ดูทั้งหมด</h3>
+              </Link>
+          </div>
+          <div className='w-full flex flex-col justify-center items-center gap-5 mt-3'>
+             
+              <Headtopic name="Blog" th_name="บทความ"/>
+  
+              <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
+                  {
+                    dataBlog.map((data,index) => {
+                      return <Blog_card key={index} data={data}/>
+                    })
+                  }
+                
+              </div>
+              <Link href='/blog' className='hover:no-underline bg-[#EAECEE] rounded-[10px] md:w-[1120px] max-sm:w-full max-sm:m-1 p-1 hover:bg-[#E8EAED]/70'>            
+                   <h3 className="text-center text-[20px] m-1 text-[#39db4a] ">ดูทั้งหมด</h3>
+              </Link>
+     </div>
+  
+  
+     </div>
+  
+      </>
+    )
+  }
 }
 
 export default Home
