@@ -3,6 +3,7 @@ import ImageRes from '/public/restaurant.webp'
 import Image from 'next/image'
 import { dataPersonalBlog } from '@/interface/interface'
 import axios from 'axios'
+import Link from 'next/link'
 
 
 const blogCard = ({data} : {data:dataPersonalBlog}) => {
@@ -18,22 +19,26 @@ const blogCard = ({data} : {data:dataPersonalBlog}) => {
   
 
   return (
-    <div className="flex flex-row gap-3 bg-white rounded-[10px] ">
+  <Link href={`/blog/${data.blog_id}`} className='text-black hover:text-black hover:no-underline hover:border hover:border-[#39db4a] hover:rounded-[10px]'>
+    <div className="flex flex-row gap-3 bg-white rounded-[10px]  justify-between">
       <div className="w-1/3">
-        <img src={data?.image} alt="" className='aspect-square rounded-l-[10px]'/>
+        <Image width={500} height={300} src={data?.image} alt="" className='aspect-square rounded-l-[10px]'/>
       </div>
+      <div className='w-2/3 flex justify-between p-3'>
       <div className='flex flex-col justify-start'>
         <div className="">
           <h4>{data?.title}</h4>
         </div>
-        <div className="">
+        <div className="max-sm:hidden">
           <h6>{new Date(data?.posted_date).toLocaleString()}</h6>
         </div>
       </div>
       <div className='p-3'>
-        <button className='bg-red-500 p-3 rounded-md text-white ' onClick={() => deleteBlog} >Delete</button>
+        <button className='text-[#ff0000] p-3 rounded-md  ' onClick={() => deleteBlog} >Delete</button>
+      </div>
       </div>
     </div>
+  </Link>
 
   )
 }

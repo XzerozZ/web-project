@@ -4,8 +4,9 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-import { Avatar } from 'rsuite'
+import { Avatar, Loader } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
+
 
 type Props = {}
 
@@ -43,39 +44,45 @@ const BlogDetail = (props: Props) => {
   };
   
     
-  return (
-    <>
-     <main className='w-full bg-[#FAFAFA]  items-center flex justify-center p-5'>
-       <div className='w-[1140px] '>
-            <h1  className='text-[50px]'>{dataBlog?.title}</h1>
-            <div className='flex flex-row p-5 gap-4'>
-                <div className=''>
-                    <Avatar circle size='lg' />
-                </div>
-                <div className=''>
-                    <div className='text-[30px]'>
-                       {
-                        dataBlog?.user?.username
-                       }
-                    </div>
-                    <div>
-                    Published {formatDateTime(dataBlog?.posted_date || '')}
-                    </div>
-                </div>
-            </div>
-            <div>
-                <img src={dataBlog?.image} alt='blog' className='w-full'/>
-            </div>
-            <div className='text-[20px]'>
-              {
-                dataBlog?.description
-              }
-            </div>
-       
-       </div>
-
-    </main>
-    </>
-  )
+  if (!dataBlog) {
+    return  <div className='flex justify-center h-[1000px] items-center'>
+    <Loader size="md"  color='black'/>
+  </div>
+  }else{
+    return (
+      <>
+       <main className='w-full bg-[#FAFAFA]  items-center flex justify-center p-5 '>
+         <div className='w-[1140px] '>
+              <h1  className='text-[50px]'>{dataBlog?.title}</h1>
+              <div className='flex flex-row p-5 gap-4'>
+                  <div className=''>
+                      <Avatar circle size='lg' src={dataBlog?.user?.image || ''}/>
+                  </div>
+                  <div className=''>
+                      <div className='text-[30px]'>
+                         {
+                          dataBlog?.user?.username
+                         }
+                      </div>
+                      <div>
+                      Published {formatDateTime(dataBlog?.posted_date || '')}
+                      </div>
+                  </div>
+              </div>
+              <div>
+                  <img src={dataBlog?.image} alt='blog' className='w-full max-sm:aspect-square'/>
+              </div>
+              <div className='text-[30px]'>
+                {
+                  dataBlog?.description
+                }
+              </div>
+         
+         </div>
+  
+      </main>
+      </>
+    )
+  }
 }
 export default BlogDetail

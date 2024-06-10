@@ -4,6 +4,7 @@ import { CiStar } from "react-icons/ci";
 import { AllRestaurant } from '@/interface/interface';
 import Link from 'next/link';
 import { Rate } from 'rsuite';
+import Image from 'next/image'
 
 
 const product_card = ({data} : {data:AllRestaurant}) => {
@@ -15,11 +16,13 @@ const product_card = ({data} : {data:AllRestaurant}) => {
        
        <div >
            <div >
-           <img src={data.image} alt='image'  className="rounded-t-lg aspect-square" ></img>
+           
+          <Image src={data.image} alt='image' width={300} height={100} className="rounded-t-lg aspect-square" />
+          
            </div>
           <div className=' flex flex-col px-3 pb-2'>
              <div>
-                 <h1 className='text-[18px] sm:line-clamp-2 line-clamp-1'>{data.name}</h1>
+                 <h1 className='text-[18px] line-clamp-1'>{data.name}</h1>
              </div>
              <div className='flex '> 
                <span >   <Rate max={1} defaultValue={1} readOnly color='yellow'/> </span>

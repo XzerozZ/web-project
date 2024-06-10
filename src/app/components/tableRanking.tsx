@@ -40,7 +40,7 @@ import React from 'react'
 
              
            
-                      <Table.Cell> {item.averageRating}</Table.Cell>
+                      <Table.Cell> {item.averageRating.toFixed(2)}</Table.Cell>
                   
               
                

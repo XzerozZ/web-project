@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { Loader } from 'rsuite';
+import 'rsuite/dist/rsuite.min.css';
 
 
 type Props = {}
@@ -48,7 +49,7 @@ const blog = (props: Props) => {
 }, [session]);
 
 if (isLoading) {
-  return  <div className='flex justify-center h-[500px] items-center'>
+  return  <div className='flex justify-center h-[1000px] items-center'>
     <Loader size="md"  color='black'/>
   </div>
 }
@@ -67,7 +68,7 @@ if (isLoading) {
               </div>
           </div>
        </div>
-       <div className='flex justify-center'>
+       <div className='flex justify-center min-h-screen'>
           <div className='w-[1140px]'>
           <div className=' flex flex-row justify-center items-center gap-4 my-10  max-sm:mx-0'>
                 

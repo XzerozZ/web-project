@@ -36,6 +36,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
           throw new Error('Please fill your email and password')
+          
         }
         const user = await prisma.user.findUnique({
           where: {

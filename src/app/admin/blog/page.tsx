@@ -4,8 +4,8 @@ import {Modal, Sidebar } from 'flowbite-react';
 import { Table } from "flowbite-react";
 
 import React, { ChangeEvent, use, useEffect, useState } from 'react'
-import { RiAdminFill } from 'react-icons/ri';
-import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser } from "react-icons/hi";
+
+import {  HiChartPie, HiInbox} from "react-icons/hi";
 
 
 import 'rsuite/dist/rsuite.min.css';
@@ -14,6 +14,7 @@ import { set } from 'mongoose';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { dataInformation } from '@/interface/interface';
+import Swal from 'sweetalert2';
 
 
 const page = () => {
@@ -54,7 +55,15 @@ const page = () => {
     const deleteRestaurant = (id:any) => {
         const formData = new FormData();
         formData.append('id',id)
-        axios.delete(`/api/blog`, { data: formData })
+        axios.delete(`/api/blog`, { data: formData }).then((res) => {
+            Swal.fire({
+                title: 'Success',
+                text: 'Delete success',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+           
+            })
+        })
     }
 
   return (

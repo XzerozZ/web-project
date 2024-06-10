@@ -3,9 +3,13 @@ import React, { ChangeEvent, useState } from 'react'
 import axios from 'axios'
 import { UserData } from '@/interface/interface'
 import { FaCloudUploadAlt } from 'react-icons/fa'
-type Props = {}
+
+import Swal from 'sweetalert2'
+import { useRouter } from 'next/navigation'
+
 
 const page = () => {
+    const  Router = useRouter()
         const [userData, setUserData] = React.useState<UserData>({
                 email: '',
                 username: '',
@@ -13,6 +17,7 @@ const page = () => {
                 birthday: '',
                 password: '',
                 role: 'user',
+                confirm: '',
                 image: '',
         });
         const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -55,10 +60,29 @@ const page = () => {
                         formData.append('image', selectedImage);
                     }
                 console.log(formData);
-                axios.post('/api/auth/register', formData)
-                        .then((res) => {
-                                console.log(res);
-                        });
+                if (userData.password !== userData.confirm) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Password is not match',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+                        
+                }
+                else{
+                    axios.post('/api/auth/register', formData)
+                    .then((res) => {
+                            console.log(res);
+                    }).then(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Register Success',
+                            showConfirmButton: false,
+                            timer: 1500
+                            })
+                        Router.push('/auth/signin')
+                    });
+                }
                 console.log(formData)
                 
              
@@ -68,7 +92,7 @@ const page = () => {
 
   return (
     <>
-     <div className='flex justify-center bg-[#FAFAFA] py-[100px] max-sm:p-[50px]'>
+     <div className='flex justify-center bg-[#FAFAFA] py-[100px] max-sm:p-[50px] min-h-screen'>
     <div >
     <h1 className='text-center text-[40px]'>Sign up</h1>
         <form onSubmit={handleSubmit} className='flex flex-col w-[450px] gap-5 max-sm:p-10'>
@@ -139,7 +163,7 @@ const page = () => {
                     onChange={handleChange}
                     name='birthday'
                     
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="YY-MM-DD" required />
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="YYYY-MM-DD" required />
                  </div>
 
             </div>
@@ -153,6 +177,17 @@ const page = () => {
                     name='password'
                     
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="password" required />
+            </div>
+
+            <div>
+                    <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confire password</label>
+                    <input 
+                    type="password" 
+                    id="confirm" 
+                    onChange={handleChange}
+                    name='confirm'
+                    
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="confirm your password" required />
             </div>
 
 

@@ -7,6 +7,7 @@ import { FaCloudUploadAlt } from 'react-icons/fa';
 import { HiChartPie, HiInbox } from 'react-icons/hi';
 import { SelectPicker } from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
+import Swal from 'sweetalert2';
 
 const page = () => {
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -97,7 +98,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     }));
 };
 
-console.log(dataRes)
+console.log(dataRes.description,'test description')
 const AddRestaurant = (e:any) => {
     e.preventDefault();
     const formData = new FormData();
@@ -143,12 +144,20 @@ const AddRestaurant = (e:any) => {
     axios.post('/api/restuarant',formData).then((res) => {
         console.log(res.data)
     
+    }).then(() => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Add Restaurant Success',
+            showConfirmButton: false,
+            timer: 1500
+            
+        })
     })
 }
 
   return (
    <>
-   <div className='flex justify-center'>
+   <div className='flex justify-center '>
 	<div>
 	
 	</div>
@@ -276,7 +285,7 @@ const AddRestaurant = (e:any) => {
                               type="text" 
                               id="description" 
                             
-                              name='descripition'
+                              name='description'
                               onChange={handleChange}
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="description" required />
                       </div>
@@ -488,7 +497,7 @@ const AddRestaurant = (e:any) => {
                       </div>
 
 
-                      <button type="submit" className="w-full text-white bg-[#39DB4A] hover:bg-[#39DB4A]/90 focus:ring-3 focus:ring-[#39DB4A]/60 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-[#39DB4A]/60 dark:hover:bg-[#39DB4A]/70 focus:outline-none dark:focus:ring-[#39DB4A]/80">Update</button>
+                      <button type="submit" className="w-full text-white bg-[#39DB4A] hover:bg-[#39DB4A]/90 focus:ring-3 focus:ring-[#39DB4A]/60 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-[#39DB4A]/60 dark:hover:bg-[#39DB4A]/70 focus:outline-none dark:focus:ring-[#39DB4A]/80">Add restaurant</button>
 
               
                       </form>

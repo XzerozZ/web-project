@@ -93,7 +93,7 @@ return (
                                         </div>
                                 </div>
                         </div>
-                        <div className='flex justify-center p-3'>
+                        <div className='flex justify-center p-3 min-h-screen'>
                                 <div className='flex gap-5 w-[1140px]'>
                                         <div className='w-1/5 max-sm:hidden '>
                                                <SideBar />

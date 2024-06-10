@@ -15,6 +15,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { dataInformation } from '@/interface/interface';
 import { Loader, SelectPicker } from 'rsuite';
+import Swal from 'sweetalert2';
 
 const page = () => {
     const router = useRouter();
@@ -24,16 +25,13 @@ const page = () => {
     const [openModal, setOpenModal] = useState(false);
     const [IdEdit, setEditId] = useState(0);
 
-    const setButton = (id:any) => {
-      setOpenModal(true);
-      setEditId(id);
-    }
+    
     const fetchUser = async () => {
         const formData = new FormData();
         formData.append('email', session?.user?.email || '');
         await axios.post(`/api/user/`, formData)
         .then((res) => {
-            console.log(res.data);
+        
             setUser(res.data);
         });
     }
@@ -53,6 +51,11 @@ const page = () => {
         description: ''
     
     })
+    const setButton = (id:any) => {
+      setOpenModal(true);
+      setEditId(id);
+     
+    }
    
    
     const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -93,21 +96,14 @@ const handleImageChange2 = (e: ChangeEvent<HTMLInputElement>) => {
             
         })
       }
-
-      console.log(edit.res_id)
-      console.log(edit.res_name)
-      console.log(edit.address)
-     
-      console.log(selectedImage)
-      console.log(selectedImage2)
-      console.log(edit.description)
-
    
+    
+  
 
-    const editRestaurant = (e:any) => {
+    const editRestaurant = (e:any,id:any) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('id',edit.res_id)
+        formData.append('id',id)
         formData.append('name',edit.res_name)
         formData.append('address',edit.address)
         formData.append('phone_number',edit.phone_number)
@@ -117,6 +113,14 @@ const handleImageChange2 = (e: ChangeEvent<HTMLInputElement>) => {
 
         axios.put(`/api/restuarant`,formData).then((res) => {
             console.log(res.data)
+        }).then((res) => {
+            Swal.fire({
+                title: 'Success',
+                text: 'Edit success',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+           
+            })
         })
        
       
@@ -144,8 +148,8 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     useEffect(() => {
         fetchRestaurant()
         fetchUser();
-        console.log(user);
-        console.log(user?.role);
+
+      
         if (user !== null) {
           setIsLoading(false);
           if (user?.role === 'user') {
@@ -254,7 +258,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Edit restaurant</Modal.Header>
         <Modal.Body>
-        <form onSubmit={editRestaurant} className='flex flex-col gap-5 max-sm:p-10  w-full mx-auto'>
+        <form onSubmit={(e) => editRestaurant(e,IdEdit)} className='flex flex-col gap-5 max-sm:p-10  w-full mx-auto'>
                       <div className='flex justify-center gap-3'>
                       <div className='w-1/2'>
                               {previewImage ? (
@@ -315,7 +319,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                               onChange={handleChange}
                               name='res_id'
                               
-                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="Restaurant id" required />
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="Restaurant id"  />
                       </div>
 
                       <div>
@@ -327,7 +331,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                               onChange={handleChange}
                               name='res_name'
                               
-                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="Restaurant name" required />
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="Restaurant name"  />
                       </div>
                       
                       <div className='flex flex-row gap-3 w-full justify-between'>
@@ -339,7 +343,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                                       name='address'
                                      
                                       onChange={handleChange}
-                                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="Addres" required />
+                                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="Addres"  />
                               </div>
                       
                       </div>
@@ -353,7 +357,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                                      
                                       onChange={handleChange}
                                       
-                                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="Phone number" required />
+                                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="Phone number"  />
                               </div>
                       
                       </div>
@@ -366,7 +370,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                             
                               name='description'
                               onChange={handleChange}
-                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="description" required />
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#39DB4A] focus:border-[#39DB4A] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#39DB4A] dark:focus:border-[#39DB4A]" placeholder="description"  />
                       </div>
                      
                    
@@ -379,10 +383,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
               
                       </form>
         </Modal.Body>
-        <Modal.Footer>
-          <button onClick={() => setOpenModal(false)}>I accept</button>
-         
-        </Modal.Footer>
+       
       </Modal>
 </>
   )
