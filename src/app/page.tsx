@@ -110,11 +110,11 @@ const Home = () => {
               
               </div>
               <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
-                 {
-                  dataRes.map((data,index) => {
-                    return <Product_card key={index} data={data}/>
-                  })
-                 }
+              {
+                dataRes.slice(0, 8).map((data,index) => {
+                  return <Product_card key={index} data={data}/>
+                })
+              }
                 
               </div>
               <Link href='/restaurant' className='hover:no-underline bg-[#EAECEE] rounded-[10px] md:w-[1120px] max-sm:w-full max-sm:m-1 p-1 hover:bg-[#E8EAED]/70'>            
@@ -127,7 +127,7 @@ const Home = () => {
   
               <div className='grid grid-cols-4 gap-3 px-2 max-sm:grid-cols-2 xl:w-[1120px] max-sm:w-full'>
                   {
-                    dataBlog.map((data,index) => {
+                    dataBlog.slice(0, 8).map((data,index) => {
                       return <Blog_card key={index} data={data}/>
                     })
                   }

@@ -69,7 +69,7 @@ const restaurant = () => {
                   <span className=' text-[60px] ml-3  max-sm:text-[40px]'>ร้านอาหาร</span>
           </div>
         </div>
-        <div className='flex justify-center min-h-screen'>
+        <div className='flex justify-center min-h-screen min-h-screen'>
             <div className='w-[1140px]'>
               <div className=' flex flex-row justify-center items-center gap-5 my-10  max-sm:mx-3'>
              

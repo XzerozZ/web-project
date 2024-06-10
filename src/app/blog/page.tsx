@@ -68,7 +68,7 @@ if (isLoading) {
               </div>
           </div>
        </div>
-       <div className='flex justify-center'>
+       <div className='flex justify-center min-h-screen'>
           <div className='w-[1140px]'>
           <div className=' flex flex-row justify-center items-center gap-4 my-10  max-sm:mx-0'>
                 

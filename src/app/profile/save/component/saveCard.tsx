@@ -18,11 +18,11 @@ const saveCard = ({data} : {data : SaveData}) => {
     <div className="w-1/3">
       <img src={data?.restaurant.image} alt="" className='aspect-square rounded-l-[10px]'/>
     </div>
-    <div className='flex flex-col'>
+    <div className='flex flex-col w-2/3'>
       <div className="">
         <h4>{data?.restaurant.name}</h4>
       </div>
-      <div className="">
+      <div className="max-sm:hidden">
        {data?.restaurant.address}
       </div>
     </div>

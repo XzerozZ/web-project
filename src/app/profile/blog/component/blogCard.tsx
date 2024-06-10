@@ -29,7 +29,7 @@ const blogCard = ({data} : {data:dataPersonalBlog}) => {
         <div className="">
           <h4>{data?.title}</h4>
         </div>
-        <div className="">
+        <div className="max-sm:hidden">
           <h6>{new Date(data?.posted_date).toLocaleString()}</h6>
         </div>
       </div>
